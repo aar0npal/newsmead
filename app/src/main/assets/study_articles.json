@@ -1,0 +1,29 @@
+{
+  "_comment": "Original study articles written for this thesis research. Not sourced from any real publication. 'source' left as generic (not mapped to a real outlet) since content is original, not actual outlet reporting. Replace article_id mapping to match your Latin square groups (e.g. Article A = 1, Article B = 2).",
+  "articles": [
+    {
+      "article_id": 1,
+      "source": "study",
+      "title": "Barangay Health Centers Expand Free Checkups for Senior Residents",
+      "image_url": "",
+      "date": "2026-06-20 09:00:00",
+      "body": "Barangay health centers across several cities have begun offering expanded free health checkups aimed at residents aged 60 and above, as part of a wider push to catch common age-related conditions earlier.\n\nThe program, which started as a pilot in a handful of barangays late last year, now covers blood pressure monitoring, blood sugar testing, and basic vision screening. Health workers say the goal is simple: catch problems before they become serious, especially for conditions like hypertension and diabetes that often go unnoticed until they cause bigger complications.\n\n\"A lot of our senior residents don't come in until something already hurts,\" said one barangay health worker involved in the program. \"We wanted to make it easy enough that people come in just to check, not just when something is wrong.\"\n\nResidents interviewed at one checkup site said the convenience made a real difference. Many said they had been meaning to get a checkup for months but kept putting it off because of transportation costs or long lines at larger hospitals. The barangay-level setup, they said, removed both of those barriers.\n\nThe checkups are staffed by a rotating team of nurses and, on certain days, a visiting doctor from a nearby district hospital. Residents are encouraged to bring any previous medical records, though it is not required. Follow-up appointments are scheduled on-site for anyone flagged with elevated readings.\n\nLocal officials say the expansion was made possible through a combination of city health funding and support from a nonprofit focused on elderly care. There are plans to add basic hearing screening by the end of the year, following requests from residents during earlier consultations.\n\nHealth officials are also using the checkups as an opportunity to talk to residents about medication management, noting that many older adults juggle multiple prescriptions and sometimes lose track of dosages or interactions.\n\n\"It's not just about catching a number that's too high,\" the health worker added. \"It's about actually sitting down and asking how someone's been feeling, whether they're taking their medicine properly, whether they have questions nobody's answered yet.\"\n\nThe program currently runs twice a week in participating barangays, with organizers hoping to expand to daily availability if funding allows. Residents can inquire at their local barangay hall for the nearest schedule.",
+      "category": "lifestyle",
+      "language": "English",
+      "read_time": "3 min read",
+      "url": ""
+    },
+    {
+      "article_id": 2,
+      "source": "study",
+      "title": "Community Drainage Project Aims to Ease Flooding Before Rainy Season",
+      "image_url": "",
+      "date": "2026-06-18 14:30:00",
+      "body": "Work has begun on a drainage improvement project intended to reduce flooding in low-lying residential areas before the peak of the rainy season, according to local engineering officials overseeing the project.\n\nThe project focuses on clearing and widening existing drainage canals that have been narrowed over the years by silt buildup and, in some sections, informal construction encroaching on the waterway. Engineers say the combination has significantly reduced how much water the canals can carry during heavy downpours, contributing to flash flooding that residents have reported in recent years.\n\n\"During the last few rainy seasons, water was rising inside homes within thirty minutes of a heavy downpour starting,\" said one resident whose house sits near one of the affected canals. \"Before, it used to take much longer, if it flooded at all.\"\n\nThe current phase of work covers roughly two kilometers of canal across three residential zones, with heavy equipment brought in to remove accumulated sediment and debris. Officials say the work is being done in sections to avoid fully blocking drainage flow while construction is ongoing, since halting water flow entirely during this period could worsen flooding in the short term.\n\nResidents have generally welcomed the project, though some have raised concerns about the noise and dust from construction equipment, particularly during afternoon hours. Project engineers say they are coordinating with barangay officials to keep residents updated on which sections will be affected each week.\n\nBeyond the immediate clearing work, officials say they are also studying longer-term solutions, including the possibility of installing additional water retention areas upstream to reduce the volume reaching residential canals during the heaviest storms.\n\nLocal officials have urged residents to avoid dumping garbage into drainage canals, noting that clogging from waste is one of the most persistent and preventable contributors to flooding in the area. Cleanup drives are being planned in coordination with the drainage project to reinforce this message.\n\nThe project is expected to be substantially complete before the rainy season reaches its peak, though officials cautioned that additional funding would be needed to extend the improvements to other flood-prone areas not currently included in this phase.",
+      "category": "news",
+      "language": "English",
+      "read_time": "3 min read",
+      "url": ""
+    }
+  ]
+}

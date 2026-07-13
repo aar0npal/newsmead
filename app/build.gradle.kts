@@ -95,6 +95,12 @@ dependencies {
     // Import ZoomLayout dependencies
     implementation("com.otaliastudios:zoomlayout:1.9.0")
 
+    // Local gaze tracking: CameraX front-camera frames + MediaPipe FaceLandmarker.
+    implementation("androidx.camera:camera-camera2:1.3.4")
+    implementation("androidx.camera:camera-lifecycle:1.3.4")
+    implementation("androidx.camera:camera-core:1.3.4")
+    implementation("com.google.mediapipe:tasks-vision:0.10.29")
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

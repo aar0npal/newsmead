@@ -27,6 +27,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?secondaryIconColor" />
+        <ImageButton
+            android:id="@+id/btnRunGazeCalibration"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="@null"
+            android:contentDescription="@string/article_calibrate_gaze"
+            android:padding="12dp"
+            android:src="@drawable/ic_visibility"
+            app:layout_constraintBottom_toBottomOf="@+id/btnArticleBack"
+            app:layout_constraintStart_toEndOf="@+id/btnArticleBack"
+            app:layout_constraintTop_toTopOf="@+id/btnArticleBack"
+            app:tint="?secondaryIconColor" />
+        <ImageButton
+            android:id="@+id/btnRunGazeTest"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:contentDescription="@string/article_gaze_test"
+            android:padding="12dp"
+            android:src="@drawable/ic_dots"
+            app:layout_constraintBottom_toBottomOf="@+id/btnRunGazeCalibration"
+            app:layout_constraintStart_toEndOf="@+id/btnRunGazeCalibration"
+            app:layout_constraintTop_toTopOf="@+id/btnRunGazeCalibration"
+            app:tint="?secondaryIconColor" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReadAloudArticle"
@@ -40,8 +65,11 @@
             app:iconPadding="4dp"
             app:iconSize="20dp"
             app:iconTint="?secondaryButtonIconColor"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnTranslateArticle"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/btnRunGazeTest"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton

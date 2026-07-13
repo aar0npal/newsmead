@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.front" android:required="false" />
+
     <application
         android:name=".data.NewsMeadApplication"
         android:allowBackup="true"
@@ -32,6 +35,15 @@
             android:name=".activities.MainActivity"
             android:exported="false">
         </activity>
+        <!-- exported=true so the researcher can launch it via `adb shell am start`
+             (Android 16 / One UI blocks adb from starting non-exported activities).
+             Harmless for a research instrument; no sensitive data behind it. -->
+        <activity
+            android:name=".activities.GazeCalibrationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.GazeTestActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

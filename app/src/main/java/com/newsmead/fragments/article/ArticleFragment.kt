@@ -10,6 +10,7 @@ import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,16 +18,28 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.newsmead.R
+import com.newsmead.activities.GazeCalibrationActivity
+import com.newsmead.activities.GazeTestActivity
 import com.newsmead.custom.CustomDividerItemDecoration
 import com.newsmead.data.DataHelper
 import com.newsmead.data.DatabaseHelper
 import com.newsmead.data.FirebaseHelper
+import com.newsmead.data.StudyConfig
+import com.newsmead.gaze.CalibrationStore
+import com.newsmead.gaze.GazeMapper
+import com.newsmead.gaze.GazeOverlayView
+import com.newsmead.gaze.GazeProvider
+import com.newsmead.gaze.LineAoiMapper
+import com.newsmead.gaze.LocalCalibratedGazeProvider
+import com.newsmead.gaze.LocalGazeSources
+import com.newsmead.gaze.ReadingStateInferencer
 import com.newsmead.databinding.FragmentArticleBinding
 import com.newsmead.fragments.layouts.BottomSheetDialogSaveFragment
 import com.newsmead.models.Article
@@ -44,6 +57,11 @@ class ArticleFragment() : Fragment(), clickListener, TextToSpeech.OnInitListener
     private lateinit var textToSpeech: TextToSpeech
     private var isTranslated = false
     private var language = "english"
+    private var gazeProvider: GazeProvider? = null
+    private var articleGazeSink: GazeProvider.OnGaze? = null
+    private var gazeOverlay: GazeOverlayView? = null
+    private var launchedCalibration = false
+    private var rsiInferencer: ReadingStateInferencer? = null
     private enum class ColorMode { LIGHT, DARK, SEPIA }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -233,6 +251,14 @@ class ArticleFragment() : Fragment(), clickListener, TextToSpeech.OnInitListener
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.btnRunGazeCalibration.setOnClickListener {
+            launchGazeCalibration()
+        }
+
+        binding.btnRunGazeTest.setOnClickListener {
+            launchGazeTest()
+        }
+
         // Show more button to show more articles from source
         binding.btnArticleRecommendations.setOnClickListener {
             // Navigate to ArticleSourceFragment
@@ -270,6 +296,18 @@ class ArticleFragment() : Fragment(), clickListener, TextToSpeech.OnInitListener
         }
 
         addBottomAppBarListeners()
+
+        // Study mode: lock the body font size and remove the +/- text-size controls
+        // so line bounding boxes stay stable for gaze AOI mapping (Stage 4).
+        // Applied in dp so the OS font-scale setting can't change the pixel size.
+        if (StudyConfig.LOCK_ARTICLE_FONT_SIZE) {
+            binding.tvArticleText.setTextSize(
+                TypedValue.COMPLEX_UNIT_DIP, StudyConfig.ARTICLE_FONT_SIZE_DP
+            )
+            binding.llArticleBottomButtons.visibility = View.GONE
+        }
+
+        setupGazeDebug()
 
         // Loading article content from url
         lifecycleScope.launch {
@@ -419,9 +457,45 @@ class ArticleFragment() : Fragment(), clickListener, TextToSpeech.OnInitListener
             textToSpeech.stop()
             textToSpeech.shutdown()
         }
+        rsiInferencer?.flush()
+        gazeProvider?.stop()
+        gazeOverlay = null
         super.onDestroy()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        if (launchedCalibration) {
+            launchedCalibration = false
+            restartLiveGazeAfterCalibration()
+        }
+    }
+
+    private fun launchGazeCalibration() {
+        launchedCalibration = true
+        rsiInferencer?.flush()
+        gazeProvider?.stop()
+        gazeProvider = null
+        startActivity(Intent(requireContext(), GazeCalibrationActivity::class.java))
+    }
+
+    /** Stop live gaze (frees the camera), open the accuracy test, resume on return. */
+    private fun launchGazeTest() {
+        launchedCalibration = true
+        rsiInferencer?.flush()
+        gazeProvider?.stop()
+        gazeProvider = null
+        startActivity(Intent(requireContext(), GazeTestActivity::class.java))
+    }
+
+    private fun restartLiveGazeAfterCalibration() {
+        if (StudyConfig.GAZE_TOUCH_VALIDATION) return
+        val onGaze = articleGazeSink ?: return
+        gazeProvider?.stop()
+        gazeProvider = null
+        attachLiveGaze(onGaze)
+    }
     // Function to convert text to speech
     private fun speak(text: String) {
         if(!isTranslated && language.lowercase() == "english"){
@@ -491,6 +565,120 @@ class ArticleFragment() : Fragment(), clickListener, TextToSpeech.OnInitListener
         binding.btnArticleClrLight.setOnClickListener{ updateColors(ColorMode.LIGHT) }
         binding.btnArticleClrDark.setOnClickListener{ updateColors(ColorMode.DARK) }
         binding.btnArticleClrSepia.setOnClickListener{ updateColors(ColorMode.SEPIA) }
+    }
+
+    /**
+     * Stage 4 (touch-validation slice): attach the debug gaze layer to the
+     * article view: the line-AOI mapper + a gaze-dot overlay. All gaze flows
+     * through the single [GazeProvider.OnGaze] entry point below, so the live
+     * local calibrated provider can drive it via `setOnGaze` with no changes here.
+     * Touch validation proves line mapping before trusting gaze accuracy.
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupGazeDebug() {
+        if (!StudyConfig.GAZE_ENABLED) return
+
+        val overlay = GazeOverlayView(requireContext())
+        gazeOverlay = overlay
+        (binding.root as ViewGroup).addView(
+            overlay,
+            ConstraintLayout.LayoutParams(0, 0).apply {
+                startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            }
+        )
+        overlay.bringToFront()
+        overlay.translationZ = 1000f
+        val mapper = LineAoiMapper(binding.tvArticleText)
+        rsiInferencer = createRsiInferencer()
+
+        // Single gaze entry point (full-screen px). Both the touch-validation
+        // source and the local calibrated gaze provider feed through here.
+        val onGaze = GazeProvider.OnGaze { x, y ->
+            overlay.setGazeScreen(x, y)
+            val line = mapper.lineAt(y)
+            val lineCount = mapper.lineCount
+            Log.d("GazeAOI", "gaze=(${x.toInt()},${y.toInt()}) line=$line/$lineCount")
+            rsiInferencer?.onLine(line, lineCount)
+        }
+
+        articleGazeSink = onGaze
+
+        if (StudyConfig.GAZE_TOUCH_VALIDATION) {
+            attachTouchValidation(onGaze)
+        } else {
+            attachLiveGaze(onGaze)
+        }
+    }
+
+    private fun createRsiInferencer(): ReadingStateInferencer =
+        ReadingStateInferencer(object : ReadingStateInferencer.Listener {
+            override fun onLineSample(sample: ReadingStateInferencer.LineSample) {
+                Log.d("GazeRSI", "line=${sample.lineIndex}/${sample.lineCount} t=${sample.timestampMs}")
+            }
+
+            override fun onFixation(event: ReadingStateInferencer.FixationEvent) {
+                Log.d("GazeRSI", "fixation line=${event.lineIndex}/${event.lineCount} duration=${event.durationMs}ms")
+            }
+
+            override fun onDwell(event: ReadingStateInferencer.DwellEvent) {
+                Log.d("GazeRSI", "dwell line=${event.lineIndex}/${event.lineCount} duration=${event.durationMs}ms")
+            }
+
+            override fun onRegression(event: ReadingStateInferencer.RegressionEvent) {
+                Log.d("GazeRSI", "regression ${event.fromLine}->${event.toLine} t=${event.timestampMs}")
+            }
+
+            override fun onScore(score: ReadingStateInferencer.RsiScore) {
+                Log.d(
+                    "GazeRSI",
+                    "score=${"%.1f".format(score.score)} " +
+                        "reg=${"%.2f".format(score.regressionComponent)} " +
+                        "dwell=${"%.2f".format(score.dwellComponent)} " +
+                        "fix=${"%.2f".format(score.fixationComponent)} " +
+                        "events=f${score.fixationCount}/d${score.totalDwellMs}ms/r${score.regressionCount}"
+                )
+            }
+        })
+
+    /** Finger substitutes for gaze; returns false so the article still scrolls. */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun attachTouchValidation(onGaze: GazeProvider.OnGaze) {
+        binding.nsvArticleText.setOnTouchListener { _, event ->
+            onGaze.onGaze(event.rawX, event.rawY)
+            false
+        }
+    }
+
+    /**
+     * Live gaze from the local phone tracker, mapped to the phone screen with
+     * the saved 16-point calibration. In live mode, do not silently substitute
+     * touch input; missing/invalid calibration must be fixed before reading.
+     */
+    private fun attachLiveGaze(onGaze: GazeProvider.OnGaze) {
+        val samples = CalibrationStore.load(requireContext())
+        if (samples == null) {
+            Log.w("GazeAOI", "No calibration found; live gaze not started")
+            Toast.makeText(context, "Run gaze calibration before live reading", Toast.LENGTH_LONG).show()
+            return
+        }
+        try {
+            val rawSource = LocalGazeSources.create(requireContext())
+            rawSource.setOnFps { fps -> activity?.runOnUiThread { gazeOverlay?.setFps(fps) } }
+            val provider = LocalCalibratedGazeProvider(
+                mapper = GazeMapper(samples),
+                rawSource = rawSource,
+            )
+            provider.setOnGaze { x, y -> activity?.runOnUiThread { onGaze.onGaze(x, y) } }
+            provider.start(viewLifecycleOwner)
+            gazeProvider = provider
+            Log.i("GazeAOI", "Local calibrated gaze started with ${samples.size} calibration samples")
+        } catch (e: Exception) {
+            Log.e("GazeAOI", "Calibration fit failed; live gaze not started", e)
+            Toast.makeText(context, "Gaze calibration is invalid; recalibrate", Toast.LENGTH_LONG).show()
+        }
     }
 
     /**
@@ -582,6 +770,7 @@ class ArticleFragment() : Fragment(), clickListener, TextToSpeech.OnInitListener
         // Change icon colors
         binding.btnArticleBack.setColorFilter(color)
         binding.btnArticleShare.setColorFilter(color)
+        binding.btnRunGazeCalibration.setColorFilter(color)
 
         binding.btnSaveList.iconTint = ColorStateList.valueOf(color)
         binding.btnTranslateArticle.iconTint = ColorStateList.valueOf(color)

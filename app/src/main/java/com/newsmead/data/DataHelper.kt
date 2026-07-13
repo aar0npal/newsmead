@@ -8,6 +8,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.newsmead.R
 import com.newsmead.models.Article
+import org.json.JSONObject
 import java.text.DateFormat
 import java.util.Date
 
@@ -54,6 +55,7 @@ object DataHelper {
             "manilabulletin" -> "The Manila Bulletin"
             "news5" -> "TV5 News"
             "abantenews" -> "Abante News"
+            "study" -> "NewsMead" // Thesis-study articles: neutral in-app label
             else -> ""
         }
     }
@@ -61,6 +63,7 @@ object DataHelper {
     // Reverse source name mapping
     fun reverseSourceNameMap(fullName: String): String {
         return when (fullName) {
+            "NewsMead" -> "study"
             "GMA News" -> "gmanews"
             "INQUIRER.NET" -> "inquirer"
             "Philstar" -> "philstar"
@@ -103,6 +106,16 @@ object DataHelper {
         pageSize: Int? = null,
         callback: (List<Article>) -> Unit)
     {
+        // Offline study mode: serve articles from the bundled local asset
+        // instead of the (decommissioned) newsmead-api. Same JSON schema,
+        // so the parsing/mapping below is reused.
+        if (StudyConfig.OFFLINE_MODE) {
+            loadLocalArticleData(
+                context, page, source, language, category, searchText, pageSize, callback
+            )
+            return
+        }
+
         // Create an empty ArrayList
         val articles = ArrayList<Article>()
 
@@ -182,6 +195,112 @@ object DataHelper {
             })
 
         queue.add(jsonObjectRequest)
+    }
+
+    /**
+     * Offline replacement for [loadArticleData]. Reads the bundled article set
+     * (assets/[StudyConfig.ARTICLES_ASSET]) and applies the same filters the API
+     * used to apply server-side (source / category / language / search / pageSize)
+     * so every screen — home feed, search, by-source, by-category, recommended —
+     * behaves the same, just against local data.
+     *
+     * Expected JSON (identical to the old API response):
+     * {
+     *   "articles": [
+     *     {
+     *       "source": "gmanews",                 // raw key -> logo + display name
+     *       "title": "Headline text",
+     *       "image_url": "file:///android_asset/study_images/a1.jpg",  // or "" or an http url
+     *       "date": "2026-07-01 09:30:00",       // MUST be yyyy-MM-dd HH:mm:ss
+     *       "body": "Full article body...",
+     *       "category": "news",
+     *       "language": "English",               // "English" or "Filipino"
+     *       "read_time": "5 min read",
+     *       "url": "https://example.com/original",
+     *       "article_id": 1
+     *     }
+     *   ]
+     * }
+     */
+    private fun loadLocalArticleData(
+        context: Context?,
+        page: Int?,
+        source: String?,
+        language: String?,
+        category: String?,
+        searchText: String?,
+        pageSize: Int?,
+        callback: (List<Article>) -> Unit
+    ) {
+        val articles = ArrayList<Article>()
+
+        // No context, or a paginated request beyond the single local page:
+        // return empty so any "load more" behaviour terminates cleanly.
+        if (context == null || (page != null && page > 1)) {
+            callback(articles)
+            return
+        }
+
+        try {
+            val jsonText = context.assets.open(StudyConfig.ARTICLES_ASSET)
+                .bufferedReader().use { it.readText() }
+            val data = JSONObject(jsonText).getJSONArray("articles")
+
+            for (i in 0 until data.length()) {
+                val a = data.getJSONObject(i)
+
+                val rawSource = a.optString("source", "")
+                val cat = a.optString("category", "")
+                val lang = a.optString("language", "English")
+                val title = a.optString("title", "")
+                val body = a.optString("body", "")
+
+                // Same filtering the API applied server-side.
+                if (source != null && rawSource != source) continue
+                if (category != null && cat.lowercase() != category.lowercase()) continue
+                if (language != null && lang.lowercase() != language.lowercase()) continue
+                if (!searchText.isNullOrEmpty() &&
+                    !title.contains(searchText, ignoreCase = true) &&
+                    !body.contains(searchText, ignoreCase = true)
+                ) continue
+
+                // Be forgiving about the date so a hand-edited entry can't crash
+                // the whole feed: fall back to the raw string if it doesn't parse.
+                val rawDate = a.optString("date", "")
+                val date = try {
+                    formatDate(rawDate)
+                } catch (e: Exception) {
+                    Log.w("DataHelper", "Unparseable date '$rawDate' in local articles")
+                    rawDate
+                }
+
+                articles.add(
+                    Article(
+                        sourceNameMap(rawSource),
+                        sourceImageMap(rawSource),
+                        title,
+                        a.optString("image_url", ""),
+                        date,
+                        body,
+                        cat,
+                        lang,
+                        a.optString("read_time", ""),
+                        a.optString("url", ""),
+                        a.optInt("article_id", i + 1).toString()
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            Log.e("DataHelper", "Failed to load local articles from ${StudyConfig.ARTICLES_ASSET}", e)
+        }
+
+        // Honour pageSize as a cap (recommended list requests a small pageSize).
+        val result = if (pageSize != null && pageSize < articles.size) {
+            ArrayList(articles.subList(0, pageSize))
+        } else {
+            articles
+        }
+        callback(result)
     }
 
 

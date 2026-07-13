@@ -2,7 +2,16 @@
     <string name="app_name">NewsMead</string>
 
     <!-- symbol -->
-    <string name="symbol_bullet">•</string>
+    <string name="symbol_bullet">*</string>
+
+    <!-- gaze calibration (Stage 4) -->
+    <string name="calib_progress_initial">Calibration</string>
+    <string name="calib_ready_instruction">Position the phone in front of the laptop screen and sit comfortably.\nTap Start when ready.</string>
+    <string name="calib_start_button">Ready - Start</string>
+    <string name="calib_progress">Point %1$d / %2$d - look at the dot</string>
+    <string name="calib_retry">No clear read - retrying</string>
+    <string name="calib_done">Calibration complete (%1$d / %2$d)</string>
+    <string name="calib_saved">Saved. Press back to return.</string>
 
     <!-- text commons -->
     <string name="commons_category">Category</string>
@@ -114,6 +123,16 @@
     <!-- activity_article -->
     <string name="article_translate_btn">Filipino</string>
     <string name="article_read_aloud_btn">Read Aloud</string>
+    <string name="article_calibrate_gaze">Run gaze calibration</string>
+    <string name="article_gaze_test">Run gaze accuracy test</string>
+    <!-- gaze accuracy test (ported Stage 3) -->
+    <string name="gaze_test_hint">Look around - the dot should follow your gaze</string>
+    <string name="gaze_test_no_calibration">No calibration found. Run calibration first.</string>
+    <string name="gaze_test_fit_failed">Calibration fit failed. Re-run calibration.</string>
+    <string name="gaze_test_run_accuracy">Run Accuracy Test</string>
+    <string name="gaze_test_accuracy_progress">Accuracy %1$d / %2$d - look at the ring</string>
+    <string name="gaze_test_point_result">Point %1$d / %2$d:  err %3$.0f px   vert %4$.0f px</string>
+    <string name="gaze_test_accuracy_result">Median error: %1$.0f px (%2$.2f cm)\nVertical: %3$.0f px (%4$.2f cm)</string>
     <string name="article_save_to_list_btn">Save to List</string>
     <string name="article_by">by</string>
     <string name="article_show_more_btn">Show more from AUTHOR</string>
@@ -208,7 +227,7 @@
         "All action takes place in a single environment. Objects are presented to the user without "
         "breaking the continuity of experience even as they transform and reorganize.\n"
         "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+        "Feedback is subtle yet clear. Transitions are efÃƒÂ¯Ã‚Â¬Ã‚Âcient yet coherent.\n\n"
 
         "3D world.\n\n"
 
@@ -247,7 +266,7 @@
         "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
         "changes are consistently implemented using dynamic elevation offsets.\n"
         "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
-        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "to the componentÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s resting state. They ensure that elevation changes are consistent "
         "across actions and component types. For example, all components that lift on press have "
         "the same elevation change relative to their resting elevation.\n"
         "Once the input event is completed or cancelled, the component will return to its resting "
@@ -263,7 +282,7 @@
         "For example, a floating action button (FAB) can disappear or move off screen before a "
         "user picks up a card, or it can move if a snackbar appears.\n"
         "On the layout level, design your app layout to minimize opportunities for interference. "
-        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "For example, position the FAB to one side of stream of a cards so the FAB wonÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="profile_confirm_password">Confirm Password</string>

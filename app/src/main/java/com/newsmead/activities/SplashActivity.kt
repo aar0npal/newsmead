@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.newsmead.data.StudyConfig
 import com.newsmead.databinding.ActivitySplashBinding
 
 @SuppressLint("CustomSplashScreen")
@@ -29,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         auth = Firebase.auth
-        if (auth.currentUser != null) {
+        if (StudyConfig.BYPASS_LOGIN || auth.currentUser != null) {
             navigateToMainActivity()
         } else {
             // Check shared preferences for signup status

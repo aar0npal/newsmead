@@ -29,6 +29,12 @@ class FirebaseHelper {
         }
 
         fun isNetworkAvailable(context: Context): Boolean {
+            // Offline study mode: article content is served from a bundled local
+            // asset, so treat data as always "available". The feed screens only
+            // render inside `if (isNetworkAvailable(...))`, so without this the
+            // shimmer would spin forever on a device with no network.
+            if (StudyConfig.OFFLINE_MODE) return true
+
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             return activeNetworkInfo != null && activeNetworkInfo.isConnected
