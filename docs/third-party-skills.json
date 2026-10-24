@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/K-Dense-AI/scientific-agent-skills",
+  "revision": "330c8e764435a731eff571e3efdda70b363d0792",
+  "modified_from_upstream": false,
+  "files": {
+    ".agents/skills/scientific-critical-thinking/references/common_biases.md": "99f608c86075f1a1ab115a1cf4ecd54fe482266cb5e47761172894f21829f6cf",
+    ".agents/skills/scientific-critical-thinking/references/core_capabilities.md": "ed5e62032737893ef7eda9f60f6b3355f9081daa91bbfddb9340194bc8253351",
+    ".agents/skills/scientific-critical-thinking/references/evidence_hierarchy.md": "e58b6fbbd080938719c1c1ed08acb3b4c056e12e8ed9ef2ff250b8e9ebf9b74c",
+    ".agents/skills/scientific-critical-thinking/references/experimental_design.md": "99023cfb10e455349f5e57fff75d34f80f3bba8842c48f5385ad7d0586f01b11",
+    ".agents/skills/scientific-critical-thinking/references/logical_fallacies.md": "7911abe82bc05c8f513591e9b00572f21e5a631783cc00cd9dbf644b5eae28ce",
+    ".agents/skills/scientific-critical-thinking/references/scientific_method.md": "09e709bdc7919a2b21825175aff5e0f9c26117a02ec654bfdb347fc8fa7ad0b7",
+    ".agents/skills/scientific-critical-thinking/references/statistical_pitfalls.md": "c525ed590c36eef9dfca95c9c8bc2ab3e228e9247aa476a2c2ddcf07ffc62172",
+    ".agents/skills/scientific-critical-thinking/SKILL.md": "b77ba9ed1872d85d804125a339e2038984052e7aaf3616813ab79f5ad91c0558",
+    ".agents/skills/statistical-analysis/references/assumptions_and_diagnostics.md": "b8fdccb2d2f160c78bd11415e30c50a0dea755f046e936b8c85b23333d1b47f8",
+    ".agents/skills/statistical-analysis/references/bayesian_statistics.md": "c6b994b512c38009f26aed3913884aa85fef2bdcefd8a9858b124deed3a05f70",
+    ".agents/skills/statistical-analysis/references/effect_sizes_and_power.md": "6de003ff25fe3613322f5cfbd4d042327b17a381c034bc2dbbe068212ecce732",
+    ".agents/skills/statistical-analysis/references/reporting_standards.md": "6854623fb5e8080e7d02b6c713ee44cb4a4cf03757d97840764118af54137a88",
+    ".agents/skills/statistical-analysis/references/test_selection_guide.md": "64f5d93f87d83431b767a24d6b32c0ed82f2cbd32b1bd07476b49b5ac6a858a5",
+    ".agents/skills/statistical-analysis/scripts/assumption_checks.py": "3fabf359ab0128bbfc498dadb53a4782431cde473c0a6681ea7298a605757018",
+    ".agents/skills/statistical-analysis/SKILL.md": "1b1d63fd667ef454a8e0cadf32457a511883d3308dcc79c47c48bc565d9a23f7",
+    ".agents/skills/K-Dense-LICENSE.md": "09b02a3c9df3053c55531d503357a9c7cde275970e6c3ceaa1ddf5f0e90b40c1"
+  }
+}

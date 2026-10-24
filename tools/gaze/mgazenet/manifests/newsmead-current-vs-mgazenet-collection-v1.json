@@ -1,0 +1,81 @@
+{
+  "schema": "newsmead_estimator_comparison_collection_v1",
+  "protocol_id": "newsmead_current_vs_mgazenet_reading_v1",
+  "protocol_manifest_sha256": "41a3fbccd4df38c2bb13d4695a052fe15d3ef78423b19a4c1737d3de6944f185",
+  "status": "host_build_verified_device_checks_pending",
+  "participant_collection_authorized": false,
+  "application_id": "com.newsmead",
+  "version_code": 1,
+  "version_name": "0.2",
+  "signer_sha256": "3056e94475f68ae47cd7d25babf34eeb7d201acb97999f20eaa3ab95fa200332",
+  "builds": {
+    "current": {
+      "estimator_id": "current",
+      "source_branch": "gaze-pipeline-improvements",
+      "base_commit": "ec635fd01905544c8251c37b6891105ebbdee923",
+      "base_apk_sha256": "3c4019e9ae0390e1f9af05f262ba50ab4c71332ac9258aa4c9cc172e67c78e01",
+      "base_archive_sha256": "5c631be6d12892768b707d433eebbdab4c7f102f18738b2f9d21d19fe2518aca",
+      "comparison_controls": "tools/gaze/mgazenet/patches/current-reference-ec635fd-comparison-v1.patch",
+      "comparison_controls_sha256": "e577ef8f8f27e7bd0aef688ee1ff9e6153f3f41aaf76a7cc1b2cdfe28b9b4dea",
+      "comparison_apk_file": "current-newsmead-comparison-v1.apk",
+      "comparison_apk_size_bytes": 84746470,
+      "comparison_apk_sha256": "2147ff1b1e3e1761e144d95499001c58dad0aa4b932d0c737611062ffa93eb87"
+    },
+    "mgazenet": {
+      "estimator_id": "mgazenet",
+      "source_branch": "mgazenet-feasibility",
+      "base_commit": "bea2dacbfa8d95f6519ccd4fad1cb0dfd6028b22",
+      "base_apk_sha256": "131f8d96f9bdc3f5a5c16855aa6347e119fd07e96609cba9f6792b161c682fd9",
+      "comparison_controls": "tools/gaze/mgazenet/patches/mgazenet-primary-bea2dac-comparison-v1.patch",
+      "comparison_controls_sha256": "fc5e1219506731e622d236813aa731606a640e1a7ce3005f1863d4bf4658ab7f",
+      "comparison_apk_file": "mgazenet-primary-comparison-v1.apk",
+      "comparison_apk_size_bytes": 47861232,
+      "comparison_apk_sha256": "8146df9bbab6facf17fab4687c2cee4fb79589d4a3ce0201bf8a3bf434dc50ea"
+    }
+  },
+  "slots": [
+    {
+      "id": "a56_current_A",
+      "device": "SM-A566B",
+      "estimator": "current",
+      "order_variant": "A",
+      "comparison_apk_sha256": "2147ff1b1e3e1761e144d95499001c58dad0aa4b932d0c737611062ffa93eb87"
+    },
+    {
+      "id": "a56_mgazenet_A",
+      "device": "SM-A566B",
+      "estimator": "mgazenet",
+      "order_variant": "A",
+      "comparison_apk_sha256": "8146df9bbab6facf17fab4687c2cee4fb79589d4a3ce0201bf8a3bf434dc50ea"
+    },
+    {
+      "id": "g991b_mgazenet_B",
+      "device": "SM-G991B",
+      "estimator": "mgazenet",
+      "order_variant": "B",
+      "comparison_apk_sha256": "8146df9bbab6facf17fab4687c2cee4fb79589d4a3ce0201bf8a3bf434dc50ea"
+    },
+    {
+      "id": "g991b_current_B",
+      "device": "SM-G991B",
+      "estimator": "current",
+      "order_variant": "B",
+      "comparison_apk_sha256": "2147ff1b1e3e1761e144d95499001c58dad0aa4b932d0c737611062ffa93eb87"
+    }
+  ],
+  "host_verification": {
+    "java": "17.0.14",
+    "current_focused_jvm_tests": "passed",
+    "current_android_test_compilation": "passed",
+    "current_assemble_debug": "passed",
+    "mgazenet_focused_jvm_tests": "passed",
+    "mgazenet_android_test_compilation": "passed",
+    "mgazenet_vendor_verification": "passed",
+    "mgazenet_apk_verification": "passed",
+    "mgazenet_assemble_debug": "passed",
+    "offline_scorer_synthetic_tests": "passed",
+    "phone_installation_performed": false,
+    "camera_used": false,
+    "participant_calibration_performed": false
+  }
+}

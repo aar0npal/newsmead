@@ -7,10 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
+import com.newsmead.R
 import com.newsmead.activities.AccountActivity
+import com.newsmead.data.FirebaseHelper
 import com.newsmead.data.PreloadedData
+import com.newsmead.logging.Analytics
+import com.newsmead.logging.AppLog
+import com.newsmead.research.ResearchSession
 
 // ViewBinding
 import com.newsmead.databinding.FragmentProfileBinding
@@ -44,14 +50,32 @@ class ProfileFragment : Fragment() {
 
         // Buttons
         this.viewBinding.btnLogout.setOnClickListener {
+            this.viewBinding.btnLogout.isEnabled = false
+            Analytics.logout()
+            ResearchSession.authEvent("log_out", success = true)
+            AppLog.setAuthState("signed_out")
+            val firestore = FirebaseHelper.getFirestoreInstance()
+
             this.auth.signOut()
             PreloadedData.clearData()
 
-            // Finish Activity and Go to AccountActivity and reset the back stack
-            val intent = Intent(requireActivity(), AccountActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            requireActivity().finish()
+            // Clear Firestore's on-disk offline cache so the next account to
+            // sign in on this device (e.g. a shared test device) never reads
+            // the previous user's cached documents.
+            //
+            // clearPersistence() only succeeds while no Firestore client is
+            // running, and by logout one always is — so the bare call here
+            // failed with FAILED_PRECONDITION every single time and the old
+            // account's documents stayed on disk. terminate() shuts the client
+            // down first; getInstance() builds a fresh one on next use.
+            firestore.terminate()
+                .continueWithTask { firestore.clearPersistence() }
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        AppLog.w("ProfileFragment", "clearPersistence:failure", task.exception)
+                    }
+                    goToAccountActivity()
+                }
         }
 
         this.viewBinding.btnSave.setOnClickListener {
@@ -59,7 +83,7 @@ class ProfileFragment : Fragment() {
             val password = this.viewBinding.etPassword.text.toString()
             val confirmPassword = this.viewBinding.etConfirmPassword.text.toString()
 
-            updateProfile("User", password, confirmPassword)
+            updateProfile(password, confirmPassword)
         }
 
         // Check if dark mode is enabled on phone
@@ -89,27 +113,44 @@ class ProfileFragment : Fragment() {
         return this.viewBinding.root
     }
 
-    private fun updateProfile(name: String, password: String, confirmPassword: String): Boolean {
-        var result = false
+    private fun goToAccountActivity() {
+        val host = activity ?: return
+        // Finish Activity and Go to AccountActivity and reset the back stack
+        val intent = Intent(host, AccountActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        host.finish()
+    }
+
+    /**
+     * Returns Unit rather than Boolean: the old signature promised a result
+     * it computed inside an async callback, so it always returned false no
+     * matter what happened. The outcome is reported to the user instead.
+     */
+    private fun updateProfile(password: String, confirmPassword: String) {
         if (checkPasswordError(password, confirmPassword)) {
-            return false
-        } else {
-            // Firebase updates password of user
-            this.auth.currentUser?.updatePassword(password)?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Password updated successfully
-                    resetTextFields()
-                    result = true
-                } else {
-                    // Password update failed
-                    this.viewBinding.etPassword.error = task.exception?.message
-                    this.viewBinding.etPassword.requestFocus()
-                    result = false
-                }
-            }
+            return
         }
 
-        return result
+        // Firebase updates password of user
+        this.auth.currentUser?.updatePassword(password)?.addOnCompleteListener { task ->
+            if (!isAdded) return@addOnCompleteListener
+            if (task.isSuccessful) {
+                // Password updated successfully
+                resetTextFields()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.profile_password_updated,
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                // Password update failed. A stale session reports
+                // FirebaseAuthRecentLoginRequiredException here, which the
+                // message below surfaces verbatim.
+                this.viewBinding.etPassword.error = task.exception?.message
+                this.viewBinding.etPassword.requestFocus()
+            }
+        }
     }
 
     /**

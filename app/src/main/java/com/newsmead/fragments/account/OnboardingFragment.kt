@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import com.newsmead.data.DataHelper.loadCategoryLongerData
 import com.newsmead.activities.MainActivity
 import com.newsmead.data.FirebaseHelper
+import com.newsmead.logging.Analytics
+import com.newsmead.research.ResearchSession
 import com.newsmead.databinding.ChipOnboardingBinding
 
 import com.newsmead.databinding.FragmentOnboardingBinding
@@ -68,6 +70,8 @@ class OnboardingFragment : Fragment() {
         binding.btnFinishOnboarding.setOnClickListener {
             // Add selected categories to Firebase
             FirebaseHelper.addPreferredCategoriesToFireStore(requireActivity(), checkedChipTexts)
+            Analytics.onboardingComplete(checkedChipTexts.size)
+            ResearchSession.onboardingComplete(checkedChipTexts.size)
 
             val intent = Intent(requireActivity(), MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)

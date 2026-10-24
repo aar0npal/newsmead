@@ -1,0 +1,2385 @@
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index 7bcc2216ff6156232bc701009e456ca6398627f5..a0b07c1350f43cab5be8918d871d9a032df1564a 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -29,6 +29,26 @@ android {
+         versionCode = 1
+         versionName = "0.2"
+ 
++        // Frozen estimator baseline identity for the matched comparison harness.
++        // The reference build applies the reviewed comparison patch to its exact
++        // base snapshot and substitutes only these arm-specific constants.
++        buildConfigField("String", "COMPARISON_ESTIMATOR_ID", "\"mgazenet\"")
++        buildConfigField(
++            "String",
++            "COMPARISON_BASE_COMMIT",
++            "\"bea2dacbfa8d95f6519ccd4fad1cb0dfd6028b22\"",
++        )
++        buildConfigField(
++            "String",
++            "COMPARISON_BASE_APK_SHA256",
++            "\"131f8d96f9bdc3f5a5c16855aa6347e119fd07e96609cba9f6792b161c682fd9\"",
++        )
++        buildConfigField(
++            "String",
++            "COMPARISON_PROTOCOL_MANIFEST_SHA256",
++            "\"41a3fbccd4df38c2bb13d4695a052fe15d3ef78423b19a4c1737d3de6944f185\"",
++        )
++
+         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+         ndk { abiFilters += "arm64-v8a" }
+     }
+@@ -61,6 +81,7 @@ android {
+     // Enable viewBinding
+     buildFeatures {
+         viewBinding = true
++        buildConfig = true
+     }
+ }
+ 
+@@ -150,6 +171,19 @@ val verifyVendor by tasks.registering {
+         check(rootProject.file("mgazenet-benchmark/vendor/assets/notices/MNN-Apache-2.0.txt").isFile)
+     }
+ }
++val verifyComparisonProtocolManifest by tasks.registering {
++    val manifest = file("src/main/assets/comparison/newsmead-current-vs-mgazenet-reading-v1.json")
++    inputs.file(manifest)
++    doLast {
++        check(manifest.isFile) { "Missing frozen comparison protocol manifest asset." }
++        val hash = MessageDigest.getInstance("SHA-256").digest(manifest.readBytes())
++            .joinToString("") { "%02x".format(it) }
++        check(hash == "41a3fbccd4df38c2bb13d4695a052fe15d3ef78423b19a4c1737d3de6944f185") {
++            "Frozen comparison protocol manifest changed."
++        }
++    }
++}
++
+ val prepareMgazeNetAssets by tasks.registering(Sync::class) {
+     dependsOn(verifyVendor)
+     from(rootProject.file("mgazenet-benchmark/vendor/assets")) {
+@@ -157,7 +191,10 @@ val prepareMgazeNetAssets by tasks.registering(Sync::class) {
+     }
+     into(layout.buildDirectory.dir("generated/mgazenetAssets"))
+ }
+-tasks.named("preBuild").configure { dependsOn(prepareMgazeNetAssets) }
++tasks.named("preBuild").configure {
++    dependsOn(prepareMgazeNetAssets)
++    dependsOn(verifyComparisonProtocolManifest)
++}
+ 
+ // Verify the artifact, not just input directories (OpenCV also supplies libc++_shared).
+ tasks.register("verifyMgazeNetDebugApk") {
+diff --git a/app/src/androidTest/java/com/newsmead/gaze/mgazenet/MgazeNetIntegrationTest.kt b/app/src/androidTest/java/com/newsmead/gaze/mgazenet/MgazeNetIntegrationTest.kt
+index 4466b3491e4ad923612563a0efffcd73c58b63f8..7411e3ac115a9147d60d44c54deb216ea32c3658 100644
+--- a/app/src/androidTest/java/com/newsmead/gaze/mgazenet/MgazeNetIntegrationTest.kt
++++ b/app/src/androidTest/java/com/newsmead/gaze/mgazenet/MgazeNetIntegrationTest.kt
+@@ -1,11 +1,15 @@
+ package com.newsmead.gaze.mgazenet
+ 
+ import android.content.ContextWrapper
++import android.content.Intent
++import android.os.Build
+ import android.view.WindowManager
+ import androidx.test.core.app.ActivityScenario
+ import androidx.test.platform.app.InstrumentationRegistry
+ import com.newsmead.activities.GazeCalibrationActivity
+ import com.newsmead.activities.GazeTestActivity
++import com.newsmead.activities.ReadingValidationActivity
++import com.newsmead.gaze.ComparisonProtocol
+ import com.newsmead.gaze.GazeCoordinateFrame
+ import org.junit.Assert.*
+ import org.junit.Test
+@@ -33,6 +37,41 @@ class MgazeNetIntegrationTest {
+         } }
+         assertEquals(before,snapshot())
+     }
++    @Test fun comparisonSetupRequiresExactInputsAndStaysCameraOffAndMutationFree() {
++        val context = InstrumentationRegistry.getInstrumentation().targetContext
++        fun snapshot(): Map<String,String> = listOf(context.filesDir,context.noBackupFilesDir).flatMap { root ->
++            root.walkTopDown().filter { it.isFile &&
++                (it.path.contains("mgazenet") || it.path.contains("comparison-v1") || it.name.startsWith("calibration"))
++            }.map { it.path to CalibrationIdentity.hash(it.readBytes()) }.toList()
++        }.toMap()
++        val slot: Pair<String,String> = when (Build.MODEL) {
++            "SM-A566B" -> "a56_mgazenet_A" to "A"
++            "SM-G991B" -> "g991b_mgazenet_B" to "B"
++            else -> throw AssertionError("Comparison setup test requires one of the two frozen phone models")
++        }
++        fun comparisonIntent(activity: Class<*>): Intent = Intent(context,activity).apply {
++            putExtra(ComparisonProtocol.EXTRA_PROTOCOL_ID,ComparisonProtocol.PROTOCOL_ID)
++            putExtra(ComparisonProtocol.EXTRA_SLOT_ID,slot.first)
++            putExtra(ComparisonProtocol.EXTRA_ORDER_VARIANT,slot.second)
++        }
++        val before = snapshot()
++        ActivityScenario.launch<GazeCalibrationActivity>(comparisonIntent(GazeCalibrationActivity::class.java)).use { scenario -> scenario.onActivity {
++            assertEquals(0,it.window.attributes.flags and WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
++            assertFalse(it.findViewById<android.view.View>(com.newsmead.R.id.root).keepScreenOn)
++            assertTrue(it.findViewById<android.view.View>(com.newsmead.R.id.startButton).isEnabled)
++        } }
++        ActivityScenario.launch<ReadingValidationActivity>(comparisonIntent(ReadingValidationActivity::class.java)).use { scenario -> scenario.onActivity {
++            assertEquals(0,it.window.attributes.flags and WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
++            assertTrue(it.findViewById<android.view.View>(com.newsmead.R.id.btnValidationAction).isEnabled)
++        } }
++        val incomplete = Intent(context,GazeCalibrationActivity::class.java).apply {
++            putExtra(ComparisonProtocol.EXTRA_PROTOCOL_ID,ComparisonProtocol.PROTOCOL_ID)
++        }
++        ActivityScenario.launch<GazeCalibrationActivity>(incomplete).use { scenario -> scenario.onActivity {
++            assertFalse(it.findViewById<android.view.View>(com.newsmead.R.id.startButton).isEnabled)
++        } }
++        assertEquals(before,snapshot())
++    }
+     @Test fun nativeSyntheticPersistenceAndStoreReload() {
+         check(OpenCVLoader.initLocal())
+         val context = InstrumentationRegistry.getInstrumentation().targetContext
+diff --git a/app/src/main/java/com/newsmead/activities/GazeCalibrationActivity.kt b/app/src/main/java/com/newsmead/activities/GazeCalibrationActivity.kt
+index 383493cf3f7f9ccce9bc427499f59cd9c94dac30..03e35db7707a7066280773a551961b7db9c80d82 100644
+--- a/app/src/main/java/com/newsmead/activities/GazeCalibrationActivity.kt
++++ b/app/src/main/java/com/newsmead/activities/GazeCalibrationActivity.kt
+@@ -1,6 +1,7 @@
+ package com.newsmead.activities
+ 
+ import android.Manifest
++import android.content.Intent
+ import android.content.pm.PackageManager
+ import android.os.Bundle
+ import android.os.Handler
+@@ -16,6 +17,11 @@ import androidx.core.view.WindowInsetsControllerCompat
+ import com.newsmead.databinding.ActivityGazeCalibrationBinding
+ import com.newsmead.gaze.gazeCoordinateFrame
+ import com.newsmead.gaze.physicalDisplaySize
++import com.newsmead.gaze.ComparisonCalibrationEvidence
++import com.newsmead.gaze.ComparisonCalibrationReservation
++import com.newsmead.gaze.ComparisonLaunchSpec
++import com.newsmead.gaze.ComparisonRuntime
++import com.newsmead.gaze.ComparisonSlotStore
+ import com.newsmead.gaze.mgazenet.*
+ 
+ /** MGazeNet-only calibration. Setup performs no camera/native/store mutation. */
+@@ -33,6 +39,10 @@ class GazeCalibrationActivity : AppCompatActivity() {
+     private val errors = ArrayList<Float>()
+     private val summaries = ArrayList<String>()
+     private var permissionPending = false
++    private var preparingComparison = false
++    private var comparisonSpec: ComparisonLaunchSpec? = null
++    private var comparisonReservation: ComparisonCalibrationReservation? = null
++    private var comparisonCalibrationCommitted = false
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -46,24 +56,97 @@ class GazeCalibrationActivity : AppCompatActivity() {
+         binding.root.keepScreenOn = false
+         binding.progressText.text = "MGazeNet calibration. Start opens the camera; follow each target until it advances."
+         binding.startButton.setOnClickListener {
+-            if (ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+-                permissionPending = true
+-                ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.CAMERA),42)
+-            } else begin()
++            requestStart()
+         }
+         binding.btnAccept.setOnClickListener { save() }
+         binding.btnRedoWorst.visibility = View.GONE
+         binding.btnRedoAll.visibility = View.GONE
++
++        val comparisonLaunch = ComparisonRuntime.parseLaunch(intent)
++        if (comparisonLaunch.requested) {
++            val spec = comparisonLaunch.spec
++            if (spec == null) {
++                binding.progressText.text = comparisonLaunch.error
++                binding.startButton.isEnabled = false
++            } else {
++                comparisonSpec = spec
++                val issue = ComparisonSlotStore(this).calibrationStartIssue(spec)
++                binding.progressText.text = issue ?:
++                    "Matched comparison ${spec.slot.id}. Start verifies and reserves this slot before opening the camera."
++                binding.startButton.isEnabled = issue == null
++                binding.startButton.text = "Start comparison calibration"
++            }
++        }
+     }
++
++    private fun requestStart() {
++        if (active || preparingComparison) return
++        if (ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
++            permissionPending = true
++            ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.CAMERA),42)
++        } else prepareComparisonThenBegin()
++    }
++
+     override fun onRequestPermissionsResult(code: Int, permissions: Array<out String>, results: IntArray) {
+         super.onRequestPermissionsResult(code,permissions,results)
+         if (code == 42 && permissionPending) {
+             permissionPending = false
+-            if (results.firstOrNull() == PackageManager.PERMISSION_GRANTED) begin()
++            if (results.firstOrNull() == PackageManager.PERMISSION_GRANTED) prepareComparisonThenBegin()
+         }
+     }
++
++    private fun prepareComparisonThenBegin() {
++        val spec = comparisonSpec
++        if (spec == null) {
++            begin()
++            return
++        }
++        preparingComparison = true
++        binding.startButton.isEnabled = false
++        binding.progressText.text = "Verifying the installed comparison build…"
++        val displaySize = binding.calibrationView.physicalDisplaySize()
++        val densityDpi = resources.displayMetrics.densityDpi
++        val rotation = binding.calibrationView.display.rotation
++        Thread {
++            val resolved = runCatching {
++                ComparisonRuntime.resolveIdentity(
++                    this,
++                    spec,
++                    displaySize.x,
++                    displaySize.y,
++                    densityDpi,
++                    rotation,
++                )
++            }
++            runOnUiThread {
++                preparingComparison = false
++                if (isFinishing || isDestroyed) return@runOnUiThread
++                resolved.fold(
++                    onSuccess = { runtime ->
++                        runCatching { ComparisonSlotStore(this).reserveCalibration(runtime) }
++                            .onSuccess { reservation ->
++                                comparisonReservation = reservation
++                                begin()
++                            }
++                            .onFailure { failure ->
++                                binding.progressText.text = failure.message
++                                    ?: "The comparison slot could not be reserved."
++                            }
++                    },
++                    onFailure = { failure ->
++                        binding.progressText.text = failure.message
++                            ?: "The comparison build could not be verified."
++                    },
++                )
++            }
++        }.start()
++    }
+     private fun begin() {
+-        if (active || binding.calibrationView.width == 0) return
++        if (active) return
++        if (binding.calibrationView.width == 0) {
++            binding.calibrationView.post { begin() }
++            return
++        }
+         val store = MgazeNetCalibrationStore(this)
+         identity = store.identity(binding.calibrationView)
+         active = true; startedAt = MgazeNetCameraSource.now()
+@@ -164,6 +247,12 @@ class GazeCalibrationActivity : AppCompatActivity() {
+         binding.root.keepScreenOn = false
+         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+         binding.calibrationView.hideTarget(); binding.statusText.text = ""
++        if (comparisonSpec != null) {
++            binding.progressText.text = "Finalizing the slot calibration…"
++            binding.gatePanel.visibility = View.GONE
++            saveComparisonCalibration()
++            return
++        }
+         binding.gatePanel.visibility = View.VISIBLE
+         binding.gateText.text = summaries.joinToString("\n") +
+             "\n\nDescriptive checks only; no accuracy pass is assigned. Save retains two local models. No correction is applied."
+@@ -177,8 +266,74 @@ class GazeCalibrationActivity : AppCompatActivity() {
+             if (success) finish()
+         }
+     }
++
++    private fun saveComparisonCalibration() {
++        val reservation = comparisonReservation ?: run {
++            stop("Comparison reservation unavailable.")
++            return
++        }
++        val savedIdentity = identity ?: run {
++            stop("Calibration identity unavailable.")
++            return
++        }
++        source?.save(savedIdentity) { success ->
++            if (!success) {
++                stop("Calibration could not be saved.")
++                return@save
++            }
++            val fingerprint = MgazeNetCalibrationStore(this).fingerprint()
++            val recorded = runCatching {
++                require(fingerprint != null)
++                ComparisonSlotStore(this).completeCalibration(
++                    reservation,
++                    fingerprint,
++                    ComparisonCalibrationEvidence(
++                        fitTargetCount = 16,
++                        acceptedRowsPerTarget = 45,
++                        featureCount = 258,
++                        postFitCheckCount = 6,
++                        excludedFitTargetCount = 0,
++                        detailedTelemetryEnabled = false,
++                        correctionApplied = false,
++                    ),
++                )
++            }
++            if (recorded.isFailure) {
++                stop(recorded.exceptionOrNull()?.message ?: "Calibration receipt could not be written.")
++                return@save
++            }
++            comparisonCalibrationCommitted = true
++            active = false
++            handler.removeCallbacksAndMessages(null)
++            session?.close()
++            session = null
++            binding.root.keepScreenOn = false
++            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
++            val closing = source
++            source = null
++            closing?.close {
++                val reading = ComparisonRuntime.putLaunch(
++                    Intent(this, ReadingValidationActivity::class.java),
++                    reservation.runtime.spec,
++                )
++                startActivity(reading)
++                finish()
++            }
++        }
++    }
+     private fun stop(message: String) {
+         active = false; handler.removeCallbacksAndMessages(null)
++        val reservation = comparisonReservation
++        if (reservation != null && !comparisonCalibrationCommitted) {
++            runCatching {
++                ComparisonSlotStore(this).failCalibration(
++                    reservation,
++                    if (message.contains("interrupted", ignoreCase = true)) "interrupted" else "failed",
++                    message,
++                )
++            }
++            comparisonReservation = null
++        }
+         source?.close {}; source = null; session?.close()
+         binding.calibrationView.hideTarget(); binding.countdownText.visibility = View.GONE
+         binding.root.keepScreenOn = false; window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+diff --git a/app/src/main/java/com/newsmead/activities/ReadingValidationActivity.kt b/app/src/main/java/com/newsmead/activities/ReadingValidationActivity.kt
+index 82849a06c0ee30d2840f4074aade9add2e670204..509094e9146684d1e93059b11ce5be6b362e067e 100644
+--- a/app/src/main/java/com/newsmead/activities/ReadingValidationActivity.kt
++++ b/app/src/main/java/com/newsmead/activities/ReadingValidationActivity.kt
+@@ -5,6 +5,7 @@ import android.graphics.Rect
+ import android.os.Bundle
+ import android.os.Handler
+ import android.os.Looper
++import android.os.SystemClock
+ import android.text.InputType
+ import android.text.Spannable
+ import android.text.SpannableString
+@@ -27,6 +28,11 @@ import com.newsmead.gaze.getVisibleRectOnScreen
+ import com.newsmead.gaze.physicalDisplaySize
+ import com.newsmead.gaze.GazeOverlayView
+ import com.newsmead.gaze.GazeTargetStabilizer
++import com.newsmead.gaze.ComparisonLaunchSpec
++import com.newsmead.gaze.ComparisonProtocol
++import com.newsmead.gaze.ComparisonReadingBinding
++import com.newsmead.gaze.ComparisonRecordBinding
++import com.newsmead.gaze.ComparisonRuntime
+ import com.newsmead.gaze.mgazenet.MgazeNetGazeProvider
+ import com.newsmead.gaze.mgazenet.MgazeNetCalibrationStore
+ import com.newsmead.gaze.LineAoiMapper
+@@ -78,7 +84,12 @@ class ReadingValidationActivity : AppCompatActivity() {
+     private var verticalCorrection: ReadingVerticalCorrection? = null
+     private var running = false
+     private var finished = false
++    private var preparingComparison = false
+     private var programmaticScrollUntilMs = 0L
++    private var comparisonSpec: ComparisonLaunchSpec? = null
++    private var pendingDeliveryId: Long? = null
++    private var pendingDeliveryElapsedNs: Long? = null
++    private var fallbackDeliveryId = 0L
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -94,6 +105,22 @@ class ReadingValidationActivity : AppCompatActivity() {
+         binding.tvValidationInstruction.text =
+             "This test measures only known words and visibly highlighted physical lines. It does not score free reading or adaptive behavior."
+ 
++        val comparisonLaunch = ComparisonRuntime.parseLaunch(intent)
++        if (comparisonLaunch.requested) {
++            val spec = comparisonLaunch.spec
++            if (spec == null) {
++                binding.tvValidationProgress.text = "Comparison setup rejected"
++                binding.tvValidationInstruction.text = comparisonLaunch.error
++                binding.btnValidationAction.isEnabled = false
++            } else {
++                comparisonSpec = spec
++                binding.tvValidationProgress.text = "Matched comparison · ${spec.slot.id}"
++                binding.tvValidationInstruction.text =
++                    "Order ${spec.orderVariant} is locked. Start verifies the exact installed build and saved slot calibration before opening the camera."
++                binding.btnValidationAction.text = "Start reading validation"
++            }
++        }
++
+         binding.btnValidationAction.setOnClickListener { showRunSetup() }
+         binding.btnCloseValidation.setOnClickListener { requestStop() }
+         binding.nsvValidationText.setOnScrollChangeListener(
+@@ -118,9 +145,11 @@ class ReadingValidationActivity : AppCompatActivity() {
+ 
+     override fun onDestroy() {
+         handler.removeCallbacksAndMessages(null)
+-        gazeProvider?.stop()
+         if (!finished && sessionLog != null) {
+-            sessionLog?.finish("interrupted", metrics.summary())
++            finishSessionAfterProviderStops("interrupted", metrics.summary())
++        } else {
++            gazeProvider?.stop()
++            gazeProvider = null
+         }
+         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+         super.onDestroy()
+@@ -136,6 +165,12 @@ class ReadingValidationActivity : AppCompatActivity() {
+                 .show()
+             return
+         }
++        comparisonSpec?.let { spec ->
++            orderVariant = spec.orderVariant
++            verticalAlignmentMode = ReadingVerticalAlignmentMode.OFF
++            beginSession(spec.slot.id, 16)
++            return
++        }
+         val runNumber = getPreferences(MODE_PRIVATE).getInt(PREF_RUN_COUNT, 0) + 1
+         orderVariant = if (runNumber % 2 == 1) "A" else "B"
+         verticalAlignmentMode = ReadingVerticalAlignmentMode.OFF
+@@ -169,7 +204,7 @@ class ReadingValidationActivity : AppCompatActivity() {
+     }
+ 
+     private fun beginSession(runLabel: String, calibrationPointCount: Int) {
+-        if (running) return
++        if (running || preparingComparison) return
+         val layout = binding.tvValidationText.layout
+         if (layout == null) {
+             binding.tvValidationText.post { beginSession(runLabel, calibrationPointCount) }
+@@ -184,35 +219,121 @@ class ReadingValidationActivity : AppCompatActivity() {
+             return
+         }
+ 
+-        val display = resources.displayMetrics
+-        val displaySize = binding.root.physicalDisplaySize()
+-        sessionLog = ReadingValidationSessionLog(
+-            context = this,
+-            runLabel = runLabel,
+-            orderVariant = orderVariant,
+-            screenWidthPx = displaySize.x,
+-            screenHeightPx = displaySize.y,
+-            densityDpi = display.densityDpi,
+-            rawFeatureMode = "mgazenet_258_svr_unfiltered_v1",
+-            calibrationPointCount = calibrationPointCount,
+-            calibrationFingerprint = MgazeNetCalibrationStore(this).fingerprint(),
+-            driftCorrectionActive = false,
+-            verticalAlignmentMode = verticalAlignmentMode,
+-        ).also {
+-            it.logLayout(
+-                textLength = binding.tvValidationText.text.length,
+-                lineCount = layout.lineCount,
++        val comparison = comparisonSpec
++        if (comparison != null) {
++            val calibrationFingerprint = MgazeNetCalibrationStore(this).fingerprint()
++            if (!ComparisonProtocol.isSha256(calibrationFingerprint)) {
++                Toast.makeText(this, "The slot calibration fingerprint is unavailable.", Toast.LENGTH_LONG).show()
++                return
++            }
++            val layoutSha256 = ComparisonProtocol.readingLayoutSha256(
++                passage = VALIDATION_PASSAGE,
++                lines = lines,
++                wordTargets = wordCheckpoints,
++                lineTargets = lineCheckpoints,
+                 lineHeightPx = binding.tvValidationText.lineHeight.toFloat(),
+                 textSizePx = binding.tvValidationText.textSize,
+                 viewportWidthPx = binding.nsvValidationText.width,
+                 viewportHeightPx = binding.nsvValidationText.height,
+             )
++            preparingComparison = true
++            binding.btnValidationAction.isEnabled = false
++            binding.tvValidationInstruction.text = "Verifying the installed comparison build…"
++            val comparisonDisplaySize = binding.root.physicalDisplaySize()
++            val comparisonDensityDpi = resources.displayMetrics.densityDpi
++            val comparisonRotation = binding.root.display.rotation
++            Thread {
++                val resolved = runCatching {
++                    ComparisonRuntime.resolveIdentity(
++                        this,
++                        comparison,
++                        comparisonDisplaySize.x,
++                        comparisonDisplaySize.y,
++                        comparisonDensityDpi,
++                        comparisonRotation,
++                    )
++                }
++                runOnUiThread {
++                    preparingComparison = false
++                    if (isFinishing || isDestroyed) return@runOnUiThread
++                    resolved.fold(
++                        onSuccess = { runtime ->
++                            val comparisonBinding = ComparisonReadingBinding(
++                                ComparisonRecordBinding(runtime, calibrationFingerprint),
++                                layoutSha256,
++                                ComparisonProtocol.passageSha256(VALIDATION_PASSAGE),
++                            )
++                            startPreparedSession(
++                                runLabel,
++                                calibrationPointCount,
++                                layout,
++                                comparisonBinding,
++                            )
++                        },
++                        onFailure = { failure ->
++                            binding.btnValidationAction.isEnabled = true
++                            binding.tvValidationInstruction.text =
++                                failure.message ?: "The comparison build could not be verified."
++                        },
++                    )
++                }
++            }.start()
++            return
++        }
++        startPreparedSession(runLabel, calibrationPointCount, layout, null)
++    }
++
++    private fun startPreparedSession(
++        runLabel: String,
++        calibrationPointCount: Int,
++        layout: android.text.Layout,
++        comparisonBinding: ComparisonReadingBinding?,
++    ) {
++        if (running) return
++
++        val display = resources.displayMetrics
++        val displaySize = binding.root.physicalDisplaySize()
++        sessionLog = try {
++            ReadingValidationSessionLog(
++                context = this,
++                runLabel = runLabel,
++                orderVariant = orderVariant,
++                screenWidthPx = displaySize.x,
++                screenHeightPx = displaySize.y,
++                densityDpi = display.densityDpi,
++                rawFeatureMode = "mgazenet_258_svr_unfiltered_v1",
++                calibrationPointCount = calibrationPointCount,
++                calibrationFingerprint = MgazeNetCalibrationStore(this).fingerprint(),
++                driftCorrectionActive = false,
++                verticalAlignmentMode = verticalAlignmentMode,
++                comparison = comparisonBinding,
++            ).also {
++                it.logLayout(
++                    textLength = binding.tvValidationText.text.length,
++                    lineCount = layout.lineCount,
++                    lineHeightPx = binding.tvValidationText.lineHeight.toFloat(),
++                    textSizePx = binding.tvValidationText.textSize,
++                    viewportWidthPx = binding.nsvValidationText.width,
++                    viewportHeightPx = binding.nsvValidationText.height,
++                )
++                it.logProtocolPlan(
++                    ComparisonProtocol.passageSha256(VALIDATION_PASSAGE),
++                    wordCheckpoints,
++                    lineCheckpoints,
++                )
++            }
++        } catch (failure: Exception) {
++            binding.btnValidationAction.isEnabled = true
++            binding.tvValidationInstruction.text =
++                failure.message ?: "The comparison slot is not ready for reading."
++            return
+         }
+ 
+         running = true
+         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+-        attachGazePipeline()
+         showDotPreview()
++        attachGazePipeline()
++        gazeOverlay?.setDebugVisualsEnabled(true)
+     }
+ 
+     private fun attachGazePipeline() {
+@@ -237,16 +358,36 @@ class ReadingValidationActivity : AppCompatActivity() {
+         provider.onFailure = { message ->
+             Toast.makeText(this,message,Toast.LENGTH_LONG).show()
+             handler.removeCallbacksAndMessages(null)
+-            sessionLog?.finish("mgazenet_failed",metrics.summary())
+-            finished = true; running = false
+-            finish()
++            finishSessionAfterProviderStops("mgazenet_failed", metrics.summary()) { finish() }
+         }
+         provider.onObservation = { observation ->
+-            sessionLog?.logMgazeNetObservation(observation.captureMs,observation.outputMs,observation.reason,
+-                observation.rawX,observation.rawY,observation.arrivals,observation.busyDrops)
++            fallbackDeliveryId = maxOf(fallbackDeliveryId, observation.deliveryId)
++            sessionLog?.logMgazeNetObservation(
++                observation.captureMs,
++                observation.deliveryElapsedNs,
++                observation.deliveryId,
++                observation.reason,
++                observation.rawX,
++                observation.rawY,
++                observation.arrivals,
++                observation.busyDrops,
++                phase,
++                stepId,
++                trialState,
++            )
++            if (observation.reason == "coordinate") {
++                pendingDeliveryId = observation.deliveryId
++                pendingDeliveryElapsedNs = observation.deliveryElapsedNs
++            }
+             if (observation.reason != "coordinate") gazeOverlay?.clearGaze()
+         }
+-        provider.setOnGaze { x, y -> runOnUiThread { onGaze(x, y) } }
++        provider.setOnGaze { x, y -> runOnUiThread {
++            val elapsedNs = pendingDeliveryElapsedNs ?: SystemClock.elapsedRealtimeNanos()
++            val deliveryId = pendingDeliveryId ?: ++fallbackDeliveryId
++            pendingDeliveryElapsedNs = null
++            pendingDeliveryId = null
++            onGaze(x, y, elapsedNs, deliveryId)
++        } }
+         gazeProvider = provider
+         provider.start(this)
+     }
+@@ -298,9 +439,8 @@ class ReadingValidationActivity : AppCompatActivity() {
+ 
+     private fun prepareVerticalReferences(): Boolean {
+         if (!binding.nsvValidationText.getVisibleRectOnScreen(readingVisibleRect)) {
+-            sessionLog?.finish("reading_surface_not_visible", metrics.summary())
+             Toast.makeText(this, "Reading surface unavailable. Please reopen the test.", Toast.LENGTH_LONG).show()
+-            finish()
++            finishSessionAfterProviderStops("reading_surface_not_visible", metrics.summary()) { finish() }
+             return false
+         }
+         logCoordinateFrames()
+@@ -404,15 +544,12 @@ class ReadingValidationActivity : AppCompatActivity() {
+ 
+     private fun finishAlignmentRejected() {
+         if (finished) return
+-        finished = true
+-        running = false
+-        gazeProvider?.stop()
+-        gazeProvider = null
+         binding.verticalAlignmentTarget.visibility = View.GONE
+         val fileName = sessionLog?.fileName().orEmpty()
+-        sessionLog?.finish("alignment_rejected", metrics.summary())
+-        Toast.makeText(this, "Alignment evidence saved: $fileName", Toast.LENGTH_LONG).show()
+-        finish()
++        finishSessionAfterProviderStops("alignment_rejected", metrics.summary()) {
++            Toast.makeText(this, "Alignment evidence saved: $fileName", Toast.LENGTH_LONG).show()
++            finish()
++        }
+     }
+ 
+     private fun showWordInstructions() {
+@@ -441,9 +578,10 @@ class ReadingValidationActivity : AppCompatActivity() {
+             .show()
+     }
+ 
+-    private fun onGaze(x: Float, y: Float) {
++    private fun onGaze(x: Float, y: Float, deliveryElapsedNs: Long, deliveryId: Long) {
+         if (!running || finished) return
+         val timestampMs = System.currentTimeMillis()
++        val monotonicTimestampMs = deliveryElapsedNs / 1_000_000L
+         if (phase == ReadingValidationPhase.VERTICAL_ALIGNMENT &&
+             trialState == ReadingValidationTrialState.MEASURE &&
+             activeVerticalReference != null
+@@ -452,7 +590,7 @@ class ReadingValidationActivity : AppCompatActivity() {
+         gazeOverlay?.setGazeScreen(x, effectiveY)
+         val baseTarget = mapper?.targetAt(x, y) ?: TextTarget.INVALID
+         val rawTarget = mapper?.targetAt(x, effectiveY) ?: TextTarget.INVALID
+-        val stableTarget = stabilizer.update(rawTarget, timestampMs)
++        val stableTarget = stabilizer.update(rawTarget, monotonicTimestampMs)
+         if ((phase == ReadingValidationPhase.LOCALIZATION ||
+                 phase == ReadingValidationPhase.GUIDED_LINE_READING) &&
+             trialState == ReadingValidationTrialState.MEASURE
+@@ -461,6 +599,8 @@ class ReadingValidationActivity : AppCompatActivity() {
+         binding.tvValidationText.getLocationOnScreen(textLocation)
+         sessionLog?.logGaze(
+             timestampMs = timestampMs,
++            deliveryElapsedNs = deliveryElapsedNs,
++            deliveryId = deliveryId,
+             phase = phase,
+             stepId = stepId,
+             state = trialState,
+@@ -600,38 +740,70 @@ class ReadingValidationActivity : AppCompatActivity() {
+         trialState = ReadingValidationTrialState.MEASURE
+         expectedCheckpoint = null
+         clearHighlight()
++        val summary = metrics.summary()
++        val fileName = sessionLog?.fileName().orEmpty()
++        finishSessionAfterProviderStops("completed", summary) {
++            if (comparisonSpec != null) {
++                val receipt = sessionLog?.sealedReceipt()
++                val receiptText = receipt?.let { "${it.fileName}\nSHA-256 ${it.sha256}" }
++                    ?: "The slot log could not be sealed."
++                binding.validationControlPanel.visibility = View.VISIBLE
++                binding.tvValidationProgress.text = "Comparison slot sealed"
++                binding.tvValidationInstruction.text = receiptText
++                binding.btnValidationAction.text = "Done"
++                binding.btnValidationAction.visibility = View.VISIBLE
++                binding.btnValidationAction.setOnClickListener { finish() }
++                AlertDialog.Builder(this)
++                    .setTitle("Comparison slot saved")
++                    .setMessage("Spatial results remain hidden.\n\n$receiptText")
++                    .setCancelable(false)
++                    .setPositiveButton("Done") { _, _ -> finish() }
++                    .show()
++            } else {
++                val result = String.format(
++                    Locale.US,
++                    "File: %s\nAlignment: %s%s\n\nWORD FIXATION\nExact line: %.1f%%\nWithin one line: %.1f%%\nExact word: %.1f%%\n\nGUIDED LINE READING\nExact line: %.1f%%\nWithin one line: %.1f%%",
++                    fileName,
++                    verticalAlignmentMode.name,
++                    verticalAlignmentFit?.gain?.let { String.format(Locale.US, " · gain %.3f", it) }.orEmpty(),
++                    100.0 * summary.wordExactLineAccuracy,
++                    100.0 * summary.wordWithinOneLineAccuracy,
++                    100.0 * summary.exactWordAccuracy,
++                    100.0 * summary.guidedLineExactAccuracy,
++                    100.0 * summary.guidedLineWithinOneAccuracy,
++                )
++                binding.validationControlPanel.visibility = View.VISIBLE
++                binding.tvValidationProgress.text = "Known-target accuracy validation complete"
++                binding.tvValidationInstruction.text = "Saved $fileName"
++                binding.btnValidationAction.text = "Done"
++                binding.btnValidationAction.visibility = View.VISIBLE
++                binding.btnValidationAction.setOnClickListener { finish() }
++                AlertDialog.Builder(this)
++                    .setTitle("Accuracy data saved")
++                    .setMessage(result)
++                    .setPositiveButton("Done") { _, _ -> finish() }
++                    .setNegativeButton("Stay", null)
++                    .show()
++            }
++        }
++    }
++
++    private fun finishSessionAfterProviderStops(
++        outcome: String,
++        summary: ReadingValidationMetrics.Summary,
++        afterSeal: () -> Unit = {},
++    ) {
++        if (finished) return
+         finished = true
+         running = false
+-        gazeProvider?.stop()
++        handler.removeCallbacksAndMessages(null)
++        val stopping = gazeProvider
+         gazeProvider = null
+-        val summary = metrics.summary()
+-        val fileName = sessionLog?.fileName().orEmpty()
+-        sessionLog?.finish("completed", summary)
+-
+-        val result = String.format(
+-            Locale.US,
+-            "File: %s\nAlignment: %s%s\n\nWORD FIXATION\nExact line: %.1f%%\nWithin one line: %.1f%%\nExact word: %.1f%%\n\nGUIDED LINE READING\nExact line: %.1f%%\nWithin one line: %.1f%%",
+-            fileName,
+-            verticalAlignmentMode.name,
+-            verticalAlignmentFit?.gain?.let { String.format(Locale.US, " · gain %.3f", it) }.orEmpty(),
+-            100.0 * summary.wordExactLineAccuracy,
+-            100.0 * summary.wordWithinOneLineAccuracy,
+-            100.0 * summary.exactWordAccuracy,
+-            100.0 * summary.guidedLineExactAccuracy,
+-            100.0 * summary.guidedLineWithinOneAccuracy,
+-        )
+-        binding.validationControlPanel.visibility = View.VISIBLE
+-        binding.tvValidationProgress.text = "Known-target accuracy validation complete"
+-        binding.tvValidationInstruction.text = "Saved $fileName"
+-        binding.btnValidationAction.text = "Done"
+-        binding.btnValidationAction.visibility = View.VISIBLE
+-        binding.btnValidationAction.setOnClickListener { finish() }
+-        AlertDialog.Builder(this)
+-            .setTitle("Accuracy data saved")
+-            .setMessage(result)
+-            .setPositiveButton("Done") { _, _ -> finish() }
+-            .setNegativeButton("Stay", null)
+-            .show()
++        val seal = {
++            sessionLog?.finish(outcome, summary)
++            afterSeal()
++        }
++        if (stopping == null) seal() else stopping.stopAndThen(seal)
+     }
+ 
+     private fun highlight(checkpoint: ReadingValidationCheckpoint) {
+@@ -718,10 +890,7 @@ class ReadingValidationActivity : AppCompatActivity() {
+ 
+     override fun onStop() {
+         if (running && !finished) {
+-            handler.removeCallbacksAndMessages(null)
+-            gazeProvider?.stop(); gazeProvider = null
+-            sessionLog?.finish("interrupted",metrics.summary())
+-            finished = true; running = false
++            finishSessionAfterProviderStops("interrupted", metrics.summary())
+         }
+         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+         super.onStop()
+diff --git a/app/src/main/java/com/newsmead/gaze/ReadingValidationProtocol.kt b/app/src/main/java/com/newsmead/gaze/ReadingValidationProtocol.kt
+index a7d19c310341b4db1a824ddd2828ffe8806c0874..da23b64e2fc5f99d523274b5ed8db8605f685d6b 100644
+--- a/app/src/main/java/com/newsmead/gaze/ReadingValidationProtocol.kt
++++ b/app/src/main/java/com/newsmead/gaze/ReadingValidationProtocol.kt
+@@ -57,6 +57,7 @@ object ReadingValidationProtocol {
+         lines: List<ReadingValidationLine>,
+         variant: String,
+     ): List<ReadingValidationCheckpoint> {
++        require(variant == "A" || variant == "B") { "Reading order must be exactly A or B" }
+         val usable = lines.filter { it.words.isNotEmpty() }
+         require(usable.size >= REQUIRED_CHECKPOINTS) {
+             "Structured reading validation requires at least $REQUIRED_CHECKPOINTS laid-out text lines"
+@@ -93,7 +94,7 @@ object ReadingValidationProtocol {
+             )
+         }
+ 
+-        val order = if (variant.uppercase(Locale.ROOT) == "B") {
++        val order = if (variant == "B") {
+             intArrayOf(1, 3, 0, 2, 5, 7, 4, 6)
+         } else {
+             intArrayOf(0, 1, 2, 3, 4, 5, 6, 7)
+@@ -106,6 +107,7 @@ object ReadingValidationProtocol {
+         lines: List<ReadingValidationLine>,
+         variant: String,
+     ): List<ReadingValidationCheckpoint> {
++        require(variant == "A" || variant == "B") { "Reading order must be exactly A or B" }
+         val usable = lines.filter { it.words.size >= 3 }
+         require(usable.size >= REQUIRED_LINE_CHECKPOINTS) {
+             "Guided line validation requires at least $REQUIRED_LINE_CHECKPOINTS laid-out text lines"
+@@ -129,7 +131,7 @@ object ReadingValidationProtocol {
+                 viewportFraction = verticalFractions[index],
+             )
+         }
+-        return if (variant.uppercase(Locale.ROOT) == "B") {
++        return if (variant == "B") {
+             listOf(selected[1], selected[2], selected[0], selected[4], selected[5], selected[3])
+         } else {
+             selected
+diff --git a/app/src/main/java/com/newsmead/gaze/ReadingValidationSessionLog.kt b/app/src/main/java/com/newsmead/gaze/ReadingValidationSessionLog.kt
+index af9087212e1d3b25eb0b9cf0111280f1d2ef8fb5..1371f96e2c1087c1bbc9aa723e807c450010ea1a 100644
+--- a/app/src/main/java/com/newsmead/gaze/ReadingValidationSessionLog.kt
++++ b/app/src/main/java/com/newsmead/gaze/ReadingValidationSessionLog.kt
+@@ -2,7 +2,9 @@ package com.newsmead.gaze
+ 
+ import android.content.Context
+ import android.os.Build
++import android.os.SystemClock
+ import android.util.Log
++import org.json.JSONArray
+ import org.json.JSONObject
+ import java.io.BufferedWriter
+ import java.io.File
+@@ -11,10 +13,9 @@ import java.util.Date
+ import java.util.Locale
+ 
+ /**
+- * Append-only synchronized trace for a structured reading validation run.
+- * Each line is one JSON object. Camera images and raw face landmarks are never
+- * retained, and detailed source telemetry remains disabled to avoid perturbing
+- * the live gaze rate being evaluated.
++ * Structured reading trace. Comparison records use one slot-bound append-only
++ * file and a shared elapsedRealtimeNanos envelope; ordinary diagnostic runs
++ * keep their existing independent files.
+  */
+ class ReadingValidationSessionLog(
+     context: Context,
+@@ -28,48 +29,86 @@ class ReadingValidationSessionLog(
+     calibrationFingerprint: String?,
+     driftCorrectionActive: Boolean,
+     verticalAlignmentMode: ReadingVerticalAlignmentMode,
++    private val comparison: ComparisonReadingBinding? = null,
+ ) {
+     private val stamp = SimpleDateFormat("yyyyMMdd_HHmmss_SSS", Locale.US).format(Date())
+-    private val sessionId = "reading_validation_session_$stamp"
+-    private val file = File(context.filesDir, "$sessionId.jsonl")
+-    private val writer: BufferedWriter = file.bufferedWriter()
++    private val sessionId = comparison?.let { "comparison_${it.record.runtime.spec.slot.id}" }
++        ?: "reading_validation_session_$stamp"
++    private val normalFile: File? = if (comparison == null) {
++        File(context.filesDir, "$sessionId.jsonl")
++    } else {
++        null
++    }
++    private val normalWriter: BufferedWriter? = normalFile?.bufferedWriter()
++    private val comparisonWriter = comparison?.let { ComparisonSlotStore(context).openReading(it) }
+     private val startedAtMs = System.currentTimeMillis()
++    private val startedElapsedNs = SystemClock.elapsedRealtimeNanos()
+     private var finished = false
++    private var receipt: ComparisonSlotReceipt? = null
+ 
+     init {
+-        write(
+-            JSONObject().apply {
+-                put("record_type", "session_start")
+-                put("schema_version", SCHEMA_VERSION)
+-                put("coordinate_space", GazeCoordinateContract.SPACE)
+-                put("calibration_sha256", calibrationFingerprint ?: JSONObject.NULL)
+-                put("protocol_version", ReadingValidationProtocol.VERSION)
+-                put("session_id", sessionId)
+-                put("run_label", runLabel)
+-                put("order_variant", orderVariant)
+-                put("timestamp_ms", startedAtMs)
+-                put("timestamp_iso", isoTimestamp(startedAtMs))
+-                put("device_model", Build.MODEL)
+-                put("device_manufacturer", Build.MANUFACTURER)
+-                put("android_version", Build.VERSION.RELEASE)
+-                put("screen_width_px", screenWidthPx)
+-                put("screen_height_px", screenHeightPx)
+-                put("density_dpi", densityDpi)
+-                put("raw_feature_mode", rawFeatureMode)
+-                put("calibration_point_count", calibrationPointCount)
+-                put("drift_correction_active", driftCorrectionActive)
+-                put("vertical_alignment_mode", verticalAlignmentMode.name.lowercase(Locale.ROOT))
+-                put("vertical_alignment_scope", "session_only_reading_surface_y_gain_bias")
+-                put("detailed_source_telemetry_enabled", false)
+-                put("camera_frames_retained", false)
+-                put("validation_scope", "known_target_spatial_accuracy_only")
+-                put(
+-                    "processing_path",
+-                    "calibrated_gaze -> optional_session_vertical_alignment -> line_aoi -> existing_target_stabilizer",
+-                )
+-            },
+-            flush = true,
+-        )
++        require(orderVariant == "A" || orderVariant == "B")
++        if (comparison != null) {
++            require(calibrationFingerprint == comparison.record.calibrationSha256)
++            require(orderVariant == comparison.record.runtime.spec.orderVariant)
++            require(screenWidthPx == comparison.record.runtime.screenWidthPx)
++            require(screenHeightPx == comparison.record.runtime.screenHeightPx)
++            require(densityDpi == comparison.record.runtime.densityDpi)
++            require(!driftCorrectionActive)
++            require(verticalAlignmentMode == ReadingVerticalAlignmentMode.OFF)
++        }
++        event("session_start", flush = true) {
++            put("schema_version", SCHEMA_VERSION)
++            put("calibration_sha256", calibrationFingerprint ?: JSONObject.NULL)
++            put("protocol_version", ReadingValidationProtocol.VERSION)
++            put("run_label", runLabel)
++            put("order_variant", orderVariant)
++            put("timestamp_iso", isoTimestamp(startedAtMs))
++            put("device_model", Build.MODEL)
++            put("device_manufacturer", Build.MANUFACTURER)
++            put("android_version", Build.VERSION.RELEASE)
++            put("screen_width_px", screenWidthPx)
++            put("screen_height_px", screenHeightPx)
++            put("density_dpi", densityDpi)
++            put("raw_feature_mode", rawFeatureMode)
++            put("calibration_point_count", calibrationPointCount)
++            put("drift_correction_active", driftCorrectionActive)
++            put("vertical_alignment_mode", verticalAlignmentMode.name.lowercase(Locale.ROOT))
++            put("vertical_alignment_scope", "session_only_reading_surface_y_gain_bias")
++            put("detailed_source_telemetry_enabled", false)
++            put("camera_frames_retained", false)
++            put("validation_scope", "known_target_spatial_accuracy_only")
++            put("result_visibility", if (comparison == null) "terminal_ui" else "offline_after_four_hashes")
++            put(
++                "processing_path",
++                "calibrated_gaze -> optional_session_vertical_alignment -> line_aoi -> existing_target_stabilizer",
++            )
++        }
++    }
++
++    fun logProtocolPlan(
++        passageSha256: String,
++        wordTargets: List<ReadingValidationCheckpoint>,
++        lineTargets: List<ReadingValidationCheckpoint>,
++    ) = event("protocol_plan", flush = true) {
++        put("passage_sha256", passageSha256)
++        put("unscored_dot_preview_count", 1)
++        put("vertical_reference_count", 3)
++        put("word_target_count", wordTargets.size)
++        put("line_target_count", lineTargets.size)
++        put("countdown_ms", ReadingValidationProtocol.COUNTDOWN_MS)
++        put("vertical_reference_acquire_ms", ReadingValidationProtocol.ALIGNMENT_ACQUIRE_MS)
++        put("vertical_reference_measure_ms", ReadingValidationProtocol.ALIGNMENT_MEASURE_MS)
++        put("word_acquire_ms", ReadingValidationProtocol.LOCALIZATION_ACQUIRE_MS)
++        put("word_measure_ms", ReadingValidationProtocol.LOCALIZATION_MEASURE_MS)
++        put("line_acquire_ms", ReadingValidationProtocol.LINE_READING_ACQUIRE_MS)
++        put("line_measure_ms", ReadingValidationProtocol.LINE_READING_MEASURE_MS)
++        put("minimum_coordinates_per_scored_target", ComparisonProtocol.MIN_COORDINATES_PER_SCORED_TARGET)
++        put("targets", JSONArray().apply {
++            (wordTargets + lineTargets).forEach { target ->
++                put(JSONObject().apply { putExpected(target) })
++            }
++        })
+     }
+ 
+     fun logCoordinateFrames(
+@@ -138,19 +177,15 @@ class ReadingValidationSessionLog(
+         putNum("fps", fps)
+     }
+ 
+-    fun logVerticalReference(
+-        aggregate: ReadingVerticalReferenceAggregate,
+-    ) = event("vertical_alignment_reference", flush = true) {
+-        put("reference_id", aggregate.reference.id)
+-        putNum("target_x_screen_px", aggregate.reference.targetX)
+-        putNum("target_y_screen_px", aggregate.reference.targetY)
+-        put("sample_count", aggregate.sampleCount)
+-        putNum("observed_median_y_screen_px", aggregate.observedMedianY)
+-        putNum(
+-            "signed_error_before_px",
+-            aggregate.observedMedianY - aggregate.reference.targetY,
+-        )
+-    }
++    fun logVerticalReference(aggregate: ReadingVerticalReferenceAggregate) =
++        event("vertical_alignment_reference", flush = true) {
++            put("reference_id", aggregate.reference.id)
++            putNum("target_x_screen_px", aggregate.reference.targetX)
++            putNum("target_y_screen_px", aggregate.reference.targetY)
++            put("sample_count", aggregate.sampleCount)
++            putNum("observed_median_y_screen_px", aggregate.observedMedianY)
++            putNum("signed_error_before_px", aggregate.observedMedianY - aggregate.reference.targetY)
++        }
+ 
+     fun logVerticalAlignmentFit(
+         mode: ReadingVerticalAlignmentMode,
+@@ -172,6 +207,8 @@ class ReadingValidationSessionLog(
+ 
+     fun logGaze(
+         timestampMs: Long,
++        deliveryElapsedNs: Long,
++        deliveryId: Long,
+         phase: ReadingValidationPhase,
+         stepId: String,
+         state: ReadingValidationTrialState,
+@@ -184,8 +221,10 @@ class ReadingValidationSessionLog(
+         stableTarget: TextTarget,
+         scrollY: Int,
+         textTopOnScreen: Int,
+-    ) = event("gaze_sample", timestampMs) {
++    ) = event("gaze_sample", timestampMs, deliveryElapsedNs) {
+         putContext(phase, stepId, state, expected)
++        put("delivery_id", deliveryId)
++        put("delivery_elapsed_ns", deliveryElapsedNs)
+         putNum("gaze_x_screen_px", gazeX)
+         putNum("gaze_y_screen_px", baseGazeY)
+         putNum("effective_gaze_y_screen_px", effectiveGazeY)
+@@ -198,116 +237,162 @@ class ReadingValidationSessionLog(
+         put("line_count", stableTarget.lineCount.takeIf { it > 0 } ?: rawTarget.lineCount)
+     }
+ 
++    /** MGazeNet-only source events. Current-arm records must not invent capture time. */
++    fun logMgazeNetObservation(
++        captureMs: Double?,
++        deliveryElapsedNs: Long,
++        deliveryId: Long,
++        reason: String,
++        rawX: Float?,
++        rawY: Float?,
++        arrivals: Long?,
++        busyDrops: Long?,
++        phase: ReadingValidationPhase,
++        stepId: String,
++        state: ReadingValidationTrialState,
++    ) = event("mgazenet_source", elapsedNs = deliveryElapsedNs) {
++        putContext(phase, stepId, state, null)
++        put("delivery_id", deliveryId)
++        putNum("capture_elapsed_ms", captureMs)
++        put("delivery_elapsed_ns", deliveryElapsedNs)
++        putNum("output_age_ms", captureMs?.let { deliveryElapsedNs / 1e6 - it })
++        put("reason", reason)
++        putNum("raw_screen_x", rawX)
++        putNum("raw_screen_y", rawY)
++        putNum("analyzer_arrivals", arrivals)
++        putNum("observed_busy_drops", busyDrops)
++        put("operational_expiry_ms", 500)
++        put("filter", "none")
++    }
++
+     fun finish(outcome: String, summary: ReadingValidationMetrics.Summary) {
+         if (finished) return
+         event("session_end", flush = true) {
+             put("outcome", outcome)
+             put("timestamp_iso", isoTimestamp(System.currentTimeMillis()))
+-            put("measured_sample_count", summary.measuredSamples)
+-            put("valid_sample_count", summary.validSamples)
+-            put("completed_checkpoint_count", summary.checkpointCount)
+-            putNum("valid_fraction", summary.validFraction)
+-            putNum("exact_line_accuracy", summary.exactLineAccuracy)
+-            putNum("within_one_line_accuracy", summary.withinOneLineAccuracy)
+-            putNum("exact_word_accuracy", summary.exactWordAccuracy)
+-            put("word_measurement_sample_count", summary.wordMeasuredSamples)
+-            putNum("word_trial_exact_line_accuracy", summary.wordExactLineAccuracy)
+-            putNum("word_trial_within_one_line_accuracy", summary.wordWithinOneLineAccuracy)
+-            put("guided_line_measurement_sample_count", summary.lineMeasuredSamples)
+-            putNum("guided_line_exact_accuracy", summary.guidedLineExactAccuracy)
+-            putNum("guided_line_within_one_accuracy", summary.guidedLineWithinOneAccuracy)
+-            putNum("median_absolute_line_error", summary.medianAbsoluteLineError)
+-            putNum("p95_absolute_line_error", summary.p95AbsoluteLineError)
++            put("spatial_result_exposed", comparison == null)
++            if (comparison == null) {
++                put("measured_sample_count", summary.measuredSamples)
++                put("valid_sample_count", summary.validSamples)
++                put("completed_checkpoint_count", summary.checkpointCount)
++                putNum("valid_fraction", summary.validFraction)
++                putNum("exact_line_accuracy", summary.exactLineAccuracy)
++                putNum("within_one_line_accuracy", summary.withinOneLineAccuracy)
++                putNum("exact_word_accuracy", summary.exactWordAccuracy)
++                put("word_measurement_sample_count", summary.wordMeasuredSamples)
++                putNum("word_trial_exact_line_accuracy", summary.wordExactLineAccuracy)
++                putNum("word_trial_within_one_line_accuracy", summary.wordWithinOneLineAccuracy)
++                put("guided_line_measurement_sample_count", summary.lineMeasuredSamples)
++                putNum("guided_line_exact_accuracy", summary.guidedLineExactAccuracy)
++                putNum("guided_line_within_one_accuracy", summary.guidedLineWithinOneAccuracy)
++                putNum("median_absolute_line_error", summary.medianAbsoluteLineError)
++                putNum("p95_absolute_line_error", summary.p95AbsoluteLineError)
++            }
+         }
+         finished = true
+-        writer.close()
+-        Log.i(TAG, "Finished structured reading log ${file.absolutePath}: $outcome")
++        if (comparisonWriter != null) {
++            receipt = comparisonWriter.closeAndSeal()
++        } else {
++            normalWriter?.close()
++        }
++        Log.i(TAG, "Finished structured reading log ${fileName()}: $outcome")
+     }
+ 
+     fun flush() {
+-        if (!finished) writer.flush()
++        if (!finished) comparisonWriter?.flush() ?: normalWriter?.flush()
+     }
+ 
+-    fun fileName(): String = file.name
++    fun fileName(): String = comparisonWriter?.fileName() ?: normalFile?.name.orEmpty()
++
++    fun sealedReceipt(): ComparisonSlotReceipt? = receipt
+ 
+     private fun event(
+         recordType: String,
+         timestampMs: Long = System.currentTimeMillis(),
++        elapsedNs: Long = SystemClock.elapsedRealtimeNanos(),
+         flush: Boolean = false,
+         block: JSONObject.() -> Unit,
+     ) {
+         if (finished) return
+-        write(JSONObject().apply {
++        val value = JSONObject().apply {
+             put("record_type", recordType)
+             put("session_id", sessionId)
+             put("timestamp_ms", timestampMs)
+-            put("elapsed_ms", (timestampMs - startedAtMs).coerceAtLeast(0L))
++            put("event_elapsed_ns", elapsedNs)
++            put("elapsed_ms", ((elapsedNs - startedElapsedNs).coerceAtLeast(0L)) / 1e6)
+             block()
+-        }, flush)
++        }
++        write(value, elapsedNs, flush)
+     }
+ 
+     private fun JSONObject.putContext(
+         phase: ReadingValidationPhase,
+         stepId: String,
+         state: ReadingValidationTrialState,
+-        expected: ReadingValidationCheckpoint?,
++        expectedCheckpoint: ReadingValidationCheckpoint?,
+     ) {
+         put("phase", phase.name)
+         put("step_id", stepId)
+         put("trial_state", state.name)
+-        put("expected_checkpoint", expected?.id ?: JSONObject.NULL)
+-        put("expected_region", expected?.region ?: JSONObject.NULL)
+-        put("expected_line", expected?.lineIndex ?: JSONObject.NULL)
+-        put("expected_target_kind", expected?.targetKind?.name ?: JSONObject.NULL)
+-        put("expected_target_text", expected?.targetText ?: JSONObject.NULL)
+-        put("expected_target_start", expected?.targetStart ?: JSONObject.NULL)
+-        put("expected_target_end", expected?.targetEnd ?: JSONObject.NULL)
++        put("expected_checkpoint", expectedCheckpoint?.id ?: JSONObject.NULL)
++        put("expected_region", expectedCheckpoint?.region ?: JSONObject.NULL)
++        put("expected_line", expectedCheckpoint?.lineIndex ?: JSONObject.NULL)
++        put("expected_target_kind", expectedCheckpoint?.targetKind?.name ?: JSONObject.NULL)
++        put("expected_target_text", expectedCheckpoint?.targetText ?: JSONObject.NULL)
++        put("expected_target_start", expectedCheckpoint?.targetStart ?: JSONObject.NULL)
++        put("expected_target_end", expectedCheckpoint?.targetEnd ?: JSONObject.NULL)
++    }
++
++    private fun JSONObject.putExpected(target: ReadingValidationCheckpoint) {
++        put("id", target.id)
++        put("region", target.region)
++        put("line_index", target.lineIndex)
++        put("target_kind", target.targetKind.name)
++        put("target_text", target.targetText)
++        put("target_start", target.targetStart)
++        put("target_end", target.targetEnd)
++        putNum("viewport_fraction", target.viewportFraction)
+     }
+ 
+     private fun JSONObject.putTarget(prefix: String, target: TextTarget) {
+         put("${prefix}_valid", target.isValid)
+         put("${prefix}_line", target.lineIndex)
++        put("${prefix}_line_count", target.lineCount)
+         put("${prefix}_word_start", target.wordStart)
+         put("${prefix}_word_end", target.wordEnd)
+     }
+ 
+-    /** Capture/delivery and explicit gaps accompany coordinates; never contains model inputs. */
+-    fun logMgazeNetObservation(captureMs: Double?, outputMs: Double, reason: String,
+-        rawX: Float?, rawY: Float?, arrivals: Long?, busyDrops: Long?) {
+-        if (finished) return
+-        write(JSONObject().apply {
+-            put("record_type","mgazenet_source")
+-            putNum("capture_elapsed_ms",captureMs)
+-            putNum("output_elapsed_ms",outputMs)
+-            putNum("output_age_ms",captureMs?.let { outputMs-it })
+-            put("reason",reason)
+-            putNum("raw_screen_x",rawX); putNum("raw_screen_y",rawY)
+-            putNum("analyzer_arrivals",arrivals); putNum("observed_busy_drops",busyDrops)
+-            put("operational_expiry_ms",500)
+-            put("filter","none")
+-        })
+-    }
+-
+     private fun JSONObject.putNum(key: String, value: Number?) {
+         val number = value?.toDouble()
+         put(key, if (number != null && number.isFinite()) number else JSONObject.NULL)
+     }
+ 
+-    private fun write(value: JSONObject, flush: Boolean = false) {
++    private fun write(value: JSONObject, elapsedNs: Long, flush: Boolean) {
++        if (comparisonWriter != null) {
++            comparisonWriter.append(value, elapsedNs, flush)
++            return
++        }
+         try {
+-            writer.append(value.toString())
+-            writer.newLine()
+-            if (flush) writer.flush()
++            normalWriter?.append(value.toString())
++            normalWriter?.newLine()
++            if (flush) normalWriter?.flush()
+         } catch (e: Exception) {
+-            Log.e(TAG, "Failed to write ${file.name}", e)
++            Log.e(TAG, "Failed to write ${normalFile?.name}", e)
+         }
+     }
+ 
++    private fun GazeCoordinateFrame.toJson() = JSONObject().apply {
++        put("origin_x", originX)
++        put("origin_y", originY)
++        put("width", width)
++        put("height", height)
++    }
++
+     private fun isoTimestamp(timestampMs: Long): String =
+         SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US).format(Date(timestampMs))
+ 
+     companion object {
+-        const val SCHEMA_VERSION = 6
++        const val SCHEMA_VERSION = 7
+         private const val TAG = "ReadingValidation"
+     }
+ }
+diff --git a/app/src/main/java/com/newsmead/gaze/mgazenet/MgazeNetGazeProvider.kt b/app/src/main/java/com/newsmead/gaze/mgazenet/MgazeNetGazeProvider.kt
+index e64abadfff22968b94d089498de321f004520ce9..bb6288220666e93dce62d2900275c33b78781938 100644
+--- a/app/src/main/java/com/newsmead/gaze/mgazenet/MgazeNetGazeProvider.kt
++++ b/app/src/main/java/com/newsmead/gaze/mgazenet/MgazeNetGazeProvider.kt
+@@ -3,17 +3,51 @@ package com.newsmead.gaze.mgazenet
+ import android.content.Context
+ import android.os.Handler
+ import android.os.Looper
++import android.os.SystemClock
+ import android.view.View
+ import androidx.lifecycle.DefaultLifecycleObserver
+ import androidx.lifecycle.LifecycleOwner
+ import com.newsmead.gaze.GazeProvider
+ import com.newsmead.gaze.physicalDisplaySize
+ 
++internal enum class MgazeNetStopAction { START_CLOSE, WAIT_FOR_CLOSE, ALREADY_CLOSED }
++
++/** Keeps every terminal callback behind the one asynchronous source close. */
++internal class MgazeNetStopCompletionQueue {
++    private enum class State { OPEN, CLOSING, CLOSED }
++
++    private var state = State.OPEN
++    private val callbacks = ArrayList<() -> Unit>()
++
++    @Synchronized
++    fun request(callback: () -> Unit): MgazeNetStopAction = when (state) {
++        State.OPEN -> {
++            callbacks += callback
++            state = State.CLOSING
++            MgazeNetStopAction.START_CLOSE
++        }
++        State.CLOSING -> {
++            callbacks += callback
++            MgazeNetStopAction.WAIT_FOR_CLOSE
++        }
++        State.CLOSED -> MgazeNetStopAction.ALREADY_CLOSED
++    }
++
++    @Synchronized
++    fun complete(): List<() -> Unit> {
++        check(state == State.CLOSING) { "MGazeNet source close was not pending." }
++        state = State.CLOSED
++        return callbacks.toList().also { callbacks.clear() }
++    }
++}
++
+ /** Only unfiltered finite physical-screen measurements reach GazeProvider. No correction or replay. */
+ class MgazeNetGazeProvider(private val context: Context, private val view: View) : GazeProvider, DefaultLifecycleObserver {
+-    data class Observation(val captureMs: Double?, val outputMs: Double, val reason: String,
++    data class Observation(val captureMs: Double?, val deliveryElapsedNs: Long, val deliveryId: Long, val reason: String,
+         val x: Float? = null, val y: Float? = null, val rawX: Float? = null, val rawY: Float? = null,
+-        val arrivals: Long? = null, val busyDrops: Long? = null)
++        val arrivals: Long? = null, val busyDrops: Long? = null) {
++        val outputMs: Double get() = deliveryElapsedNs / 1e6
++    }
+     private var listener: GazeProvider.OnGaze? = null
+     private var source: MgazeNetCameraSource? = null
+     private var owner: LifecycleOwner? = null
+@@ -26,6 +60,8 @@ class MgazeNetGazeProvider(private val context: Context, private val view: View)
+     var onFps: ((Float) -> Unit)? = null
+     private var fpsStart = 0.0
+     private var fpsCount = 0
++    private var deliverySequence = 0L
++    private val stopCompletions = MgazeNetStopCompletionQueue()
+     override fun setOnGaze(listener: GazeProvider.OnGaze) { this.listener = listener }
+     override fun start(owner: LifecycleOwner) {
+         check(source == null)
+@@ -35,6 +71,7 @@ class MgazeNetGazeProvider(private val context: Context, private val view: View)
+         }
+         this.owner = owner; owner.lifecycle.addObserver(this)
+         lastCapture = -1.0; lastOutput = -1.0; fpsStart = MgazeNetCameraSource.now(); fpsCount = 0
++        deliverySequence = 0L
+         val identity = saved.identity
+         val gate = MgazeNetOutputGate(identity.screenWidth,identity.screenHeight)
+         source = MgazeNetCameraSource(context,owner,ready = {}, result = { frame ->
+@@ -42,13 +79,15 @@ class MgazeNetGazeProvider(private val context: Context, private val view: View)
+             if (size.x != identity.screenWidth || size.y != identity.screenHeight || view.display.rotation != identity.rotation) {
+                 fail("Screen geometry changed; recalibrate.")
+             } else {
+-                val now = MgazeNetCameraSource.now()
++                val deliveryElapsedNs = SystemClock.elapsedRealtimeNanos()
++                val now = deliveryElapsedNs / 1e6
++                val deliveryId = ++deliverySequence
+                 val result = gate.evaluate(frame.captureMs,now,frame.eligible,frame.prediction,
+                     if (frame.features == null) frame.reason else "eye_area")
+                 val reason = result.reason; val x = result.rawX; val y = result.rawY
+                 lastCapture = frame.captureMs; lastOutput = frame.outputMs
+                 fresh = reason == "coordinate"
+-                onObservation?.invoke(Observation(frame.captureMs,now,reason,if (fresh) x else null,if (fresh) y else null,
++                onObservation?.invoke(Observation(frame.captureMs,deliveryElapsedNs,deliveryId,reason,if (fresh) x else null,if (fresh) y else null,
+                     x,y,frame.arrivals,frame.busyDrops))
+                 if (fresh) listener?.onGaze(x!!,y!!)
+                 fpsCount++
+@@ -63,19 +102,44 @@ class MgazeNetGazeProvider(private val context: Context, private val view: View)
+             val now = MgazeNetCameraSource.now()
+             if (lastOutput < 0 && now - fpsStart > 20000) { fail("MGazeNet initialization timed out."); return }
+             if (fresh && now-lastCapture > MAX_OUTPUT_AGE_MS) {
+-                fresh = false; onObservation?.invoke(Observation(lastCapture,now,"stale"))
++                fresh = false
++                onObservation?.invoke(Observation(lastCapture,SystemClock.elapsedRealtimeNanos(),++deliverySequence,"stale"))
+             }
+             handler.postDelayed(this,50)
+         }
+     }
+-    private fun fail(reason: String) { stop(); onFailure?.invoke(reason) }
++    private fun fail(reason: String) { stopAndThen { onFailure?.invoke(reason) } }
+     override fun onStop(owner: LifecycleOwner) { stop() }
+-    override fun stop() {
++    override fun stop() { stopAndThen {} }
++
++    /** Runs [complete] only after the exact terminal source counters were observed. */
++    fun stopAndThen(complete: () -> Unit) {
++        when (stopCompletions.request(complete)) {
++            MgazeNetStopAction.WAIT_FOR_CLOSE -> return
++            MgazeNetStopAction.ALREADY_CLOSED -> {
++                complete()
++                return
++            }
++            MgazeNetStopAction.START_CLOSE -> Unit
++        }
+         handler.removeCallbacksAndMessages(null)
+         owner?.lifecycle?.removeObserver(this); owner = null
+         val closing = source; source = null; fresh = false
+-        closing?.close { counts -> onObservation?.invoke(Observation(null,MgazeNetCameraSource.now(),
+-            "stopped;arrivals=${counts["analyzer_arrivals"]};busy_drops=${counts["observed_busy_drops"]}")) }
++        if (closing == null) {
++            stopCompletions.complete().forEach { it() }
++            return
++        }
++        closing.close { counts ->
++            try {
++                onObservation?.invoke(Observation(
++                    null,SystemClock.elapsedRealtimeNanos(),++deliverySequence,"stopped",
++                    arrivals = counts["analyzer_arrivals"] as? Long,
++                    busyDrops = counts["observed_busy_drops"] as? Long,
++                ))
++            } finally {
++                stopCompletions.complete().forEach { it() }
++            }
++        }
+     }
+     companion object {
+         // Explicit operational expiry, NOT an accuracy threshold. No interpolation or smoothing.
+diff --git a/app/src/test/java/com/newsmead/gaze/ReadingValidationProtocolTest.kt b/app/src/test/java/com/newsmead/gaze/ReadingValidationProtocolTest.kt
+index 9871ef1645598409bd262b58a3197a080e95fd43..a01c91caa65bee2d5d42fa88a39ec4216301157e 100644
+--- a/app/src/test/java/com/newsmead/gaze/ReadingValidationProtocolTest.kt
++++ b/app/src/test/java/com/newsmead/gaze/ReadingValidationProtocolTest.kt
+@@ -3,6 +3,7 @@ package com.newsmead.gaze
+ import org.junit.Assert.assertEquals
+ import org.junit.Assert.assertNotEquals
+ import org.junit.Assert.assertTrue
++import org.junit.Assert.fail
+ import org.junit.Test
+ 
+ class ReadingValidationProtocolTest {
+@@ -65,4 +66,22 @@ class ReadingValidationProtocolTest {
+         assertEquals(0, summary.wordMeasuredSamples)
+         assertEquals(0.0, summary.exactWordAccuracy, 0.0001)
+     }
++
++    @Test
++    fun orderVariantMustBeExact() {
++        for (variant in listOf("", "a", "b", "C")) {
++            try {
++                ReadingValidationProtocol.localizationCheckpoints(lines, variant)
++                fail("Expected rejection for $variant")
++            } catch (_: IllegalArgumentException) {
++                // Expected.
++            }
++            try {
++                ReadingValidationProtocol.lineReadingCheckpoints(lines, variant)
++                fail("Expected rejection for $variant")
++            } catch (_: IllegalArgumentException) {
++                // Expected.
++            }
++        }
++    }
+ }
+diff --git a/app/src/main/assets/comparison/newsmead-current-vs-mgazenet-reading-v1.json b/app/src/main/assets/comparison/newsmead-current-vs-mgazenet-reading-v1.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..5c8328db950e55939a5233b7ae6d56a9c17f1907
+--- /dev/null
++++ b/app/src/main/assets/comparison/newsmead-current-vs-mgazenet-reading-v1.json
+@@ -0,0 +1,81 @@
++{
++  "schema": "newsmead_estimator_comparison_protocol_v1",
++  "protocol_id": "newsmead_current_vs_mgazenet_reading_v1",
++  "status": "software_preconditions_pending",
++  "participant_collection_authorized": false,
++  "application_id": "com.newsmead",
++  "version_code": 1,
++  "signer_sha256": "3056e94475f68ae47cd7d25babf34eeb7d201acb97999f20eaa3ab95fa200332",
++  "base_artifacts": {
++    "current": {
++      "branch": "gaze-pipeline-improvements",
++      "commit": "ec635fd01905544c8251c37b6891105ebbdee923",
++      "apk_sha256": "3c4019e9ae0390e1f9af05f262ba50ab4c71332ac9258aa4c9cc172e67c78e01",
++      "archive_sha256": "5c631be6d12892768b707d433eebbdab4c7f102f18738b2f9d21d19fe2518aca"
++    },
++    "mgazenet": {
++      "branch": "mgazenet-feasibility",
++      "commit": "bea2dacbfa8d95f6519ccd4fad1cb0dfd6028b22",
++      "production_implementation_commit": "5811486",
++      "apk_sha256": "131f8d96f9bdc3f5a5c16855aa6347e119fd07e96609cba9f6792b161c682fd9"
++    }
++  },
++  "collection_builds": null,
++  "collection_manifest_required": true,
++  "slots": [
++    {"id": "a56_current_A", "device": "SM-A566B", "estimator": "current", "order_variant": "A"},
++    {"id": "a56_mgazenet_A", "device": "SM-A566B", "estimator": "mgazenet", "order_variant": "A"},
++    {"id": "g991b_mgazenet_B", "device": "SM-G991B", "estimator": "mgazenet", "order_variant": "B"},
++    {"id": "g991b_current_B", "device": "SM-G991B", "estimator": "current", "order_variant": "B"}
++  ],
++  "calibration": {
++    "fresh_per_slot": true,
++    "fit_target_count": 16,
++    "current": {
++      "telemetry": "off",
++      "excluded_fit_targets_allowed": false,
++      "nine_point_correction": "off",
++      "reading_vertical_alignment": "off"
++    },
++    "mgazenet": {
++      "rows_per_fit_target": 45,
++      "feature_count": 258,
++      "filter": "none",
++      "correction": "none",
++      "post_fit_checks_are_selection_gate": false
++    }
++  },
++  "reading": {
++    "protocol_version": 4,
++    "word_targets": 8,
++    "line_targets": 6,
++    "vertical_reference_acquire_ms": 2000,
++    "vertical_reference_measure_ms": 2500,
++    "word_acquire_ms": 3000,
++    "word_measure_ms": 2500,
++    "line_acquire_ms": 2500,
++    "line_measure_ms": 5000,
++    "vertical_alignment": "off"
++  },
++  "coverage": {
++    "minimum_delivered_valid_coordinates_per_scored_target": 10,
++    "delivery_sensitivity_ms": [50, 100, 200, 500],
++    "primary_freshness_limit_ms": null
++  },
++  "primary_endpoint": "target_balanced_mean_of_guided_line_target_median_absolute_stabilized_line_error",
++  "classification": {
++    "mgazenet": "coverage complete; lower primary error on both devices; guided within-one-line not lower on either device",
++    "current": "coverage complete; lower primary error on both devices; guided within-one-line not lower on either device",
++    "otherwise_complete": "mixed",
++    "missing_or_failed_slot": "inconclusive"
++  },
++  "required_software_controls": [
++    "explicit protocol, slot and order inputs without defaults",
++    "alignment off and persisted correction rejection",
++    "calibration and reading result masking",
++    "artifact and manifest identity in every record",
++    "common monotonic delivery timestamps",
++    "offline integrity validator and scorer",
++    "camera-off mutation-free setup checks on both phones"
++  ]
++}
+diff --git a/app/src/main/java/com/newsmead/gaze/ComparisonProtocol.kt b/app/src/main/java/com/newsmead/gaze/ComparisonProtocol.kt
+new file mode 100644
+index 0000000000000000000000000000000000000000..942f6a157d855c8aa680e09b49e6b1194d17988c
+--- /dev/null
++++ b/app/src/main/java/com/newsmead/gaze/ComparisonProtocol.kt
+@@ -0,0 +1,150 @@
++package com.newsmead.gaze
++
++import java.security.MessageDigest
++
++data class ComparisonBuildIdentity(
++    val estimatorId: String,
++    val baseCommit: String,
++    val baseApkSha256: String,
++) {
++    init {
++        require(estimatorId in setOf("current", "mgazenet"))
++        require(ComparisonProtocol.isGitCommit(baseCommit))
++        require(ComparisonProtocol.isSha256(baseApkSha256))
++    }
++}
++
++data class ComparisonSlot(
++    val id: String,
++    val deviceModel: String,
++    val estimatorId: String,
++    val orderVariant: String,
++)
++
++data class ComparisonLaunchSpec(
++    val protocolId: String,
++    val slot: ComparisonSlot,
++    val orderVariant: String,
++)
++
++/** Pure, fixed comparison contract. It contains no preference or fallback path. */
++object ComparisonProtocol {
++    const val PROTOCOL_ID = "newsmead_current_vs_mgazenet_reading_v1"
++    const val MANIFEST_ASSET =
++        "comparison/newsmead-current-vs-mgazenet-reading-v1.json"
++    const val MANIFEST_SHA256 =
++        "41a3fbccd4df38c2bb13d4695a052fe15d3ef78423b19a4c1737d3de6944f185"
++    const val COORDINATE_SPACE = "screen_px_v1"
++    const val MONOTONIC_CLOCK = "elapsedRealtimeNanos"
++    const val MIN_COORDINATES_PER_SCORED_TARGET = 10
++
++    const val EXTRA_PROTOCOL_ID = "comparison_protocol_id"
++    const val EXTRA_SLOT_ID = "comparison_slot_id"
++    const val EXTRA_ORDER_VARIANT = "comparison_order_variant"
++
++    private const val CURRENT_COMMIT =
++        "ec635fd01905544c8251c37b6891105ebbdee923"
++    private const val CURRENT_APK =
++        "3c4019e9ae0390e1f9af05f262ba50ab4c71332ac9258aa4c9cc172e67c78e01"
++    private const val MGAZENET_COMMIT =
++        "bea2dacbfa8d95f6519ccd4fad1cb0dfd6028b22"
++    private const val MGAZENET_APK =
++        "131f8d96f9bdc3f5a5c16855aa6347e119fd07e96609cba9f6792b161c682fd9"
++
++    val slots = listOf(
++        ComparisonSlot("a56_current_A", "SM-A566B", "current", "A"),
++        ComparisonSlot("a56_mgazenet_A", "SM-A566B", "mgazenet", "A"),
++        ComparisonSlot("g991b_mgazenet_B", "SM-G991B", "mgazenet", "B"),
++        ComparisonSlot("g991b_current_B", "SM-G991B", "current", "B"),
++    )
++
++    /** All three values are required and independently checked against the slot. */
++    fun validateLaunch(
++        protocolId: String?,
++        slotId: String?,
++        orderVariant: String?,
++        build: ComparisonBuildIdentity,
++        deviceModel: String,
++    ): ComparisonLaunchSpec {
++        require(protocolId == PROTOCOL_ID) { "Missing or unknown comparison protocol ID." }
++        require(!slotId.isNullOrBlank()) { "Missing comparison slot ID." }
++        require(orderVariant == "A" || orderVariant == "B") {
++            "Missing or unknown comparison order variant."
++        }
++        validateBuild(build)
++        val slot = slots.singleOrNull { it.id == slotId }
++            ?: throw IllegalArgumentException("Unknown comparison slot ID.")
++        require(slot.estimatorId == build.estimatorId) {
++            "The comparison slot does not belong to this estimator build."
++        }
++        require(slot.orderVariant == orderVariant) {
++            "The explicit order variant does not match the frozen slot."
++        }
++        require(slot.deviceModel == deviceModel) {
++            "The comparison slot does not belong to this device model."
++        }
++        return ComparisonLaunchSpec(protocolId, slot, orderVariant)
++    }
++
++    fun validateBuild(build: ComparisonBuildIdentity) {
++        val expected = when (build.estimatorId) {
++            "current" -> CURRENT_COMMIT to CURRENT_APK
++            "mgazenet" -> MGAZENET_COMMIT to MGAZENET_APK
++            else -> throw IllegalArgumentException("Unknown estimator build.")
++        }
++        require(build.baseCommit == expected.first && build.baseApkSha256 == expected.second) {
++            "The estimator baseline identity does not match the frozen protocol."
++        }
++    }
++
++    fun passageSha256(passage: String): String = sha256(passage.toByteArray(Charsets.UTF_8))
++
++    /**
++     * Binds the rendered text topology and the exact ordered target plan. Float
++     * bit patterns avoid locale- or formatter-dependent hashes.
++     */
++    fun readingLayoutSha256(
++        passage: String,
++        lines: List<ReadingValidationLine>,
++        wordTargets: List<ReadingValidationCheckpoint>,
++        lineTargets: List<ReadingValidationCheckpoint>,
++        lineHeightPx: Float,
++        textSizePx: Float,
++        viewportWidthPx: Int,
++        viewportHeightPx: Int,
++    ): String {
++        val canonical = buildString {
++            append("protocol=").append(PROTOCOL_ID).append('\n')
++            append("version=").append(ReadingValidationProtocol.VERSION).append('\n')
++            append("passage=").append(passageSha256(passage)).append('\n')
++            append("line_height_bits=").append(lineHeightPx.toRawBits()).append('\n')
++            append("text_size_bits=").append(textSizePx.toRawBits()).append('\n')
++            append("viewport=").append(viewportWidthPx).append('x').append(viewportHeightPx).append('\n')
++            lines.forEach { line ->
++                append("line|").append(line.lineIndex)
++                line.words.forEach { word ->
++                    append('|').append(word.start).append(':').append(word.end).append(':').append(word.text)
++                }
++                append('\n')
++            }
++            (wordTargets + lineTargets).forEach { target ->
++                append("target|").append(target.id).append('|').append(target.region)
++                    .append('|').append(target.lineIndex).append('|').append(target.targetKind.name)
++                    .append('|').append(target.targetStart).append('|').append(target.targetEnd)
++                    .append('|').append(target.viewportFraction.toRawBits()).append('|')
++                    .append(target.targetText).append('\n')
++            }
++        }
++        return sha256(canonical.toByteArray(Charsets.UTF_8))
++    }
++
++    fun sha256(bytes: ByteArray): String = MessageDigest.getInstance("SHA-256")
++        .digest(bytes)
++        .joinToString("") { "%02x".format(it.toInt() and 0xff) }
++
++    fun isSha256(value: String?): Boolean =
++        value?.length == 64 && value.all { it in '0'..'9' || it in 'a'..'f' }
++
++    fun isGitCommit(value: String?): Boolean =
++        value?.length == 40 && value.all { it in '0'..'9' || it in 'a'..'f' }
++}
+diff --git a/app/src/main/java/com/newsmead/gaze/ComparisonRuntime.kt b/app/src/main/java/com/newsmead/gaze/ComparisonRuntime.kt
+new file mode 100644
+index 0000000000000000000000000000000000000000..b1c5ec253e9b8e09a83c25e15476c08fce7a2548
+--- /dev/null
++++ b/app/src/main/java/com/newsmead/gaze/ComparisonRuntime.kt
+@@ -0,0 +1,170 @@
++package com.newsmead.gaze
++
++import android.content.Context
++import android.content.Intent
++import android.os.Build
++import android.os.SystemClock
++import android.provider.Settings
++import com.newsmead.BuildConfig
++import java.io.File
++import java.io.FileInputStream
++
++data class ComparisonLaunchParse(
++    val requested: Boolean,
++    val spec: ComparisonLaunchSpec? = null,
++    val error: String? = null,
++)
++
++data class ComparisonRuntimeIdentity(
++    val spec: ComparisonLaunchSpec,
++    val build: ComparisonBuildIdentity,
++    val protocolManifestSha256: String,
++    val collectionApkSha256: String,
++    val deviceInstanceSha256: String,
++    val deviceModel: String,
++    val screenWidthPx: Int,
++    val screenHeightPx: Int,
++    val densityDpi: Int,
++    val rotation: Int,
++) {
++    init {
++        require(protocolManifestSha256 == ComparisonProtocol.MANIFEST_SHA256)
++        require(ComparisonProtocol.isSha256(collectionApkSha256))
++        require(ComparisonProtocol.isSha256(deviceInstanceSha256))
++        require(deviceModel == spec.slot.deviceModel)
++        require(screenWidthPx > 0 && screenHeightPx > 0 && densityDpi > 0)
++        require(rotation in 0..3)
++    }
++}
++
++data class ComparisonRecordBinding(
++    val runtime: ComparisonRuntimeIdentity,
++    val calibrationSha256: String?,
++) {
++    val digest: String = ComparisonProtocol.sha256(
++        buildString {
++            append(runtime.spec.protocolId).append('\n')
++            append(runtime.protocolManifestSha256).append('\n')
++            append(runtime.spec.slot.id).append('\n')
++            append(runtime.spec.orderVariant).append('\n')
++            append(runtime.build.estimatorId).append('\n')
++            append(runtime.build.baseCommit).append('\n')
++            append(runtime.build.baseApkSha256).append('\n')
++            append(runtime.collectionApkSha256).append('\n')
++            append(calibrationSha256 ?: "unavailable").append('\n')
++            append(runtime.deviceInstanceSha256).append('\n')
++            append(runtime.deviceModel).append('\n')
++            append(runtime.screenWidthPx).append('x').append(runtime.screenHeightPx).append('\n')
++            append(runtime.densityDpi).append('\n')
++            append(runtime.rotation).append('\n')
++            append(ComparisonProtocol.COORDINATE_SPACE).append('\n')
++            append(ComparisonProtocol.MONOTONIC_CLOCK)
++        }.toByteArray(Charsets.UTF_8),
++    )
++}
++
++data class ComparisonReadingBinding(
++    val record: ComparisonRecordBinding,
++    val readingLayoutSha256: String,
++    val passageSha256: String,
++) {
++    val digest: String = ComparisonProtocol.sha256(
++        "${record.digest}\n$readingLayoutSha256\n$passageSha256\n${ReadingValidationProtocol.VERSION}"
++            .toByteArray(Charsets.UTF_8),
++    )
++}
++
++object ComparisonRuntime {
++    private val extraKeys = listOf(
++        ComparisonProtocol.EXTRA_PROTOCOL_ID,
++        ComparisonProtocol.EXTRA_SLOT_ID,
++        ComparisonProtocol.EXTRA_ORDER_VARIANT,
++    )
++
++    fun buildIdentity(): ComparisonBuildIdentity = ComparisonBuildIdentity(
++        estimatorId = BuildConfig.COMPARISON_ESTIMATOR_ID,
++        baseCommit = BuildConfig.COMPARISON_BASE_COMMIT,
++        baseApkSha256 = BuildConfig.COMPARISON_BASE_APK_SHA256,
++    )
++
++    fun parseLaunch(intent: Intent): ComparisonLaunchParse {
++        if (extraKeys.none(intent::hasExtra)) return ComparisonLaunchParse(requested = false)
++        return try {
++            ComparisonLaunchParse(
++                requested = true,
++                spec = ComparisonProtocol.validateLaunch(
++                    protocolId = intent.getStringExtra(ComparisonProtocol.EXTRA_PROTOCOL_ID),
++                    slotId = intent.getStringExtra(ComparisonProtocol.EXTRA_SLOT_ID),
++                    orderVariant = intent.getStringExtra(ComparisonProtocol.EXTRA_ORDER_VARIANT),
++                    build = buildIdentity(),
++                    deviceModel = Build.MODEL,
++                ),
++            )
++        } catch (e: IllegalArgumentException) {
++            ComparisonLaunchParse(requested = true, error = e.message ?: "Invalid comparison launch.")
++        }
++    }
++
++    fun putLaunch(intent: Intent, spec: ComparisonLaunchSpec): Intent = intent.apply {
++        putExtra(ComparisonProtocol.EXTRA_PROTOCOL_ID, spec.protocolId)
++        putExtra(ComparisonProtocol.EXTRA_SLOT_ID, spec.slot.id)
++        putExtra(ComparisonProtocol.EXTRA_ORDER_VARIANT, spec.orderVariant)
++    }
++
++    /** Called after explicit Start while CAMERA is still unopened. */
++    fun resolveIdentity(
++        context: Context,
++        spec: ComparisonLaunchSpec,
++        screenWidthPx: Int,
++        screenHeightPx: Int,
++        densityDpi: Int,
++        rotation: Int,
++    ): ComparisonRuntimeIdentity {
++        require(
++            BuildConfig.COMPARISON_PROTOCOL_MANIFEST_SHA256 ==
++                ComparisonProtocol.MANIFEST_SHA256,
++        ) { "The comparison build manifest identity changed." }
++        val manifestBytes = context.assets.open(ComparisonProtocol.MANIFEST_ASSET).use { it.readBytes() }
++        require(ComparisonProtocol.sha256(manifestBytes) == ComparisonProtocol.MANIFEST_SHA256) {
++            "The embedded comparison protocol manifest changed."
++        }
++        val build = buildIdentity()
++        ComparisonProtocol.validateLaunch(
++            spec.protocolId,
++            spec.slot.id,
++            spec.orderVariant,
++            build,
++            Build.MODEL,
++        )
++        val apk = File(context.applicationInfo.sourceDir)
++        require(apk.isFile && apk.length() > 0L) { "The installed APK cannot be verified." }
++        return ComparisonRuntimeIdentity(
++            spec = spec,
++            build = build,
++            protocolManifestSha256 = ComparisonProtocol.MANIFEST_SHA256,
++            collectionApkSha256 = FileInputStream(apk).use { input ->
++                val digest = java.security.MessageDigest.getInstance("SHA-256")
++                val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
++                while (true) {
++                    val read = input.read(buffer)
++                    if (read < 0) break
++                    digest.update(buffer, 0, read)
++                }
++                digest.digest().joinToString("") { "%02x".format(it.toInt() and 0xff) }
++            },
++            deviceInstanceSha256 = ComparisonProtocol.sha256(
++                (Build.FINGERPRINT + ":" + Settings.Secure.getString(
++                    context.contentResolver,
++                    Settings.Secure.ANDROID_ID,
++                )).toByteArray(Charsets.UTF_8),
++            ),
++            deviceModel = Build.MODEL,
++            screenWidthPx = screenWidthPx,
++            screenHeightPx = screenHeightPx,
++            densityDpi = densityDpi,
++            rotation = rotation,
++        )
++    }
++
++    fun nowNs(): Long = SystemClock.elapsedRealtimeNanos()
++}
+diff --git a/app/src/main/java/com/newsmead/gaze/ComparisonSlotStore.kt b/app/src/main/java/com/newsmead/gaze/ComparisonSlotStore.kt
+new file mode 100644
+index 0000000000000000000000000000000000000000..5473e1d686620187e7cafe7cc6589a164dde9c8f
+--- /dev/null
++++ b/app/src/main/java/com/newsmead/gaze/ComparisonSlotStore.kt
+@@ -0,0 +1,347 @@
++package com.newsmead.gaze
++
++import android.content.Context
++import android.util.AtomicFile
++import org.json.JSONObject
++import java.io.BufferedWriter
++import java.io.File
++import java.io.FileOutputStream
++import java.io.OutputStreamWriter
++
++data class ComparisonCalibrationEvidence(
++    val fitTargetCount: Int,
++    val acceptedRowsPerTarget: Int?,
++    val featureCount: Int?,
++    val postFitCheckCount: Int,
++    val excludedFitTargetCount: Int,
++    val detailedTelemetryEnabled: Boolean,
++    val correctionApplied: Boolean,
++)
++
++data class ComparisonCalibrationReservation(
++    val runtime: ComparisonRuntimeIdentity,
++    val startedElapsedNs: Long,
++    val startedWallTimeMs: Long,
++)
++
++data class ComparisonSlotReceipt(
++    val fileName: String,
++    val sha256: String,
++)
++
++/** Append-only per-slot storage shared across sequential in-place arm installs. */
++class ComparisonSlotStore(context: Context) {
++    private val context = context.applicationContext
++    private val root = File(context.noBackupFilesDir, DIRECTORY)
++
++    fun calibrationStartIssue(spec: ComparisonLaunchSpec): String? {
++        val files = paths(spec.slot.id)
++        return when {
++            files.marker.exists() -> "This comparison slot already started and is retained as interrupted."
++            files.log.exists() || files.hash.exists() -> "This comparison slot already exists and cannot be replaced."
++            else -> null
++        }
++    }
++
++    /** The first mutation for a slot. Call only after the explicit Start action. */
++    fun reserveCalibration(runtime: ComparisonRuntimeIdentity): ComparisonCalibrationReservation =
++        synchronized(LOCK) {
++            calibrationStartIssue(runtime.spec)?.let { throw IllegalStateException(it) }
++            check(root.isDirectory || root.mkdirs()) { "Cannot create comparison slot storage." }
++            val reservation = ComparisonCalibrationReservation(
++                runtime,
++                ComparisonRuntime.nowNs(),
++                System.currentTimeMillis(),
++            )
++            val marker = JSONObject().apply {
++                put("comparison_schema", SCHEMA)
++                put("record_type", "slot_reservation")
++                putRuntime(runtime)
++                put("started_elapsed_ns", reservation.startedElapsedNs)
++                put("started_wall_time_ms", reservation.startedWallTimeMs)
++            }
++            writeAtomic(paths(runtime.spec.slot.id).marker, marker.toString().toByteArray(Charsets.UTF_8))
++            reservation
++        }
++
++    fun completeCalibration(
++        reservation: ComparisonCalibrationReservation,
++        calibrationSha256: String,
++        evidence: ComparisonCalibrationEvidence,
++    ) = synchronized(LOCK) {
++        require(ComparisonProtocol.isSha256(calibrationSha256)) { "Invalid calibration fingerprint." }
++        require(evidence.fitTargetCount == 16 && evidence.excludedFitTargetCount == 0)
++        require(!evidence.detailedTelemetryEnabled && !evidence.correctionApplied)
++        when (reservation.runtime.build.estimatorId) {
++            "current" -> {
++                require(evidence.acceptedRowsPerTarget == null)
++                require(evidence.featureCount == 2)
++                require(evidence.postFitCheckCount == 6)
++            }
++            "mgazenet" -> {
++                require(evidence.acceptedRowsPerTarget == 45)
++                require(evidence.featureCount == 258)
++                require(evidence.postFitCheckCount == 6)
++            }
++            else -> error("Unknown comparison estimator.")
++        }
++        val paths = paths(reservation.runtime.spec.slot.id)
++        check(paths.marker.isFile && !paths.log.exists() && !paths.hash.exists()) {
++            "Comparison slot reservation changed before calibration completion."
++        }
++        verifyMarker(paths.marker, reservation)
++        val binding = ComparisonRecordBinding(reservation.runtime, calibrationSha256)
++        val completedNs = ComparisonRuntime.nowNs()
++        val records = listOf(
++            JSONObject().apply {
++                put("record_type", "slot_start")
++                put("stage", "calibration")
++                put("started_wall_time_ms", reservation.startedWallTimeMs)
++            } to reservation.startedElapsedNs,
++            JSONObject().apply {
++                put("record_type", "calibration_start")
++                put("explicit_start", true)
++                put("fresh_calibration_required", true)
++            } to reservation.startedElapsedNs,
++            JSONObject().apply {
++                put("record_type", "calibration_end")
++                put("outcome", "completed")
++                put("calibration_technically_complete", true)
++                put("fit_target_count", evidence.fitTargetCount)
++                putNum("accepted_rows_per_target", evidence.acceptedRowsPerTarget)
++                putNum("feature_count", evidence.featureCount)
++                put("post_fit_check_count", evidence.postFitCheckCount)
++                put("excluded_fit_target_count", evidence.excludedFitTargetCount)
++                put("detailed_telemetry_enabled", evidence.detailedTelemetryEnabled)
++                put("correction_applied", evidence.correctionApplied)
++                put("spatial_result_exposed", false)
++            } to completedNs,
++        )
++        val bytes = buildString {
++            records.forEachIndexed { index, (record, elapsedNs) ->
++                stamp(record, binding, index, elapsedNs, null)
++                append(record).append('\n')
++            }
++        }.toByteArray(Charsets.UTF_8)
++        writeAtomic(paths.log, bytes)
++        check(paths.marker.delete()) { "Cannot retire completed comparison reservation." }
++    }
++
++    fun failCalibration(
++        reservation: ComparisonCalibrationReservation,
++        outcome: String,
++        reason: String,
++    ): ComparisonSlotReceipt? = synchronized(LOCK) {
++        require(outcome in setOf("failed", "interrupted"))
++        val paths = paths(reservation.runtime.spec.slot.id)
++        if (!paths.marker.isFile || paths.log.exists() || paths.hash.exists()) return@synchronized null
++        verifyMarker(paths.marker, reservation)
++        val binding = ComparisonRecordBinding(reservation.runtime, null)
++        val endNs = ComparisonRuntime.nowNs()
++        val records = listOf(
++            JSONObject().apply {
++                put("record_type", "slot_start")
++                put("stage", "calibration")
++                put("started_wall_time_ms", reservation.startedWallTimeMs)
++            } to reservation.startedElapsedNs,
++            JSONObject().apply {
++                put("record_type", "calibration_start")
++                put("explicit_start", true)
++                put("fresh_calibration_required", true)
++            } to reservation.startedElapsedNs,
++            JSONObject().apply {
++                put("record_type", "calibration_end")
++                put("outcome", outcome)
++                put("reason", reason)
++                put("calibration_technically_complete", false)
++                put("spatial_result_exposed", false)
++            } to endNs,
++        )
++        val bytes = buildString {
++            records.forEachIndexed { index, (record, elapsedNs) ->
++                stamp(record, binding, index, elapsedNs, null)
++                append(record).append('\n')
++            }
++        }.toByteArray(Charsets.UTF_8)
++        writeAtomic(paths.log, bytes)
++        check(paths.marker.delete()) { "Cannot retire failed comparison reservation." }
++        seal(paths)
++    }
++
++    fun openReading(
++        binding: ComparisonReadingBinding,
++    ): ComparisonSlotWriter = synchronized(LOCK) {
++        val slot = binding.record.runtime.spec.slot.id
++        val paths = paths(slot)
++        check(!paths.marker.exists() && paths.log.isFile && !paths.hash.exists()) {
++            "The slot is not ready for one reading validation."
++        }
++        val lines = paths.log.readLines().filter(String::isNotBlank)
++        check(lines.size == CALIBRATION_RECORD_COUNT) { "The slot already has reading data or is incomplete." }
++        val records = lines.map(::JSONObject)
++        check(records.map { it.getInt("record_sequence") } == listOf(0, 1, 2))
++        val end = records.last()
++        check(end.getString("record_type") == "calibration_end" && end.getString("outcome") == "completed") {
++            "The slot calibration did not complete."
++        }
++        records.forEach { verifyBinding(it, binding.record) }
++        ComparisonSlotWriter(paths, binding, CALIBRATION_RECORD_COUNT)
++    }
++
++    private fun verifyMarker(file: File, reservation: ComparisonCalibrationReservation) {
++        val marker = JSONObject(file.readText())
++        check(marker.getString("comparison_schema") == SCHEMA)
++        check(marker.getString("record_type") == "slot_reservation")
++        check(marker.getLong("started_elapsed_ns") == reservation.startedElapsedNs)
++        verifyRuntime(marker, reservation.runtime)
++    }
++
++    private fun paths(slotId: String): SlotPaths {
++        require(ComparisonProtocol.slots.any { it.id == slotId })
++        return SlotPaths(
++            marker = File(root, "$slotId.started.json"),
++            log = File(root, "$slotId.jsonl"),
++            hash = File(root, "$slotId.jsonl.sha256"),
++        )
++    }
++
++    internal data class SlotPaths(val marker: File, val log: File, val hash: File)
++
++    class ComparisonSlotWriter internal constructor(
++        private val paths: SlotPaths,
++        private val binding: ComparisonReadingBinding,
++        firstSequence: Int,
++    ) {
++        private val writer = BufferedWriter(
++            OutputStreamWriter(FileOutputStream(paths.log, true), Charsets.UTF_8),
++        )
++        private var sequence = firstSequence
++        private var closed = false
++
++        @Synchronized
++        fun append(record: JSONObject, elapsedNs: Long = ComparisonRuntime.nowNs(), flush: Boolean = false) {
++            check(!closed) { "Comparison slot writer is closed." }
++            stamp(record, binding.record, sequence++, elapsedNs, binding)
++            writer.append(record.toString())
++            writer.newLine()
++            if (flush) writer.flush()
++        }
++
++        @Synchronized
++        fun flush() {
++            if (!closed) writer.flush()
++        }
++
++        @Synchronized
++        fun closeAndSeal(): ComparisonSlotReceipt {
++            if (!closed) {
++                writer.flush()
++                writer.close()
++                closed = true
++            }
++            return synchronized(LOCK) { seal(paths) }
++        }
++
++        fun fileName(): String = paths.log.name
++    }
++
++    companion object {
++        const val SCHEMA = "newsmead_comparison_slot_v1"
++        const val DIRECTORY = "comparison-v1"
++        private const val CALIBRATION_RECORD_COUNT = 3
++        private val LOCK = Any()
++
++        private fun JSONObject.putRuntime(runtime: ComparisonRuntimeIdentity) {
++            put("protocol_id", runtime.spec.protocolId)
++            put("protocol_manifest_sha256", runtime.protocolManifestSha256)
++            put("slot_id", runtime.spec.slot.id)
++            put("order_variant", runtime.spec.orderVariant)
++            put("estimator_id", runtime.build.estimatorId)
++            put("estimator_base_commit", runtime.build.baseCommit)
++            put("estimator_base_apk_sha256", runtime.build.baseApkSha256)
++            put("collection_apk_sha256", runtime.collectionApkSha256)
++            put("device_instance_sha256", runtime.deviceInstanceSha256)
++            put("device_model", runtime.deviceModel)
++            put("screen_width_px", runtime.screenWidthPx)
++            put("screen_height_px", runtime.screenHeightPx)
++            put("density_dpi", runtime.densityDpi)
++            put("display_rotation", runtime.rotation)
++            put("coordinate_space", ComparisonProtocol.COORDINATE_SPACE)
++            put("monotonic_clock", ComparisonProtocol.MONOTONIC_CLOCK)
++        }
++
++        private fun stamp(
++            value: JSONObject,
++            binding: ComparisonRecordBinding,
++            sequence: Int,
++            elapsedNs: Long,
++            reading: ComparisonReadingBinding?,
++        ) {
++            require(elapsedNs >= 0L)
++            value.put("comparison_schema", SCHEMA)
++            value.putRuntime(binding.runtime)
++            value.put(
++                "calibration_sha256",
++                binding.calibrationSha256 ?: JSONObject.NULL,
++            )
++            value.put("comparison_binding_sha256", binding.digest)
++            value.put("record_sequence", sequence)
++            value.put("event_elapsed_ns", elapsedNs)
++            value.put("reading_layout_sha256", reading?.readingLayoutSha256 ?: JSONObject.NULL)
++            value.put("passage_sha256", reading?.passageSha256 ?: JSONObject.NULL)
++            value.put("reading_binding_sha256", reading?.digest ?: JSONObject.NULL)
++        }
++
++        private fun verifyRuntime(value: JSONObject, expected: ComparisonRuntimeIdentity) {
++            check(value.getString("protocol_id") == expected.spec.protocolId)
++            check(value.getString("protocol_manifest_sha256") == expected.protocolManifestSha256)
++            check(value.getString("slot_id") == expected.spec.slot.id)
++            check(value.getString("order_variant") == expected.spec.orderVariant)
++            check(value.getString("estimator_id") == expected.build.estimatorId)
++            check(value.getString("estimator_base_commit") == expected.build.baseCommit)
++            check(value.getString("estimator_base_apk_sha256") == expected.build.baseApkSha256)
++            check(value.getString("collection_apk_sha256") == expected.collectionApkSha256)
++            check(value.getString("device_instance_sha256") == expected.deviceInstanceSha256)
++            check(value.getString("device_model") == expected.deviceModel)
++            check(value.getInt("screen_width_px") == expected.screenWidthPx)
++            check(value.getInt("screen_height_px") == expected.screenHeightPx)
++            check(value.getInt("density_dpi") == expected.densityDpi)
++            check(value.getInt("display_rotation") == expected.rotation)
++            check(value.getString("coordinate_space") == ComparisonProtocol.COORDINATE_SPACE)
++            check(value.getString("monotonic_clock") == ComparisonProtocol.MONOTONIC_CLOCK)
++        }
++
++        private fun verifyBinding(value: JSONObject, expected: ComparisonRecordBinding) {
++            verifyRuntime(value, expected.runtime)
++            check(value.getString("calibration_sha256") == expected.calibrationSha256)
++            check(value.getString("comparison_binding_sha256") == expected.digest)
++        }
++
++        private fun seal(paths: SlotPaths): ComparisonSlotReceipt {
++            check(paths.log.isFile && !paths.hash.exists()) { "Comparison slot cannot be sealed." }
++            val hash = ComparisonProtocol.sha256(paths.log.readBytes())
++            writeAtomic(
++                paths.hash,
++                "$hash  ${paths.log.name}\n".toByteArray(Charsets.UTF_8),
++            )
++            return ComparisonSlotReceipt(paths.log.name, hash)
++        }
++
++        private fun writeAtomic(file: File, bytes: ByteArray) {
++            check(file.parentFile?.isDirectory == true || file.parentFile?.mkdirs() == true)
++            val atomic = AtomicFile(file)
++            val output: FileOutputStream = atomic.startWrite()
++            try {
++                output.write(bytes)
++                atomic.finishWrite(output)
++            } catch (failure: Throwable) {
++                atomic.failWrite(output)
++                throw failure
++            }
++        }
++
++        private fun JSONObject.putNum(key: String, value: Number?) {
++            put(key, value ?: JSONObject.NULL)
++        }
++    }
++}
+diff --git a/app/src/test/java/com/newsmead/gaze/ComparisonProtocolTest.kt b/app/src/test/java/com/newsmead/gaze/ComparisonProtocolTest.kt
+new file mode 100644
+index 0000000000000000000000000000000000000000..bc84ce25d94c54812b0ff8d929ad9ff818394424
+--- /dev/null
++++ b/app/src/test/java/com/newsmead/gaze/ComparisonProtocolTest.kt
+@@ -0,0 +1,123 @@
++package com.newsmead.gaze
++
++import org.junit.Assert.assertEquals
++import org.junit.Assert.assertNotEquals
++import org.junit.Assert.fail
++import org.junit.Test
++
++class ComparisonProtocolTest {
++    private val mgazenet = ComparisonBuildIdentity(
++        "mgazenet",
++        "bea2dacbfa8d95f6519ccd4fad1cb0dfd6028b22",
++        "131f8d96f9bdc3f5a5c16855aa6347e119fd07e96609cba9f6792b161c682fd9",
++    )
++
++    @Test
++    fun exactExplicitLaunchIsAccepted() {
++        val spec = ComparisonProtocol.validateLaunch(
++            ComparisonProtocol.PROTOCOL_ID,
++            "a56_mgazenet_A",
++            "A",
++            mgazenet,
++            "SM-A566B",
++        )
++        assertEquals("a56_mgazenet_A", spec.slot.id)
++        assertEquals("A", spec.orderVariant)
++    }
++
++    @Test
++    fun missingOrMutableInputsAreRejected() {
++        rejected { ComparisonProtocol.validateLaunch(null, "a56_mgazenet_A", "A", mgazenet, "SM-A566B") }
++        rejected { ComparisonProtocol.validateLaunch(ComparisonProtocol.PROTOCOL_ID, null, "A", mgazenet, "SM-A566B") }
++        rejected {
++            ComparisonProtocol.validateLaunch(
++                ComparisonProtocol.PROTOCOL_ID,
++                "a56_mgazenet_A",
++                null,
++                mgazenet,
++                "SM-A566B",
++            )
++        }
++        rejected {
++            ComparisonProtocol.validateLaunch(
++                ComparisonProtocol.PROTOCOL_ID,
++                "a56_mgazenet_A",
++                "a",
++                mgazenet,
++                "SM-A566B",
++            )
++        }
++    }
++
++    @Test
++    fun slotEstimatorOrderDeviceAndBaseMustAllMatch() {
++        rejected {
++            ComparisonProtocol.validateLaunch(
++                ComparisonProtocol.PROTOCOL_ID,
++                "a56_current_A",
++                "A",
++                mgazenet,
++                "SM-A566B",
++            )
++        }
++        rejected {
++            ComparisonProtocol.validateLaunch(
++                ComparisonProtocol.PROTOCOL_ID,
++                "g991b_mgazenet_B",
++                "A",
++                mgazenet,
++                "SM-G991B",
++            )
++        }
++        rejected {
++            ComparisonProtocol.validateLaunch(
++                ComparisonProtocol.PROTOCOL_ID,
++                "a56_mgazenet_A",
++                "A",
++                mgazenet,
++                "SM-G991B",
++            )
++        }
++        rejected {
++            ComparisonProtocol.validateLaunch(
++                ComparisonProtocol.PROTOCOL_ID,
++                "a56_mgazenet_A",
++                "A",
++                mgazenet.copy(baseApkSha256 = "0".repeat(64)),
++                "SM-A566B",
++            )
++        }
++    }
++
++    @Test
++    fun readingLayoutHashBindsRenderedTargets() {
++        val lines = (0 until 20).map { line ->
++            ReadingValidationLine(
++                line,
++                listOf(
++                    ReadingValidationWord("left$line", line * 30, line * 30 + 6),
++                    ReadingValidationWord("middle$line", line * 30 + 8, line * 30 + 16),
++                    ReadingValidationWord("right$line", line * 30 + 18, line * 30 + 25),
++                ),
++            )
++        }
++        val words = ReadingValidationProtocol.localizationCheckpoints(lines, "A")
++        val guided = ReadingValidationProtocol.lineReadingCheckpoints(lines, "A")
++        val first = ComparisonProtocol.readingLayoutSha256(
++            "passage", lines, words, guided, 60f, 44f, 1080, 1800,
++        )
++        val changed = ComparisonProtocol.readingLayoutSha256(
++            "passage", lines, words.drop(1) + words.first(), guided, 60f, 44f, 1080, 1800,
++        )
++        assertNotEquals(first, changed)
++    }
++
++    private fun rejected(block: () -> Unit) {
++        try {
++            block()
++            fail("Expected frozen comparison contract rejection")
++        } catch (_: IllegalArgumentException) {
++            // Expected.
++        }
++    }
++}
+diff --git a/app/src/test/java/com/newsmead/gaze/mgazenet/MgazeNetStopCompletionQueueTest.kt b/app/src/test/java/com/newsmead/gaze/mgazenet/MgazeNetStopCompletionQueueTest.kt
+new file mode 100644
+index 0000000000000000000000000000000000000000..bb6889db374d1290462dcd2b505a70629608b4ba
+--- /dev/null
++++ b/app/src/test/java/com/newsmead/gaze/mgazenet/MgazeNetStopCompletionQueueTest.kt
+@@ -0,0 +1,32 @@
++package com.newsmead.gaze.mgazenet
++
++import org.junit.Assert.assertEquals
++import org.junit.Assert.assertTrue
++import org.junit.Test
++
++class MgazeNetStopCompletionQueueTest {
++    @Test
++    fun terminalCallbacksWaitForOneCloseAndRunInRequestOrder() {
++        val queue = MgazeNetStopCompletionQueue()
++        val completed = ArrayList<String>()
++
++        assertEquals(
++            MgazeNetStopAction.START_CLOSE,
++            queue.request { completed += "seal" },
++        )
++        assertEquals(
++            MgazeNetStopAction.WAIT_FOR_CLOSE,
++            queue.request { completed += "lifecycle" },
++        )
++        assertTrue(completed.isEmpty())
++
++        queue.complete().forEach { it() }
++        assertEquals(listOf("seal", "lifecycle"), completed)
++
++        assertEquals(
++            MgazeNetStopAction.ALREADY_CLOSED,
++            queue.request { completed += "late" },
++        )
++        assertEquals(listOf("seal", "lifecycle"), completed)
++    }
++}

@@ -1,0 +1,23 @@
+MGazeNet integration for NewsMead (research branch)
+
+Public base.mnn and adapted crop/preprocessing algorithms:
+Gancheng Zhu, GazeFollower v1.0.2
+https://github.com/GanchengZhu/GazeFollower/tree/553920edcb7998c029828677f50f6d8eb4a16249
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0.
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+Modifications: Kotlin/Android crop buffers, explicit invalid-input handling,
+NCHW packing for MNN Session API, and synthetic fixture checks.
+AccuracySession also adapts calibration grid fractions, target indices and timing:
+physical-screen labels, draw acknowledgements, finite deadlines, held-out windows,
+and in-memory personal calibration. No upstream gaze accuracy is implied.
+These adaptations retain CC BY-NC-SA 4.0. Full upstream license is bundled.
+
+MNN 3.6.1, Alibaba, Apache License 2.0. Full license is bundled.
+https://github.com/alibaba/MNN/tree/d407447ed56c4121a11ccbd266dc184ca1ead0c2
+JNI declarations retain upstream package and ABI, exposing only CPU methods.
+
+Other dependencies: OpenCV 4.11.0, MediaPipe Tasks 0.10.29,
+AndroidX CameraX 1.3.4, and the C++ runtime bundled with MNN.
+See their upstream licenses and the repository's benchmark NOTICE.md.
+
+Production adaptations: separate local two-SVR persistence, full NewsMead calibration viewport, explicit-start lifecycle and unfiltered physical-screen output.

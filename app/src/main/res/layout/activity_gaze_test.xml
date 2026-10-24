@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light"
+    android:keepScreenOn="false">
+
+    <com.newsmead.gaze.CalibrationView
+        android:id="@+id/calibrationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.newsmead.gaze.GazeDotView
+        android:id="@+id/gazeDot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/hintText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/light_text"
+        android:textSize="16sp"
+        android:text="@string/gaze_test_hint" />
+
+    <Button
+        android:id="@+id/accuracyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:visibility="gone"
+        android:text="@string/gaze_recal_measure" />
+
+    <ScrollView
+        android:id="@+id/gatePanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="24dp"
+            android:paddingTop="72dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="32dp">
+
+        <TextView
+            android:id="@+id/gateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/light_text"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnApply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:text="@string/gaze_recal_apply" />
+
+        <Button
+            android:id="@+id/btnRevert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:text="@string/gaze_recal_revert" />
+
+        <Button
+            android:id="@+id/btnFullRecal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:text="@string/gaze_recal_full" />
+
+        <Button
+            android:id="@+id/btnRemeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:text="@string/gaze_recal_remeasure" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/countdownText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#212121"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -15,6 +15,8 @@ import com.newsmead.data.DataHelper
 import com.newsmead.R
 import com.newsmead.custom.CustomDividerItemDecoration
 import com.newsmead.data.FirebaseHelper
+import com.newsmead.logging.Analytics
+import com.newsmead.research.ResearchSession
 import com.newsmead.databinding.FragmentArticleSearchBinding
 import com.newsmead.fragments.layouts.BottomSheetDialogSearchFilter
 import com.newsmead.models.Article
@@ -112,6 +114,11 @@ class ArticleSearchFragment : Fragment(), clickListener {
 
         lifecycleScope.launch {
             DataHelper.loadArticleData(context, searchText = searchQuery) {
+
+                val language = if (languageVal == "") "english" else languageVal.lowercase()
+                Analytics.search(searchQuery.length, language, it.size)
+                ResearchSession.search(searchQuery.length, language, it.size)
+
                 if(FirebaseHelper.isNetworkAvailable(requireContext())) {
                     // Stop the shimmer
                     binding.shimmerSearch.stopShimmer()
@@ -146,6 +153,11 @@ class ArticleSearchFragment : Fragment(), clickListener {
                 searchText=searchQuery) {
                 binding.tvResultCount.text = "${it.size} results"
                 adapter.updateData(it)
+
+                // Logged once results are back, so result_count is real. Only
+
+                Analytics.search(searchQuery.length, language, it.size)
+                ResearchSession.search(searchQuery.length, language, it.size)
             }
         }
     }

@@ -11,7 +11,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.newsmead.data.DataHelper
-import com.newsmead.data.DataHelper.loadArticleDataLatest
 import com.newsmead.data.DataHelper.loadCategoryData
 import com.newsmead.data.DataHelper.loadSourcesData
 import com.newsmead.R

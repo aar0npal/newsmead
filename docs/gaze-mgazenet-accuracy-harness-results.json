@@ -1,0 +1,63 @@
+{
+  "scope": "Isolated accuracy harness software verification only",
+  "real_camera_accuracy_run": false,
+  "personal_calibration_run": false,
+  "active_tracker_changed": false,
+  "apk_sha256": "e2aff9a1c61622bbf1eccca571455379688fece48cf21f90a79e441da32f6865",
+  "camera_free_tested_apk_sha256": "272ac2c20b2278523a841cf000514ee4901d3215fef33e9fd4698e84b2ed44ac",
+  "post_device_change_scope": "numeric export provenance only; no UI, camera, session, preprocessing, calibration, or inference behavior changed",
+  "instrumentation_apk_sha256": "c4a2ee729a1d00bbeafd4509423308ec7a8c8e33ce814d72447dded376f39a32",
+  "benchmark_jvm": {
+    "tests": 130,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "host_tests": {
+    "tests": 37,
+    "failures": 0,
+    "skipped": 0
+  },
+  "protocol_review": {
+    "scope": "Host scorer and protocol review; Android source/APK unchanged",
+    "manifest_removal_bypass_rejected": true,
+    "protocol_target_geometry_validated": true,
+    "synthetic_metrics_unchanged": true,
+    "fixture_requires_gradle_build": false,
+    "jvm_tests_rerun": false,
+    "device_tests_rerun": false,
+    "v2_pilot_implemented": false
+  },
+  "camera_free_instrumentation": {
+    "SM-A566B": {
+      "tests": 2,
+      "failures": 0,
+      "camera_permission_granted": false,
+      "camera_appop": "ignore"
+    },
+    "SM-G991B": {
+      "tests": 2,
+      "failures": 0,
+      "camera_permission_granted": false,
+      "camera_appop": "ignore"
+    }
+  },
+  "synthetic_cross_language_export": {
+    "planned_blocks": 8,
+    "blocks_without_coordinates": 1,
+    "accuracy_gate_pass": null
+  },
+  "evidence_files": {
+    "a56-instrumentation-final.txt": "efe0c52f466ba6da956faafd699b5cc4da23e4c82588fdf48560836aba385091",
+    "a56-instrumentation-initial.txt": "ddb9fdf6903dc76aa06132f4e5a62ec2b366b7bba3ce915e71a8a2c795df9eb5",
+    "manifest-initial.json": "84c60c5209018e226d67f7e6b6ba03911a743d86ac5d17dc9d6754ef6021fcc5",
+    "sm-g991b-instrumentation-final.txt": "ba4e501d0bf7c8c657446ff2be3033d69f5b7103dc3ce6f16bc499f8888eaa1e",
+    "synthetic-kotlin-export.json": "c8852a9f461989e777fcec42495a4f1f076bb0866d3d2f11bbbb56adc34948c2",
+    "synthetic-python-score.json": "e4ed0431cde7c4a414a551c149fe7d812d72081e4a9cc41dd7371a0ca9bff23a",
+    "synthetic-kotlin-export-integrity.json": "bd4cd99ccb05c6ed534ddc0ad472cd4e2e13392080305fea0d677dc8a187f619",
+    "synthetic-python-score-integrity.json": "98ff1bc18c4faa1902c2f55ddc4449a67775eccaacd59a43a9a2c86b736ff272",
+    "synthetic-python-score-protocol-review.json": "98ff1bc18c4faa1902c2f55ddc4449a67775eccaacd59a43a9a2c86b736ff272",
+    "host-tests-integrity.txt": "abf413c1d2b51e29555078ee6aa1a4cf4ede31c6302d36490088fa83b68c56ba",
+    "TEST-com.newsmead.mgazenetbenchmark.AccuracySessionTest.xml": "1dd9f964713dbafbc005f65c29615697290a4675aa1da934d675f82de462e90e"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "scope": "Static asset and source identity only; no localizer inference or gaze accuracy",
+  "bundle_sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff",
+  "bundle_components": [
+    {
+      "name": "face_detector.tflite",
+      "bytes": 229746,
+      "sha256": "b4578f35940bf5a1a655214a1cce5cab13eba73c1297cd78e1a04c2380b0152f"
+    },
+    {
+      "name": "face_landmarks_detector.tflite",
+      "bytes": 2553590,
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5"
+    },
+    {
+      "name": "geometry_pipeline_metadata_landmarks.binarypb",
+      "bytes": 19376,
+      "sha256": "bdbcda96dfcb7da883da124aaa2c55dee49770d934f0fcc71747f8c21bdc75b4"
+    },
+    {
+      "name": "face_blendshapes.tflite",
+      "bytes": 955312,
+      "sha256": "4f36dded049db18d76048567439b2a7f58f1daabc00d78bfe8f3ad396a2d2082"
+    }
+  ],
+  "source_files": {
+    "mgazenet-benchmark/vendor/reference/face_alignment/MediaPipeFaceAlignment.py": "5378917b8f53d4192a22e02fbd0fdbe42064a408db22d4a641bdca2e902426ff",
+    "mgazenet-benchmark/vendor/reference/calibration/CalibrationController.py": "5bcbf3c5ced0533d074a67d1f7dd7511947cf844cf303632cd9df3d5f7653fd9",
+    "mgazenet-benchmark/src/main/java/com/newsmead/mgazenetbenchmark/CameraBenchmark.kt": "e55c42cae2efa362d77eda5a9e4385e2d0b4b3f6f00c33bf681d296bb1db74d0",
+    "mgazenet-benchmark/src/test/resources/upstream-openness.tsv": "b7a6f5bd405621b855e03f4b63572e31b5e60cc3ae85276007ab8044e71d7746"
+  },
+  "reference_mediapipe_version": "not pinned by GazeFollower 1.0.2 setup.py",
+  "android_runtime": "MediaPipe Tasks 0.10.29",
+  "localizer_equivalence_established": false,
+  "camera_used": false,
+  "images_used": false
+}

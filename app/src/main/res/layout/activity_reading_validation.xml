@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?primaryBackgroundColor"
+    tools:context=".activities.ReadingValidationActivity">
+
+    <ImageButton
+        android:id="@+id/btnCloseValidation"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:contentDescription="@string/reading_validation_stop"
+        android:src="@drawable/arrow_back_ios_nofill_weight400"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?secondaryIconColor" />
+
+    <TextView
+        android:id="@+id/tvValidationTitle"
+        style="@style/ts_title_small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/reading_validation_title"
+        android:textColor="?primaryTextColor"
+        app:layout_constraintBottom_toBottomOf="@id/btnCloseValidation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnCloseValidation"
+        app:layout_constraintTop_toTopOf="@id/btnCloseValidation" />
+
+    <com.newsmead.custom.LockableNestedScrollView
+        android:id="@+id/nsvValidationText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/validationControlPanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCloseValidation">
+
+        <TextView
+            android:id="@+id/tvValidationText"
+            style="@style/ts_body_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:lineSpacingExtra="8dp"
+            android:textColor="?primaryTextColor"
+            tools:text="Structured reading validation passage." />
+    </com.newsmead.custom.LockableNestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/validationControlPanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?primaryBackgroundColor"
+        android:elevation="12dp"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvValidationProgress"
+            style="@style/ts_subtext_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?secondaryTextColor"
+            tools:text="Phase 1 of 3" />
+
+        <TextView
+            android:id="@+id/tvValidationInstruction"
+            style="@style/ts_body_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="?primaryTextColor"
+            tools:text="Find the word shown here and keep looking at it." />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnValidationAction"
+            style="@style/ButtonMedium_Solid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/reading_validation_start" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/verticalAlignmentTarget"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/reading_alignment_target"
+        android:contentDescription="@string/reading_vertical_alignment_target"
+        android:elevation="20dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvValidationCountdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?primaryBackgroundColor"
+        android:elevation="24dp"
+        android:gravity="center"
+        android:padding="28dp"
+        android:textColor="?primaryTextColor"
+        android:textSize="64sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

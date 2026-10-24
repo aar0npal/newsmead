@@ -1,0 +1,7 @@
+// Explicit host-only verification. The existing FirebaseTest creates external accounts/data.
+// This init script is opt-in; it does not change the normal project's test configuration.
+allprojects {
+    tasks.withType(Test).configureEach {
+        exclude '**/FirebaseTest.class'
+    }
+}

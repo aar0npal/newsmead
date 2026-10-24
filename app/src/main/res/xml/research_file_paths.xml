@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!--
+      Session logs are written to noBackupFilesDir, which FileProvider has no
+      path type for. SessionLogExport stages copies here before sharing.
+    -->
+    <cache-path name="research-export" path="research-export/" />
+</paths>

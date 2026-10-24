@@ -1,0 +1,6 @@
+# Proposed reference environment only; NOT installed by build or audit scripts.
+# CPython 3.12, Windows x86-64. Hashes verified against PyPI metadata 2026-09-07.
+# Use a separate venv with --require-hashes --only-binary=:all: after authorization.
+MNN==3.6.1 --hash=sha256:432a5b241e1a63af9de10d7bfa9db1d468461ecb39b33b045b1bf0a0b43fd838
+opencv-python==4.11.0.86 --hash=sha256:085ad9b77c18853ea66283e98affefe2de8cc4c1f43eda4c100cf9b2721142ec
+numpy==1.26.4 --hash=sha256:08beddf13648eb95f8d867350f6a018a4be2e5ad54c8d8caed89ebca558b2818

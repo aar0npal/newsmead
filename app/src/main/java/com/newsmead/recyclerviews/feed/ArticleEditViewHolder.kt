@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.newsmead.R
+import com.newsmead.data.DataHelper
 import com.newsmead.databinding.ItemListEditBinding
 import com.newsmead.models.Article
 
@@ -21,8 +22,7 @@ class ArticleEditViewHolder(
         else
             binding.ivArticleEditImage.setImageResource(R.drawable.sample_article_image)
         val context = binding.root.context
-        val resourceId = context.resources.getIdentifier(article.sourceImage, "drawable", context.packageName)
-        binding.ivSourceEditImage.setImageResource(if (resourceId != 0) resourceId else R.drawable.sample_source_image)
+        DataHelper.loadSourceImage(binding.ivSourceEditImage, article.sourceImage)
     }
 
     fun getCardView(): CardView {

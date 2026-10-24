@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "599794313490",
-    "project_id": "newsmead",
-    "storage_bucket": "newsmead.appspot.com"
+    "project_number": "1062577119168",
+    "project_id": "newsmead-test",
+    "storage_bucket": "newsmead-test.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:599794313490:android:399e7e41f4c92d19e0abcb",
+        "mobilesdk_app_id": "1:1062577119168:android:34adc4c2b7be51c734f225",
         "android_client_info": {
           "package_name": "com.newsmead"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDGJSwvkhXLSVYn-R9xB_5JHNBFcmYZYwo"
+          "current_key": "AIzaSyA60owriOsT2PXHXb_EoeKGzuPxJFOS2t0"
         }
       ],
       "services": {

@@ -8,6 +8,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.newsmead.R
 import com.newsmead.data.DataHelper
+import com.newsmead.logging.AppLog
+import com.newsmead.logging.Analytics
+import com.newsmead.research.ResearchSession
 
 import com.newsmead.databinding.ActivityMainBinding
 
@@ -31,6 +34,14 @@ class MainActivity : AppCompatActivity() {
 
         // OnDestinationChangedListener
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            // The nav graph already reports every destination change, so screen
+            // tracking rides along rather than being sprinkled per fragment.
+            val screen = runCatching { resources.getResourceEntryName(destination.id) }
+                .getOrDefault("unknown")
+            AppLog.setScreen(screen)
+            Analytics.screenView(screen, "MainActivity")
+            ResearchSession.screenView(screen)
+
             when (destination.id) {
                 R.id.homeFragment -> {
                     this.viewBinding.bottomNavigationView.visibility = View.VISIBLE

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.front" android:required="false" />
+
     <application
         android:name=".data.NewsMeadApplication"
         android:allowBackup="true"
@@ -32,6 +35,52 @@
             android:name=".activities.MainActivity"
             android:exported="false">
         </activity>
+        <!-- exported=true so the researcher can launch it via `adb shell am start`
+             (Android 16 / One UI blocks adb from starting non-exported activities).
+             Harmless for a research instrument; no sensitive data behind it. -->
+        <activity
+            android:name=".activities.GazeCalibrationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.GazeTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ReadingValidationActivity"
+            android:exported="true" />
+        <activity android:name=".activities.ReadingBaselineActivity" android:exported="false" />
+        <!-- Researcher-only candidate throughput preview. It cannot emit gaze or write calibration. -->
+        <activity
+            android:name=".activities.HybridEyePerformanceActivity"
+            android:exported="true" />
+        <!-- Researcher-only raw horizontal gate; no mapper, gaze output, or calibration access. -->
+        <activity
+            android:name=".activities.CompactFaceHorizontalGateActivity"
+            android:exported="true" />
+        <!-- Standalone compact-candidate fit/held-out gate; never saves app calibration. -->
+        <activity
+            android:name=".activities.CompactFaceCalibrationGateActivity"
+            android:exported="true" />
+
+        <!-- Stages research session logs for an explicit, user-initiated share. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.research.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/research_file_paths" />
+        </provider>
+
+        <!--
+          Firebase Analytics is used for product events (see logging/Analytics.kt).
+          Advertising-ID collection is off: this app is also run as a study
+          instrument, and an advertising identifier is not something
+          participants consent to.
+        -->
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
     </application>
 
 </manifest>

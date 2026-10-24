@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.newsmead.data.DatabaseHelper
 import com.newsmead.data.FirebaseHelper
+import com.newsmead.logging.Analytics
+import com.newsmead.research.ResearchSession
 import com.newsmead.data.PreloadedData
 import com.newsmead.databinding.BottomSheetDialogSaveListBinding
 import com.newsmead.models.Article
@@ -87,6 +89,8 @@ class BottomSheetDialogSaveFragment(
                         FirebaseHelper.addArticleToFireStoreList(
                             requireContext(), listId, article
                         )
+                        Analytics.saveToList(article.newsId, listId)
+                        ResearchSession.saveToList(article.newsId, listId)
 
                         // Add to local database IF listId is offlineArticle
                         if (listId == "offlineArticles") {
@@ -115,6 +119,8 @@ class BottomSheetDialogSaveFragment(
                         FirebaseHelper.deleteArticleFromFirestoreList(
                             requireContext(), list.id, article.newsId
                         )
+                        Analytics.removeFromList(article.newsId, list.id)
+                        ResearchSession.removeFromList(article.newsId, list.id)
 
                         // Remove from local database IF listId is offlineArticle
                         if (list.id == "offlineArticle") {

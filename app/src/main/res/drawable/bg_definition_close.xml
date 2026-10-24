@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?buttonRippleGray">
+    <item>
+        <inset android:insetLeft="10dp" android:insetTop="10dp"
+            android:insetRight="10dp" android:insetBottom="10dp">
+            <shape>
+                <solid android:color="?secondaryButtonBgColor" />
+                <corners android:radius="3dp" />
+            </shape>
+        </inset>
+    </item>
+    <item android:id="@android:id/mask">
+        <inset android:insetLeft="10dp" android:insetTop="10dp"
+            android:insetRight="10dp" android:insetBottom="10dp">
+            <shape>
+                <solid android:color="@android:color/white" />
+                <corners android:radius="3dp" />
+            </shape>
+        </inset>
+    </item>
+</ripple>

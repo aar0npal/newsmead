@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "NewsMead"
 include(":app")
- 
+// Explicit research build only; the ordinary app never depends on this module.
+if (providers.gradleProperty("mgazenetBenchmark").orNull == "true") {
+    include(":mgazenet-benchmark")
+}

@@ -1,8 +1,45 @@
 <resources>
+    <string name="definition_lookup_offer">Look up %1$s</string>
     <string name="app_name">NewsMead</string>
 
     <!-- symbol -->
-    <string name="symbol_bullet">•</string>
+    <string name="symbol_bullet">*</string>
+
+    <!-- gaze calibration (Stage 4) -->
+    <string name="calib_progress_initial">Calibration</string>
+    <string name="calib_ready_instruction">Hold the phone at your normal reading position.\nFollow the dot with your eyes - it flashes green when captured.\nTap Start when ready.</string>
+    <string name="calib_start_button">Ready - Start</string>
+    <string name="calib_progress">Point %1$d / %2$d - look at the dot</string>
+    <string name="calib_retry">No clear read - retrying</string>
+    <string name="calib_done">Calibration complete (%1$d / %2$d)</string>
+    <string name="calib_saved">Saved. Press back to return.</string>
+    <string name="calib_practice_label">Practice point - follow the dot</string>
+    <string name="calib_drift_label">One more - look at the dot</string>
+    <string name="calib_validation_progress">Accuracy check - point %1$d / %2$d</string>
+    <string name="reading_validation_title">Structured reading validation</string>
+    <string name="reading_validation_start">Start validation</string>
+    <string name="reading_validation_stop">Stop validation</string>
+    <string name="reading_vertical_alignment_target">Vertical alignment reference target</string>
+    <string name="reading_validation_menu">Gaze diagnostics</string>
+    <string name="reading_measurement_option">Record natural reading</string>
+    <string name="reading_measurement_instructions">Read normally at your own pace. The orange gaze dot stays visible so you can check tracking. Reading scaffolds will be off. Tap the gaze diagnostics button again to finish. Leaving this screen also ends the recording.</string>
+    <string name="reading_measurement_start">Start reading</string>
+    <string name="reading_measurement_unavailable">Start live gaze tracking and open an article before recording.</string>
+    <string name="reading_measurement_saved">Reading recording saved on this device.</string>
+    <string name="reading_measurement_failed">The reading recording could not be saved completely. Please repeat it.</string>
+    <string name="reading_validation_accuracy_option">Nine-point accuracy check</string>
+    <string name="reading_validation_reading_option">Structured reading validation</string>
+    <string name="calib_excluded_notice">Point skipped after 2 tries</string>
+    <string name="calib_gate_title">Calibration quality check</string>
+    <string name="calib_gate_summary">Fit error (leave-one-out):\nmedian %1$.0f px (%2$.1f lines) - P95 %3$.0f px (%4$.1f lines)\nValidation (%5$d pts): median %6$.0f px (%7$.1f lines)\nExcluded points: %8$d</string>
+    <string name="calib_gate_drift">High drift between start and end (%1$.0f px)</string>
+    <string name="calib_gate_advice_good">Meets the provisional spatial reference; reading compatibility is not yet established.</string>
+    <string name="calib_gate_advice_ok">Review individual target errors before saving.</string>
+    <string name="calib_gate_advice_poor">Large target-specific errors detected; redo is recommended.</string>
+    <string name="calib_accept">Save calibration</string>
+    <string name="calib_redo_worst">Redo worst points</string>
+    <string name="calib_redo_all">Redo all</string>
+    <string name="calib_aborted">Only %1$d of %2$d points usable - calibration must be redone</string>
 
     <!-- text commons -->
     <string name="commons_category">Category</string>
@@ -45,8 +82,32 @@
     <!-- fragment_log_in -->
     <string name="log_in_title">Welcome Back! Log in</string>
     <string name="log_in_remember_me">Remember Me?</string>
+    <string name="log_in_forgot_password">Forgot password?</string>
     <string name="log_in_btn">Log in</string>
     <string name="log_in_create_account_btn">Create an Account</string>
+    <string name="reset_password_title">Reset password</string>
+    <string name="reset_password_message">Enter the email address for your account. We\'ll send you a link to reset your password.</string>
+    <string name="reset_password_send">Send link</string>
+    <string name="reset_password_cancel">Cancel</string>
+    <string name="reset_password_sent">If an account exists for that email, a reset link has been sent.</string>
+    <string name="reset_password_invalid_email">Please provide a valid email</string>
+
+    <!-- email verification -->
+    <string name="verify_email_sent">Account created. We have sent a verification link to your email. Open it, then log in.</string>
+    <string name="verify_email_before_login">Please verify your email before logging in. We have sent a new link to your inbox.</string>
+
+    <!-- auth errors -->
+    <string name="auth_error_network">No internet connection. Check your network and try again.</string>
+    <string name="auth_error_no_account">No account found for that email.</string>
+    <string name="auth_error_disabled">This account has been disabled.</string>
+    <string name="auth_error_bad_credentials">Wrong email or password.</string>
+    <string name="auth_error_sign_in_generic">Could not sign in. Please try again.</string>
+    <string name="auth_error_too_many_attempts">Too many attempts. Please wait a moment and try again.</string>
+    <string name="auth_error_email_taken">That email is already registered. Try logging in instead.</string>
+    <string name="auth_error_weak_password">Please choose a stronger password.</string>
+    <string name="auth_error_invalid_email">Please provide a valid email address.</string>
+    <string name="auth_error_sign_up_generic">Could not create your account. Please try again.</string>
+    <string name="profile_password_updated">Password updated.</string>
 
     <!-- fragment_onboarding -->
     <string name="onboarding_title">Welcome to NewsMead</string>
@@ -114,6 +175,30 @@
     <!-- activity_article -->
     <string name="article_translate_btn">Filipino</string>
     <string name="article_read_aloud_btn">Read Aloud</string>
+    <string name="article_calibrate_gaze">Run gaze calibration</string>
+    <string name="article_gaze_test">Run gaze accuracy test</string>
+    <!-- gaze accuracy test (ported Stage 3) -->
+    <string name="gaze_test_hint">Look around - the dot should follow your gaze</string>
+    <string name="gaze_test_no_calibration">No calibration found. Run calibration first.</string>
+    <string name="gaze_test_fit_failed">Calibration fit failed. Re-run calibration.</string>
+    <string name="gaze_test_run_accuracy">Run Accuracy Test</string>
+    <string name="gaze_test_accuracy_progress">Accuracy %1$d / %2$d - look at the ring</string>
+    <string name="gaze_test_point_result">Point %1$d / %2$d:  err %3$.0f px   vert %4$.0f px</string>
+    <string name="gaze_test_accuracy_result">Median error: %1$.0f px (%2$.2f cm)\nVertical: %3$.0f px (%4$.2f cm)</string>
+    <string name="gaze_test_apply_correction">Apply drift correction: %1$.0f px → est. %2$.0f px</string>
+    <string name="gaze_test_correction_applied">Correction applied - the dot now uses it.\nMeasure again to verify.</string>
+    <string name="gaze_recal_measure">Measure accuracy</string>
+    <string name="gaze_recal_summary">Accuracy: median %1$.0f px (%2$.1f lines)\nP95 %3$.0f px · vertical %4$.0f px</string>
+    <string name="gaze_recal_estimate">Est. after correction (leave-one-out): %1$.0f px (%2$.1f lines)</string>
+    <string name="gaze_recal_advice_good">Meets the provisional spatial reference; reading compatibility is not yet established.</string>
+    <string name="gaze_recal_advice_ok">Inspect individual targets before considering a global correction.</string>
+    <string name="gaze_recal_advice_poor">Large target-specific errors detected; a global correction may not repair a regional failure.</string>
+    <string name="gaze_recal_insufficient">Not enough clean points measured. Measure again, or run a full recalibration.</string>
+    <string name="gaze_recal_apply">Apply global correction candidate</string>
+    <string name="gaze_recal_revert">Revert to calibration</string>
+    <string name="gaze_recal_full">Full recalibration</string>
+    <string name="gaze_recal_remeasure">Measure again</string>
+    <string name="gaze_recal_reverted">Reverted to base calibration.</string>
     <string name="article_save_to_list_btn">Save to List</string>
     <string name="article_by">by</string>
     <string name="article_show_more_btn">Show more from AUTHOR</string>
@@ -122,6 +207,11 @@
     <string name="article_theme_dark">Dark</string>
     <string name="article_theme_sepia">Sepia</string>
     <string name="article_text_smaller_btn">Smaller Text</string>
+    <string name="article_text_smaller_symbol">A−</string>
+    <string name="article_text_larger_symbol">A+</string>
+    <string name="article_text_size_current">Text size: %1$d</string>
+    <string name="article_text_smaller_caption">Smaller</string>
+    <string name="article_text_larger_caption">Larger</string>
     <string name="article_text_larger_btn">Larger Text</string>
 
     <!-- ~~~~~~~~~~~~~~~~~~~~ Bottom Sheet ~~~~~~~~~~~~~~~~~~~~ -->
@@ -208,7 +298,7 @@
         "All action takes place in a single environment. Objects are presented to the user without "
         "breaking the continuity of experience even as they transform and reorganize.\n"
         "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+        "Feedback is subtle yet clear. Transitions are efÃƒÂ¯Ã‚Â¬Ã‚Âcient yet coherent.\n\n"
 
         "3D world.\n\n"
 
@@ -247,7 +337,7 @@
         "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
         "changes are consistently implemented using dynamic elevation offsets.\n"
         "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
-        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "to the componentÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s resting state. They ensure that elevation changes are consistent "
         "across actions and component types. For example, all components that lift on press have "
         "the same elevation change relative to their resting elevation.\n"
         "Once the input event is completed or cancelled, the component will return to its resting "
@@ -263,7 +353,7 @@
         "For example, a floating action button (FAB) can disappear or move off screen before a "
         "user picks up a card, or it can move if a snackbar appears.\n"
         "On the layout level, design your app layout to minimize opportunities for interference. "
-        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "For example, position the FAB to one side of stream of a cards so the FAB wonÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="profile_confirm_password">Confirm Password</string>
@@ -279,5 +369,60 @@
     <string name="article_text_loading">Article is loading... (If it does not load, please re-open this article.)</string>
     <string name="home_show_english">Show me English news</string>
     <string name="home_show_filipino">Show me Filipino news</string>
+    <string name="home_gaze_calibration">Calibrate eye tracker</string>
+    <string name="home_region_local">Philippines</string>
+    <string name="home_region_international">World</string>
+    <string name="article_read_full">Read the full story</string>
+    <string name="article_read_full_on">Read the full story on %1$s</string>
+    <string name="article_view_original_on">View the original on %1$s</string>
+    <string name="article_loading_full">Loading the full article…</string>
 
+    <string name="reading_aids_option">Reading aids</string>
+    <string name="reading_aid_entry_short">Aids</string>
+    <string name="article_options">Article options</string>
+    <string name="reading_aid_menu_opacity">Guide opacity: %1$.1f%%</string>
+    <string name="reading_aid_menu_guide">Reading guide</string>
+    <string name="reading_aid_menu_line">Line</string>
+    <string name="reading_aid_menu_sentence">Sentence context</string>
+    <string name="reading_aid_menu_sentence_help">May include nearby sentences when needed.</string>
+    <string name="reading_aid_menu_bookmark">Reading bookmark</string>
+    <string name="reading_aid_menu_definitions">Word definitions</string>
+    <string name="reading_aid_menu_focus">Focus window</string>
+    <string name="reading_aid_menu_focus_appearance">Focus window appearance</string>
+    <string name="reading_aid_menu_focus_fade">Fade surrounding text</string>
+    <string name="reading_aid_menu_focus_dark">Dark surroundings</string>
+    <string name="reading_aid_menu_advanced">Advanced settings</string>
+    <string name="reading_aid_menu_strength_help">Strength settings are relative levels, not opacity. The reading bookmark has fixed visibility.</string>
+    <string name="reading_aid_menu_cap">Maximum strength setting: %1$d%%</string>
+    <string name="reading_aid_menu_strength">Manual strength setting: %1$d%%</string>
+    <string name="reading_aid_menu_done">Done</string>
+    <string name="reading_aids_enabled">Enable reading aids</string>
+    <string name="reading_aids_line">Follow the current line</string>
+    <string name="reading_aids_start">Mark where I left off after looking away or a line jump</string>
+    <string name="reading_aids_word">Magnify a repeatedly inspected word</string>
+    <string name="reading_aids_focus">Allow a soft focus region</string>
+    <string name="reading_aids_adaptive">Adjust strength during reading</string>
+    <string name="reading_aids_strength">Aid strength: %1$d%% (reading bookmark has fixed visibility; 0 turns aids off)</string>
+    <string name="reading_aids_apply">Apply</string>
+    <string name="reading_aids_save_trace">Save aid diagnostics</string>
+    <string name="reading_aids_trace_saved">Aid diagnostics saved privately on this device.</string>
+    <string name="reading_aids_trace_failed">Could not save aid diagnostics.</string>
+    <string name="article_aid_demo_option">Article aid demo</string>
+    <string name="article_aid_demo_status">DEMO %1$d/%2$d: %3$s\nCamera off · 4-second cycle · display preview</string>
+    <string name="article_aid_demo_preparing">Preparing article demo. Camera off.</string>
+    <string name="article_aid_demo_unavailable">Article demo unavailable: %1$s</string>
+    <string name="article_aid_demo_definition">Word lookup · tap the icon</string>
+    <string name="reading_aids_word_definition">Offer a word lookup after prolonged inspection</string>
+    <string name="definition_card_description">Definition of %1$s</string>
+    <string name="definition_close">Close definition</string>
+    <string name="definition_loading">Looking up definition…</string>
+    <string name="definition_unavailable">No definition available for this word.</string>
+    <string name="definition_token_unavailable">This word format is not supported by the English dictionary.</string>
+    <string name="definition_entry_not_found">No dictionary entry found for this word.</string>
+    <string name="definition_service_unavailable">Could not reach the dictionary or read its response. Try again later.</string>
+    <string name="definition_unknown_unavailable">No definition available for this word.</string>
+    <string name="definition_offline_unavailable">No offline definition saved for this word.</string>
+    <string name="definition_language_unavailable">Definitions are available for English articles.</string>
+    <string name="definition_common_meanings">Common meanings · %1$s</string>
+    <string name="reading_baseline_title">Baseline reading</string>
 </resources>

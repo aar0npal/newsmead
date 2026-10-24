@@ -10,6 +10,13 @@ import androidx.core.widget.NestedScrollView
 internal class LockableNestedScrollView : NestedScrollView {
     // by default is scrollable
     private var scrollable = true
+    /** Observes descendant touches too, without consuming or changing gesture dispatch. */
+    var onUserTouch: ((MotionEvent) -> Unit)? = null
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        onUserTouch?.invoke(ev)
+        return super.dispatchTouchEvent(ev)
+    }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, @Nullable attrs: AttributeSet?) : super(context, attrs)

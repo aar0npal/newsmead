@@ -1,0 +1,106 @@
+{
+  "date": "2026-09-07",
+  "scope": "Camera-free synthetic native correctness and microbenchmark; no gaze accuracy measurement",
+  "model_sha256": "2f96b95275fe6d7b79e98df3237ebb96e15ef5522c96968f08167da7e1954a96",
+  "benchmark_apk_sha256": "3c6721de746ebbcf7109ffc127e565757208a404a95dd59b422deac5255d88a2",
+  "test_apk_sha256": "67558de0665d32bf243435c67932c74b5bd14c46914e6152b1689991dfa1ad10",
+  "reference_host": {
+    "architecture": "AMD64",
+    "python": "3.12.14",
+    "numpy": "1.26.4",
+    "MNN": "3.6.1",
+    "opencv": "4.11.0",
+    "reported_fp16_support": false
+  },
+  "android_low_precision_executed": false,
+  "reference_normal_and_requested_low_identical": true,
+  "active_tracker_changed": false,
+  "camera_used": false,
+  "participant_calibration_used": false,
+  "gaze_accuracy_established": false,
+  "localizer_parity_established": false,
+  "evidence_directory": "diagnostics-local/2026-09-07/mgazenet-native-parity",
+  "devices": [
+    {
+      "model": "SM-A566B",
+      "android_version": "16",
+      "android_sdk": 36,
+      "page_bytes": 4096,
+      "native_tests_passed": 5,
+      "camera_permission_granted": false,
+      "network_permissions_present": false,
+      "synthetic_report": "diagnostics-local/2026-09-07/mgazenet-native-parity/a56-final/report.json",
+      "synthetic_report_sha256": "7a6c4909622a775c6df4e4a29c2d9751296851bc62936a798221dd91bf105473",
+      "comparison_file": "diagnostics-local/2026-09-07/mgazenet-native-parity/a56-final-comparison.json",
+      "comparison_sha256": "cce0216e3472fd720b9f2742478f7d4a1ed88f655f3f41443748c04a7ec0ad77",
+      "normal_precision_parity_pass": true,
+      "reference_host_requested_low_configuration_parity_pass": true,
+      "all_input_tensors_exact": true,
+      "maximum_model_feature_difference": 3.910064697265625e-05,
+      "maximum_synthetic_svr_prediction_difference": 1.0728836059570312e-06,
+      "model_with_io_ms": {
+        "n": 100,
+        "mean": 63.536463269999985,
+        "median": 64.063438,
+        "p95": 68.356016,
+        "max": 71.537383
+      },
+      "synthetic_preprocess_and_model_ms": {
+        "n": 100,
+        "mean": 64.39961368000002,
+        "median": 65.021172,
+        "p95": 69.193125,
+        "max": 72.342422
+      },
+      "synthetic_svr_predict_ms": {
+        "n": 100,
+        "mean": 0.35228281,
+        "median": 0.345195,
+        "p95": 0.38625,
+        "max": 0.599414
+      },
+      "synthetic_svr_training_ms": 328.117148
+    },
+    {
+      "model": "SM-G991B",
+      "android_version": "15",
+      "android_sdk": 35,
+      "page_bytes": 4096,
+      "native_tests_passed": 5,
+      "camera_permission_granted": false,
+      "network_permissions_present": false,
+      "synthetic_report": "diagnostics-local/2026-09-07/mgazenet-native-parity/sm-g991b/report.json",
+      "synthetic_report_sha256": "11047bf657b004586cf8bc3be6b6606a94bffaa6907832ea729270997111044b",
+      "comparison_file": "diagnostics-local/2026-09-07/mgazenet-native-parity/sm-g991b-comparison.json",
+      "comparison_sha256": "7fd3aeae0a74b986b45e41cdfef03656c6e47867512cbeed5096297ec4cfffdb",
+      "normal_precision_parity_pass": true,
+      "reference_host_requested_low_configuration_parity_pass": true,
+      "all_input_tensors_exact": true,
+      "maximum_model_feature_difference": 3.910064697265625e-05,
+      "maximum_synthetic_svr_prediction_difference": 1.0728836059570312e-06,
+      "model_with_io_ms": {
+        "n": 100,
+        "mean": 24.179053049999997,
+        "median": 22.029846,
+        "p95": 29.11527,
+        "max": 106.986384
+      },
+      "synthetic_preprocess_and_model_ms": {
+        "n": 100,
+        "mean": 25.684406089999996,
+        "median": 23.566231,
+        "p95": 30.685846,
+        "max": 108.512461
+      },
+      "synthetic_svr_predict_ms": {
+        "n": 100,
+        "mean": 0.44862234,
+        "median": 0.415423,
+        "p95": 0.641115,
+        "max": 2.451
+      },
+      "synthetic_svr_training_ms": 323.705961
+    }
+  ],
+  "between_phone_maximum_model_feature_difference": 0.0
+}

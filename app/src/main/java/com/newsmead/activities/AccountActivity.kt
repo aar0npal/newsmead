@@ -17,25 +17,25 @@ class AccountActivity : AppCompatActivity() {
         this.viewBinding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val intent = intent
-        if (intent != null) {
-            val initialFragment = intent.getStringExtra("initial_fragment")
 
-            if ("sign_up" == initialFragment) {
-                supportFragmentManager.beginTransaction()
-                    .replace(viewBinding.flAccountContainer.id, SignUpFragment())
-                    .commit()
-            } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(viewBinding.flAccountContainer.id, LogInFragment())
-                    .commit()
-            }
+        if (savedInstanceState != null) return
+
+        val fragment = if ("sign_up" == intent?.getStringExtra("initial_fragment")) {
+            SignUpFragment()
+        } else {
+            LogInFragment.newInstance(intent?.getStringExtra("notice"))
         }
 
+        supportFragmentManager.beginTransaction()
+            .replace(viewBinding.flAccountContainer.id, fragment)
+            .commit()
     }
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
-        // Do Nothing
+
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        }
     }
 }

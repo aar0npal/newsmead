@@ -1,0 +1,1716 @@
+{
+  "method": "fixed_three_reference_median_offset_no_clipping",
+  "retrospective_only": true,
+  "runs": [
+    {
+      "label": "vert_off_1",
+      "mode": "off",
+      "order": "B",
+      "session_id": "reading_validation_session_20260902_212604_503",
+      "offset_px": -4.9371337890625,
+      "offset_in_actual_line_pitches": -0.03712130668468045,
+      "original_fit_accepted": false,
+      "original_fit_applied_live": false,
+      "original_gain": 1.6824712346880795,
+      "original_intercept_px": -776.8452694685252,
+      "original_gate_reason": "leave_one_out_error_too_large",
+      "geometry": {
+        "pitch_px": 133,
+        "interior_intercept_px": 12,
+        "line_count": 48,
+        "content_height_px": 6340,
+        "viewport_top_px": 259,
+        "viewport_bottom_px": 2205,
+        "margin_px": 45
+      },
+      "nominal_line_height_px": 137,
+      "reproduced_measured_base_and_effective_assignments": 1772,
+      "exact_word_replay": "not_available_glyph_geometry_not_logged",
+      "stabilized_replay": "not_performed_compare_raw_line_assignment_only",
+      "variants": {
+        "base": {
+          "all": {
+            "n": 886,
+            "valid": 886,
+            "valid_pct": 100,
+            "exact_line_pct": 30.02257336343115,
+            "within_one_line_pct": 75.28216704288938,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.8633767034774436,
+            "all_sample_center_error_p95_lines": 2.401915815539826,
+            "all_sample_center_error_max_lines": 2.7876674107142856
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 361,
+              "valid": 361,
+              "valid_pct": 100,
+              "exact_line_pct": 32.13296398891967,
+              "within_one_line_pct": 60.664819944598335,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.1366012687969924,
+              "all_sample_center_error_p95_lines": 2.607155706649436,
+              "all_sample_center_error_max_lines": 2.7876674107142856
+            },
+            "GUIDED_LINE_READING": {
+              "n": 525,
+              "valid": 525,
+              "valid_pct": 100,
+              "exact_line_pct": 28.571428571428573,
+              "within_one_line_pct": 85.33333333333333,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.7610248766447368,
+              "all_sample_center_error_p95_lines": 1.8932297785479324,
+              "all_sample_center_error_max_lines": 2.754098992598684
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 28.567122558531384,
+          "equal_checkpoint_weight_within_one_line_pct": 70.3196050499127,
+          "zero_valid_checkpoints": []
+        },
+        "offset_only": {
+          "all": {
+            "n": 886,
+            "valid": 886,
+            "valid_pct": 100,
+            "exact_line_pct": 29.345372460496613,
+            "within_one_line_pct": 74.83069977426636,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.8959066061148966,
+            "all_sample_center_error_p95_lines": 2.420244259941847,
+            "all_sample_center_error_max_lines": 2.791220299283365
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 361,
+              "valid": 361,
+              "valid_pct": 100,
+              "exact_line_pct": 31.57894736842105,
+              "within_one_line_pct": 59.83379501385041,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.173722575481673,
+              "all_sample_center_error_p95_lines": 2.570033482142857,
+              "all_sample_center_error_max_lines": 2.750547021851504
+            },
+            "GUIDED_LINE_READING": {
+              "n": 525,
+              "valid": 525,
+              "valid_pct": 100,
+              "exact_line_pct": 27.80952380952381,
+              "within_one_line_pct": 85.14285714285714,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.7961067830709586,
+              "all_sample_center_error_p95_lines": 1.891847171640037,
+              "all_sample_center_error_max_lines": 2.791220299283365
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 27.880445574703337,
+          "equal_checkpoint_weight_within_one_line_pct": 69.72004968852217,
+          "zero_valid_checkpoints": []
+        },
+        "original_guarded_gain_bias": {
+          "all": {
+            "n": 886,
+            "valid": 886,
+            "valid_pct": 100,
+            "exact_line_pct": 30.02257336343115,
+            "within_one_line_pct": 75.28216704288938,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.8633767034774436,
+            "all_sample_center_error_p95_lines": 2.401915815539826,
+            "all_sample_center_error_max_lines": 2.7876674107142856
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 361,
+              "valid": 361,
+              "valid_pct": 100,
+              "exact_line_pct": 32.13296398891967,
+              "within_one_line_pct": 60.664819944598335,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.1366012687969924,
+              "all_sample_center_error_p95_lines": 2.607155706649436,
+              "all_sample_center_error_max_lines": 2.7876674107142856
+            },
+            "GUIDED_LINE_READING": {
+              "n": 525,
+              "valid": 525,
+              "valid_pct": 100,
+              "exact_line_pct": 28.571428571428573,
+              "within_one_line_pct": 85.33333333333333,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.7610248766447368,
+              "all_sample_center_error_p95_lines": 1.8932297785479324,
+              "all_sample_center_error_max_lines": 2.754098992598684
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 28.567122558531384,
+          "equal_checkpoint_weight_within_one_line_pct": 70.3196050499127,
+          "zero_valid_checkpoints": []
+        }
+      },
+      "offset_checkpoint_deltas": [
+        {
+          "checkpoint": "localization_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": -4.878048780487806,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": 0.0371213066846805,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_4",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.005526435106320504,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_1",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.0371213066846805,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_3",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": 0.03712130668468072,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_6",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": -4.6511627906976685,
+          "all_sample_center_p95_change_lines": 0.0371213066846805,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_8",
+          "actual_target_center_screen_px": 1750.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": -2.2727272727272734,
+          "all_sample_center_p95_change_lines": 0.03712130668468028,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_5",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.037122224506579204,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_7",
+          "actual_target_center_screen_px": 1351.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": 0.0371213066846805,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": -1.1235955056179705,
+          "all_sample_center_p95_change_lines": 0.03712130668468028,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_3",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": -1.2195121951219523,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": 0.03712130668468039,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_1",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": 1.1494252873563227,
+          "within_one_line_change_pp": 2.2988505747126453,
+          "all_sample_center_p95_change_lines": -0.03712130668468028,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_5",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": -2.5316455696202524,
+          "within_one_line_change_pp": -2.5316455696202524,
+          "all_sample_center_p95_change_lines": 0.0371213066846805,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_6",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": -1.123595505617974,
+          "within_one_line_change_pp": -1.1235955056179776,
+          "all_sample_center_p95_change_lines": 0.03712130668468028,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_4",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": -1.0101010101010104,
+          "within_one_line_change_pp": 1.0101010101010104,
+          "all_sample_center_p95_change_lines": -0.0371213066846805,
+          "valid_count_change": 0
+        }
+      ],
+      "source": "diagnostics-local/reading_validation_session_20260902_212604_503.jsonl",
+      "bytes": 3389001,
+      "sha256": "f6e5e44a5eafe412b725798afb60214bb24fedc937a38d82f39ad5ad871d7211"
+    },
+    {
+      "label": "vert_on_1",
+      "mode": "on",
+      "order": "A",
+      "session_id": "reading_validation_session_20260902_212925_888",
+      "offset_px": 107.06103515625,
+      "offset_in_actual_line_pitches": 0.8049701891447368,
+      "original_fit_accepted": true,
+      "original_fit_applied_live": true,
+      "original_gain": 1.3503892074292334,
+      "original_intercept_px": -258.5507512609513,
+      "original_gate_reason": "accepted",
+      "geometry": {
+        "pitch_px": 133,
+        "interior_intercept_px": 12,
+        "line_count": 48,
+        "content_height_px": 6340,
+        "viewport_top_px": 259,
+        "viewport_bottom_px": 2205,
+        "margin_px": 45
+      },
+      "nominal_line_height_px": 137,
+      "reproduced_measured_base_and_effective_assignments": 1788,
+      "exact_word_replay": "not_available_glyph_geometry_not_logged",
+      "stabilized_replay": "not_performed_compare_raw_line_assignment_only",
+      "variants": {
+        "base": {
+          "all": {
+            "n": 894,
+            "valid": 894,
+            "valid_pct": 100,
+            "exact_line_pct": 17.67337807606264,
+            "within_one_line_pct": 70.46979865771812,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.9814329219043703,
+            "all_sample_center_error_p95_lines": 2.6978446788357577,
+            "all_sample_center_error_max_lines": 3.1722623208411656
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 350,
+              "valid": 350,
+              "valid_pct": 100,
+              "exact_line_pct": 13.142857142857142,
+              "within_one_line_pct": 64,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.1366255910773027,
+              "all_sample_center_error_p95_lines": 2.167215447676809,
+              "all_sample_center_error_max_lines": 2.761931684680451
+            },
+            "GUIDED_LINE_READING": {
+              "n": 544,
+              "valid": 544,
+              "valid_pct": 100,
+              "exact_line_pct": 20.58823529411765,
+              "within_one_line_pct": 74.63235294117646,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.9495879438586701,
+              "all_sample_center_error_p95_lines": 2.828596439218163,
+              "all_sample_center_error_max_lines": 3.1722623208411656
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 16.31663713758048,
+          "equal_checkpoint_weight_within_one_line_pct": 69.23938529722167,
+          "zero_valid_checkpoints": []
+        },
+        "offset_only": {
+          "all": {
+            "n": 894,
+            "valid": 861,
+            "valid_pct": 96.30872483221476,
+            "exact_line_pct": 19.463087248322147,
+            "within_one_line_pct": 53.691275167785236,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 4,
+            "all_sample_center_error_median_lines": 1.3812728537652725,
+            "all_sample_center_error_p95_lines": 3.502814867980495,
+            "all_sample_center_error_max_lines": 3.9772325099859023
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 350,
+              "valid": 339,
+              "valid_pct": 96.85714285714286,
+              "exact_line_pct": 27.714285714285715,
+              "within_one_line_pct": 75.14285714285714,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.0429921544584118,
+              "all_sample_center_error_p95_lines": 2.05506339395853,
+              "all_sample_center_error_max_lines": 3.566901873825188
+            },
+            "GUIDED_LINE_READING": {
+              "n": 544,
+              "valid": 522,
+              "valid_pct": 95.95588235294117,
+              "exact_line_pct": 14.154411764705882,
+              "within_one_line_pct": 39.88970588235294,
+              "valid_only_median_absolute_line_error": 2,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 4,
+              "all_sample_center_error_median_lines": 1.714461477179276,
+              "all_sample_center_error_p95_lines": 3.6335666283628996,
+              "all_sample_center_error_max_lines": 3.9772325099859023
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 21.232121934196343,
+          "equal_checkpoint_weight_within_one_line_pct": 59.059259473248,
+          "zero_valid_checkpoints": []
+        },
+        "original_guarded_gain_bias": {
+          "all": {
+            "n": 894,
+            "valid": 717,
+            "valid_pct": 80.20134228187919,
+            "exact_line_pct": 20.469798657718123,
+            "within_one_line_pct": 47.76286353467562,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 4,
+            "all_sample_center_error_median_lines": 1.697611643855733,
+            "all_sample_center_error_p95_lines": 6.1612001806273495,
+            "all_sample_center_error_max_lines": 6.867194842575188
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 350,
+              "valid": 317,
+              "valid_pct": 90.57142857142857,
+              "exact_line_pct": 35.714285714285715,
+              "within_one_line_pct": 76.57142857142857,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 4,
+              "all_sample_center_error_median_lines": 0.9032546882342575,
+              "all_sample_center_error_p95_lines": 3.6454276407571675,
+              "all_sample_center_error_max_lines": 6.397393018679511
+            },
+            "GUIDED_LINE_READING": {
+              "n": 544,
+              "valid": 400,
+              "valid_pct": 73.52941176470588,
+              "exact_line_pct": 10.661764705882353,
+              "within_one_line_pct": 29.227941176470587,
+              "valid_only_median_absolute_line_error": 2,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 4,
+              "all_sample_center_error_median_lines": 2.437657406455592,
+              "all_sample_center_error_p95_lines": 6.386239646968986,
+              "all_sample_center_error_max_lines": 6.867194842575188
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 24.62878960322688,
+          "equal_checkpoint_weight_within_one_line_pct": 55.331205101907706,
+          "zero_valid_checkpoints": [
+            "line_reading_3"
+          ]
+        }
+      },
+      "offset_checkpoint_deltas": [
+        {
+          "checkpoint": "localization_1",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": -100,
+          "all_sample_center_p95_change_lines": 0.804970189144737,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 15.217391304347826,
+          "within_one_line_change_pp": 60.869565217391305,
+          "all_sample_center_p95_change_lines": -0.8049699596892621,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_3",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 81.81818181818181,
+          "all_sample_center_p95_change_lines": -0.8049701891447367,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_4",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 66.66666666666666,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.3184953503142622,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_5",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 100,
+          "all_sample_center_p95_change_lines": -0.8049701891447367,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_6",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 83.72093023255815,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.8049701891447371,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_7",
+          "actual_target_center_screen_px": 1351.5,
+          "exact_line_change_pp": -15.384615384615385,
+          "within_one_line_change_pp": -69.23076923076923,
+          "all_sample_center_p95_change_lines": 0.804970189144737,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_8",
+          "actual_target_center_screen_px": 1750.5,
+          "exact_line_change_pp": -43.90243902439025,
+          "within_one_line_change_pp": -7.31707317073171,
+          "all_sample_center_p95_change_lines": 0.8049701891447367,
+          "valid_count_change": -11
+        },
+        {
+          "checkpoint": "line_reading_1",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": -14.457831325301203,
+          "within_one_line_change_pp": -44.57831325301204,
+          "all_sample_center_p95_change_lines": 0.8049701432536416,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": -33.333333333333336,
+          "within_one_line_change_pp": -47.61904761904762,
+          "all_sample_center_p95_change_lines": 0.8049701891447367,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_3",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": 0.8049701891447372,
+          "valid_count_change": -22
+        },
+        {
+          "checkpoint": "line_reading_4",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": 9.183673469387756,
+          "within_one_line_change_pp": -32.65306122448979,
+          "all_sample_center_p95_change_lines": 0.8049701891447367,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_5",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 30.232558139534888,
+          "within_one_line_change_pp": -37.2093023255814,
+          "all_sample_center_p95_change_lines": 0.78812563329711,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_6",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": -29.12621359223301,
+          "within_one_line_change_pp": -46.60194174757281,
+          "all_sample_center_p95_change_lines": 0.8049701891447367,
+          "valid_count_change": 0
+        }
+      ],
+      "source": "diagnostics-local/reading_validation_session_20260902_212925_888.jsonl",
+      "bytes": 3024714,
+      "sha256": "0e181308a4f20c96448cc6fb7e1ee02cc767fa92fb6b53de10ec9ae75e02eceb"
+    },
+    {
+      "label": "vert_on_2",
+      "mode": "on",
+      "order": "B",
+      "session_id": "reading_validation_session_20260903_011603_530",
+      "offset_px": 219.92529296875,
+      "offset_in_actual_line_pitches": 1.653573631343985,
+      "original_fit_accepted": true,
+      "original_fit_applied_live": true,
+      "original_gain": 1.1532910568823451,
+      "original_intercept_px": 45.379316501386256,
+      "original_gate_reason": "accepted",
+      "geometry": {
+        "pitch_px": 133,
+        "interior_intercept_px": 12,
+        "line_count": 48,
+        "content_height_px": 6340,
+        "viewport_top_px": 259,
+        "viewport_bottom_px": 2205,
+        "margin_px": 45
+      },
+      "nominal_line_height_px": 137,
+      "reproduced_measured_base_and_effective_assignments": 1790,
+      "exact_word_replay": "not_available_glyph_geometry_not_logged",
+      "stabilized_replay": "not_performed_compare_raw_line_assignment_only",
+      "variants": {
+        "base": {
+          "all": {
+            "n": 895,
+            "valid": 895,
+            "valid_pct": 100,
+            "exact_line_pct": 17.76536312849162,
+            "within_one_line_pct": 71.62011173184358,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 1.1114368868949718,
+            "all_sample_center_error_p95_lines": 2.5107753897071774,
+            "all_sample_center_error_max_lines": 3.43085313381109
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 351,
+              "valid": 351,
+              "valid_pct": 100,
+              "exact_line_pct": 28.49002849002849,
+              "within_one_line_pct": 79.48717948717949,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.8025324541823309,
+              "all_sample_center_error_p95_lines": 2.008505914444314,
+              "all_sample_center_error_max_lines": 2.927878473038064
+            },
+            "GUIDED_LINE_READING": {
+              "n": 544,
+              "valid": 544,
+              "valid_pct": 100,
+              "exact_line_pct": 10.845588235294118,
+              "within_one_line_pct": 66.54411764705883,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.2104666573660716,
+              "all_sample_center_error_p95_lines": 2.82329974640581,
+              "all_sample_center_error_max_lines": 3.43085313381109
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 21.06650972036245,
+          "equal_checkpoint_weight_within_one_line_pct": 74.06536556535768,
+          "zero_valid_checkpoints": []
+        },
+        "offset_only": {
+          "all": {
+            "n": 895,
+            "valid": 895,
+            "valid_pct": 100,
+            "exact_line_pct": 37.20670391061452,
+            "within_one_line_pct": 88.71508379888269,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 5,
+            "all_sample_center_error_median_lines": 0.7516419833764098,
+            "all_sample_center_error_p95_lines": 1.9541274450775332,
+            "all_sample_center_error_max_lines": 4.581452104382049
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 351,
+              "valid": 351,
+              "valid_pct": 100,
+              "exact_line_pct": 36.75213675213675,
+              "within_one_line_pct": 91.45299145299145,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 5,
+              "all_sample_center_error_median_lines": 0.8775754082471805,
+              "all_sample_center_error_p95_lines": 1.6035007103941494,
+              "all_sample_center_error_max_lines": 4.581452104382049
+            },
+            "GUIDED_LINE_READING": {
+              "n": 544,
+              "valid": 544,
+              "valid_pct": 100,
+              "exact_line_pct": 37.5,
+              "within_one_line_pct": 86.94852941176471,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 4,
+              "all_sample_center_error_median_lines": 0.705706144634046,
+              "all_sample_center_error_p95_lines": 2.321412968456297,
+              "all_sample_center_error_max_lines": 3.8192257988721803
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 36.48391997199476,
+          "equal_checkpoint_weight_within_one_line_pct": 89.28189725352604,
+          "zero_valid_checkpoints": []
+        },
+        "original_guarded_gain_bias": {
+          "all": {
+            "n": 895,
+            "valid": 891,
+            "valid_pct": 99.55307262569832,
+            "exact_line_pct": 25.251396648044693,
+            "within_one_line_pct": 72.29050279329608,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 5,
+            "all_sample_center_error_median_lines": 0.9372255712523496,
+            "all_sample_center_error_p95_lines": 2.582642266983376,
+            "all_sample_center_error_max_lines": 4.510282358728853
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 351,
+              "valid": 351,
+              "valid_pct": 100,
+              "exact_line_pct": 14.814814814814815,
+              "within_one_line_pct": 72.64957264957265,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 5,
+              "all_sample_center_error_median_lines": 0.9836655236724624,
+              "all_sample_center_error_p95_lines": 1.9826687690906954,
+              "all_sample_center_error_max_lines": 4.510282358728853
+            },
+            "GUIDED_LINE_READING": {
+              "n": 544,
+              "valid": 540,
+              "valid_pct": 99.26470588235294,
+              "exact_line_pct": 31.985294117647058,
+              "within_one_line_pct": 72.05882352941177,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 4,
+              "all_sample_center_error_median_lines": 0.8411805575951598,
+              "all_sample_center_error_p95_lines": 2.7504013176251174,
+              "all_sample_center_error_max_lines": 4.1949435355968046
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 22.111643760887265,
+          "equal_checkpoint_weight_within_one_line_pct": 72.07166234687786,
+          "zero_valid_checkpoints": []
+        }
+      },
+      "offset_checkpoint_deltas": [
+        {
+          "checkpoint": "localization_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 100,
+          "within_one_line_change_pp": 68.29268292682927,
+          "all_sample_center_p95_change_lines": -1.6535731724330356,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_4",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 100,
+          "within_one_line_change_pp": 81.63265306122449,
+          "all_sample_center_p95_change_lines": -1.653573539561795,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_1",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": -69.76744186046511,
+          "within_one_line_change_pp": -37.20930232558139,
+          "all_sample_center_p95_change_lines": 1.6535736313439853,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_3",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 29.268292682926827,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.10164235050516912,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_6",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 15.555555555555554,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": 0.03189541235902271,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_8",
+          "actual_target_center_screen_px": 1750.5,
+          "exact_line_change_pp": -18.367346938775512,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.1096945855850564,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_5",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": -65,
+          "within_one_line_change_pp": -15,
+          "all_sample_center_p95_change_lines": 0.920924778988487,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_7",
+          "actual_target_center_screen_px": 1351.5,
+          "exact_line_change_pp": -34.883720930232556,
+          "within_one_line_change_pp": -9.302325581395351,
+          "all_sample_center_p95_change_lines": 0.7655840651433269,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 27.058823529411768,
+          "within_one_line_change_pp": -11.764705882352942,
+          "all_sample_center_p95_change_lines": 1.4755082897673866,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_3",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": 48.484848484848484,
+          "within_one_line_change_pp": 34.34343434343434,
+          "all_sample_center_p95_change_lines": 0.8398983604029606,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_1",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": 51.041666666666664,
+          "within_one_line_change_pp": 4.166666666666671,
+          "all_sample_center_p95_change_lines": 1.2607098916419466,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_5",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 36.470588235294116,
+          "within_one_line_change_pp": 38.82352941176471,
+          "all_sample_center_p95_change_lines": -0.21678347480028215,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_6",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": -28.723404255319146,
+          "within_one_line_change_pp": -2.1276595744680833,
+          "all_sample_center_p95_change_lines": 0.1451689526550759,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_4",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": 24.705882352941174,
+          "within_one_line_change_pp": 61.17647058823529,
+          "all_sample_center_p95_change_lines": -1.6348129846099622,
+          "valid_count_change": 0
+        }
+      ],
+      "source": "reading_validation_session_20260903_011603_530.jsonl",
+      "bytes": 3582083,
+      "sha256": "04f0609546f5178178a175596df56c35f20ab736838ef7eb262b523a6d1c0ead"
+    },
+    {
+      "label": "vert_off_2",
+      "mode": "off",
+      "order": "A",
+      "session_id": "reading_validation_session_20260903_011909_341",
+      "offset_px": 232.4769287109375,
+      "offset_in_actual_line_pitches": 1.7479468324130638,
+      "original_fit_accepted": false,
+      "original_fit_applied_live": false,
+      "original_gain": 1.0084463385734646,
+      "original_intercept_px": 201.18392837470242,
+      "original_gate_reason": "leave_one_out_error_too_large",
+      "geometry": {
+        "pitch_px": 133,
+        "interior_intercept_px": 12,
+        "line_count": 48,
+        "content_height_px": 6340,
+        "viewport_top_px": 259,
+        "viewport_bottom_px": 2205,
+        "margin_px": 45
+      },
+      "nominal_line_height_px": 137,
+      "reproduced_measured_base_and_effective_assignments": 1680,
+      "exact_word_replay": "not_available_glyph_geometry_not_logged",
+      "stabilized_replay": "not_performed_compare_raw_line_assignment_only",
+      "variants": {
+        "base": {
+          "all": {
+            "n": 840,
+            "valid": 840,
+            "valid_pct": 100,
+            "exact_line_pct": 32.142857142857146,
+            "within_one_line_pct": 83.0952380952381,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.7173324240777725,
+            "all_sample_center_error_p95_lines": 2.048422814849624,
+            "all_sample_center_error_max_lines": 2.6481180979793235
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 336,
+              "valid": 336,
+              "valid_pct": 100,
+              "exact_line_pct": 36.607142857142854,
+              "within_one_line_pct": 85.11904761904762,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.6980203040560385,
+              "all_sample_center_error_p95_lines": 1.772987767269737,
+              "all_sample_center_error_max_lines": 2.6481180979793235
+            },
+            "GUIDED_LINE_READING": {
+              "n": 504,
+              "valid": 504,
+              "valid_pct": 100,
+              "exact_line_pct": 29.166666666666668,
+              "within_one_line_pct": 81.74603174603175,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.7537199321546053,
+              "all_sample_center_error_p95_lines": 2.091873490182977,
+              "all_sample_center_error_max_lines": 2.5103768943843985
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 33.21500301352836,
+          "equal_checkpoint_weight_within_one_line_pct": 83.57070509127824,
+          "zero_valid_checkpoints": []
+        },
+        "offset_only": {
+          "all": {
+            "n": 840,
+            "valid": 840,
+            "valid_pct": 100,
+            "exact_line_pct": 21.904761904761905,
+            "within_one_line_pct": 68.57142857142857,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 1.077177807800752,
+            "all_sample_center_error_p95_lines": 2.4099418926956058,
+            "all_sample_center_error_max_lines": 3.3167385015272557
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 336,
+              "valid": 336,
+              "valid_pct": 100,
+              "exact_line_pct": 21.726190476190474,
+              "within_one_line_pct": 67.55952380952381,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.0799812947897087,
+              "all_sample_center_error_p95_lines": 2.351312049349448,
+              "all_sample_center_error_max_lines": 3.1383478838698307
+            },
+            "GUIDED_LINE_READING": {
+              "n": 504,
+              "valid": 504,
+              "valid_pct": 100,
+              "exact_line_pct": 22.023809523809526,
+              "within_one_line_pct": 69.24603174603175,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.077076388480968,
+              "all_sample_center_error_p95_lines": 2.4991475270206767,
+              "all_sample_center_error_max_lines": 3.3167385015272557
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 21.998037604906415,
+          "equal_checkpoint_weight_within_one_line_pct": 68.54533629359413,
+          "zero_valid_checkpoints": []
+        },
+        "original_guarded_gain_bias": {
+          "all": {
+            "n": 840,
+            "valid": 840,
+            "valid_pct": 100,
+            "exact_line_pct": 32.142857142857146,
+            "within_one_line_pct": 83.0952380952381,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.7173324240777725,
+            "all_sample_center_error_p95_lines": 2.048422814849624,
+            "all_sample_center_error_max_lines": 2.6481180979793235
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 336,
+              "valid": 336,
+              "valid_pct": 100,
+              "exact_line_pct": 36.607142857142854,
+              "within_one_line_pct": 85.11904761904762,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.6980203040560385,
+              "all_sample_center_error_p95_lines": 1.772987767269737,
+              "all_sample_center_error_max_lines": 2.6481180979793235
+            },
+            "GUIDED_LINE_READING": {
+              "n": 504,
+              "valid": 504,
+              "valid_pct": 100,
+              "exact_line_pct": 29.166666666666668,
+              "within_one_line_pct": 81.74603174603175,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.7537199321546053,
+              "all_sample_center_error_p95_lines": 2.091873490182977,
+              "all_sample_center_error_max_lines": 2.5103768943843985
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 33.21500301352836,
+          "equal_checkpoint_weight_within_one_line_pct": 83.57070509127824,
+          "zero_valid_checkpoints": []
+        }
+      },
+      "offset_checkpoint_deltas": [
+        {
+          "checkpoint": "localization_1",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": -45.65217391304348,
+          "within_one_line_change_pp": -100,
+          "all_sample_center_p95_change_lines": 1.747946832413064,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": -58.53658536585366,
+          "within_one_line_change_pp": -46.34146341463415,
+          "all_sample_center_p95_change_lines": 0.8151332310267857,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_3",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": 0.039637974330357206,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_4",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 80.95238095238095,
+          "within_one_line_change_pp": 50,
+          "all_sample_center_p95_change_lines": -1.002740478515625,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_5",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": -82.5,
+          "within_one_line_change_pp": -45,
+          "all_sample_center_p95_change_lines": 1.2026501189497179,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_6",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 78.04878048780488,
+          "within_one_line_change_pp": 70.73170731707317,
+          "all_sample_center_p95_change_lines": -1.7479463735021148,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_7",
+          "actual_target_center_screen_px": 1351.5,
+          "exact_line_change_pp": 17.5,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.3585926486137221,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_8",
+          "actual_target_center_screen_px": 1750.5,
+          "exact_line_change_pp": -100,
+          "within_one_line_change_pp": -57.77777777777778,
+          "all_sample_center_p95_change_lines": 1.4669943902725564,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_1",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": -67.10526315789474,
+          "within_one_line_change_pp": -100,
+          "all_sample_center_p95_change_lines": 1.747946832413064,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": -81.81818181818181,
+          "within_one_line_change_pp": -71.5909090909091,
+          "all_sample_center_p95_change_lines": 1.2526358927102912,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_3",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": 1.2195121951219505,
+          "within_one_line_change_pp": 17.07317073170732,
+          "all_sample_center_p95_change_lines": -0.6489966829916589,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_4",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": 37.179487179487175,
+          "within_one_line_change_pp": 24.358974358974365,
+          "all_sample_center_p95_change_lines": 0.769639392365189,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_5",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 47.19101123595506,
+          "within_one_line_change_pp": 42.69662921348315,
+          "all_sample_center_p95_change_lines": -1.3265070635573308,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_6",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": 16.483516483516485,
+          "within_one_line_change_pp": 5.494505494505489,
+          "all_sample_center_p95_change_lines": -0.658212303218985,
+          "valid_count_change": 0
+        }
+      ],
+      "source": "reading_validation_session_20260903_011909_341.jsonl",
+      "bytes": 3233736,
+      "sha256": "65c21131491cb941d3e06a81e0db40a2b8861142f56fc2ec94e3c8f0e940036c"
+    },
+    {
+      "label": "vertical_off_4",
+      "mode": "off",
+      "order": "B",
+      "session_id": "reading_validation_session_20260903_210221_564",
+      "offset_px": 203.42578125,
+      "offset_in_actual_line_pitches": 1.529517152255639,
+      "original_fit_accepted": true,
+      "original_fit_applied_live": false,
+      "original_gain": 1.368727064456485,
+      "original_intercept_px": -132.01449833821857,
+      "original_gate_reason": "accepted",
+      "geometry": {
+        "pitch_px": 133,
+        "interior_intercept_px": 12,
+        "line_count": 48,
+        "content_height_px": 6340,
+        "viewport_top_px": 259,
+        "viewport_bottom_px": 2205,
+        "margin_px": 45
+      },
+      "nominal_line_height_px": 137,
+      "reproduced_measured_base_and_effective_assignments": 1782,
+      "exact_word_replay": "not_available_glyph_geometry_not_logged",
+      "stabilized_replay": "not_performed_compare_raw_line_assignment_only",
+      "variants": {
+        "base": {
+          "all": {
+            "n": 891,
+            "valid": 891,
+            "valid_pct": 100,
+            "exact_line_pct": 7.968574635241302,
+            "within_one_line_pct": 48.9337822671156,
+            "valid_only_median_absolute_line_error": 2,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 4,
+            "all_sample_center_error_median_lines": 1.5270711568961466,
+            "all_sample_center_error_p95_lines": 3.274043032997533,
+            "all_sample_center_error_max_lines": 3.7512647585761276
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 345,
+              "valid": 345,
+              "valid_pct": 100,
+              "exact_line_pct": 10.72463768115942,
+              "within_one_line_pct": 64.05797101449275,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.036118127349624,
+              "all_sample_center_error_p95_lines": 2.4145005763921525,
+              "all_sample_center_error_max_lines": 2.813968515037594
+            },
+            "GUIDED_LINE_READING": {
+              "n": 546,
+              "valid": 546,
+              "valid_pct": 100,
+              "exact_line_pct": 6.227106227106227,
+              "within_one_line_pct": 39.37728937728938,
+              "valid_only_median_absolute_line_error": 2,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 4,
+              "all_sample_center_error_median_lines": 1.7254631788210761,
+              "all_sample_center_error_p95_lines": 3.441000113809915,
+              "all_sample_center_error_max_lines": 3.7512647585761276
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 9.237248885348713,
+          "equal_checkpoint_weight_within_one_line_pct": 53.68833708112279,
+          "zero_valid_checkpoints": []
+        },
+        "offset_only": {
+          "all": {
+            "n": 891,
+            "valid": 891,
+            "valid_pct": 100,
+            "exact_line_pct": 43.88327721661055,
+            "within_one_line_pct": 86.53198653198653,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 2,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.590596363956767,
+            "all_sample_center_error_p95_lines": 2.208256083323543,
+            "all_sample_center_error_max_lines": 2.6286079578829886
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 345,
+              "valid": 345,
+              "valid_pct": 100,
+              "exact_line_pct": 25.217391304347824,
+              "within_one_line_pct": 84.92753623188406,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.6549815701362782,
+              "all_sample_center_error_p95_lines": 2.4199114118303573,
+              "all_sample_center_error_max_lines": 2.6286079578829886
+            },
+            "GUIDED_LINE_READING": {
+              "n": 546,
+              "valid": 546,
+              "valid_pct": 100,
+              "exact_line_pct": 55.67765567765568,
+              "within_one_line_pct": 87.54578754578755,
+              "valid_only_median_absolute_line_error": 0,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 2,
+              "all_sample_center_error_median_lines": 0.397455430568609,
+              "all_sample_center_error_p95_lines": 1.9114829615542763,
+              "all_sample_center_error_max_lines": 2.2217476063204886
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 38.36709649330087,
+          "equal_checkpoint_weight_within_one_line_pct": 86.87812114858987,
+          "zero_valid_checkpoints": []
+        },
+        "original_guarded_gain_bias": {
+          "all": {
+            "n": 891,
+            "valid": 889,
+            "valid_pct": 99.77553310886644,
+            "exact_line_pct": 20.42648709315376,
+            "within_one_line_pct": 61.05499438832772,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 1.250094535655545,
+            "all_sample_center_error_p95_lines": 2.777436450011748,
+            "all_sample_center_error_max_lines": 3.2883153929746243
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 345,
+              "valid": 343,
+              "valid_pct": 99.42028985507247,
+              "exact_line_pct": 25.797101449275363,
+              "within_one_line_pct": 54.78260869565217,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.0527004155897557,
+              "all_sample_center_error_p95_lines": 2.8531187588110902,
+              "all_sample_center_error_max_lines": 3.1982293379934212
+            },
+            "GUIDED_LINE_READING": {
+              "n": 546,
+              "valid": 546,
+              "valid_pct": 100,
+              "exact_line_pct": 17.032967032967033,
+              "within_one_line_pct": 65.01831501831502,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.2602394505550987,
+              "all_sample_center_error_p95_lines": 2.758531613457472,
+              "all_sample_center_error_max_lines": 3.2883153929746243
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 22.301051311944136,
+          "equal_checkpoint_weight_within_one_line_pct": 59.860808179829355,
+          "zero_valid_checkpoints": []
+        }
+      },
+      "offset_checkpoint_deltas": [
+        {
+          "checkpoint": "localization_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 39.53488372093023,
+          "within_one_line_change_pp": 62.7906976744186,
+          "all_sample_center_p95_change_lines": -1.5295175652754938,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_4",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": -90,
+          "within_one_line_change_pp": -10,
+          "all_sample_center_p95_change_lines": 0.9768522793189027,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_1",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": -100,
+          "all_sample_center_p95_change_lines": 1.5295172899289242,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_3",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 51.16279069767442,
+          "within_one_line_change_pp": 69.76744186046511,
+          "all_sample_center_p95_change_lines": -1.529517152255639,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_6",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 100,
+          "all_sample_center_p95_change_lines": -1.529517152255639,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_8",
+          "actual_target_center_screen_px": 1750.5,
+          "exact_line_change_pp": 9.523809523809524,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.11809921838287152,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_5",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 14.285714285714286,
+          "within_one_line_change_pp": 2.3809523809523796,
+          "all_sample_center_p95_change_lines": -0.406308465254934,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_7",
+          "actual_target_center_screen_px": 1351.5,
+          "exact_line_change_pp": 86.04651162790698,
+          "within_one_line_change_pp": 51.16279069767442,
+          "all_sample_center_p95_change_lines": -1.2108933527666825,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 40.21739130434783,
+          "within_one_line_change_pp": 55.434782608695656,
+          "all_sample_center_p95_change_lines": -1.529517152255639,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_3",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": 38.144329896907216,
+          "within_one_line_change_pp": 29.89690721649484,
+          "all_sample_center_p95_change_lines": -1.529517152255639,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_1",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": 70,
+          "within_one_line_change_pp": 38.75,
+          "all_sample_center_p95_change_lines": -1.1854597392835116,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_5",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 10.112359550561798,
+          "within_one_line_change_pp": 62.92134831460674,
+          "all_sample_center_p95_change_lines": -1.5295171522556392,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_6",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": 78.35051546391753,
+          "within_one_line_change_pp": 59.79381443298969,
+          "all_sample_center_p95_change_lines": -1.105498120300752,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_4",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": 60.43956043956044,
+          "within_one_line_change_pp": 41.75824175824176,
+          "all_sample_center_p95_change_lines": -0.498070738369361,
+          "valid_count_change": 0
+        }
+      ],
+      "source": "reading_validation_session_20260903_210221_564.jsonl",
+      "bytes": 2918504,
+      "sha256": "09f28472f6e962c03159a801fa3109e3a2e8032b3616c4ce4d3db09d061b4362"
+    },
+    {
+      "label": "vertical_on_4",
+      "mode": "on",
+      "order": "A",
+      "session_id": "reading_validation_session_20260903_210447_787",
+      "offset_px": 103.8468017578125,
+      "offset_in_actual_line_pitches": 0.7808030207354323,
+      "original_fit_accepted": true,
+      "original_fit_applied_live": true,
+      "original_gain": 1.5226923848769205,
+      "original_intercept_px": -532.8008564576251,
+      "original_gate_reason": "accepted",
+      "geometry": {
+        "pitch_px": 133,
+        "interior_intercept_px": 12,
+        "line_count": 48,
+        "content_height_px": 6340,
+        "viewport_top_px": 259,
+        "viewport_bottom_px": 2205,
+        "margin_px": 45
+      },
+      "nominal_line_height_px": 137,
+      "reproduced_measured_base_and_effective_assignments": 1768,
+      "exact_word_replay": "not_available_glyph_geometry_not_logged",
+      "stabilized_replay": "not_performed_compare_raw_line_assignment_only",
+      "variants": {
+        "base": {
+          "all": {
+            "n": 884,
+            "valid": 853,
+            "valid_pct": 96.49321266968326,
+            "exact_line_pct": 30.429864253393664,
+            "within_one_line_pct": 59.16289592760181,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 1.2329686673960292,
+            "all_sample_center_error_p95_lines": 3.3953925799606437,
+            "all_sample_center_error_max_lines": 3.891766655713992
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 361,
+              "valid": 330,
+              "valid_pct": 91.41274238227147,
+              "exact_line_pct": 8.587257617728532,
+              "within_one_line_pct": 22.714681440443215,
+              "valid_only_median_absolute_line_error": 2,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 2.236333631931391,
+              "all_sample_center_error_p95_lines": 3.7359136136850917,
+              "all_sample_center_error_max_lines": 3.891766655713992
+            },
+            "GUIDED_LINE_READING": {
+              "n": 523,
+              "valid": 523,
+              "valid_pct": 100,
+              "exact_line_pct": 45.506692160611856,
+              "within_one_line_pct": 84.32122370936902,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 2,
+              "all_sample_center_error_median_lines": 0.6307492363721805,
+              "all_sample_center_error_p95_lines": 1.812195879713933,
+              "all_sample_center_error_max_lines": 2.2188280148613724
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 24.099809041644072,
+          "equal_checkpoint_weight_within_one_line_pct": 49.18916838381781,
+          "zero_valid_checkpoints": []
+        },
+        "offset_only": {
+          "all": {
+            "n": 884,
+            "valid": 884,
+            "valid_pct": 100,
+            "exact_line_pct": 19.683257918552037,
+            "within_one_line_pct": 70.47511312217195,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 3,
+            "all_sample_center_error_median_lines": 0.999217556831532,
+            "all_sample_center_error_p95_lines": 2.7207752887467684,
+            "all_sample_center_error_max_lines": 3.284270551867951
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 361,
+              "valid": 361,
+              "valid_pct": 100,
+              "exact_line_pct": 13.573407202216066,
+              "within_one_line_pct": 45.983379501385045,
+              "valid_only_median_absolute_line_error": 2,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.6808944357965225,
+              "all_sample_center_error_p95_lines": 3.00311875881109,
+              "all_sample_center_error_max_lines": 3.284270551867951
+            },
+            "GUIDED_LINE_READING": {
+              "n": 523,
+              "valid": 523,
+              "valid_pct": 100,
+              "exact_line_pct": 23.90057361376673,
+              "within_one_line_pct": 87.38049713193116,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 2,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 0.766858552631579,
+              "all_sample_center_error_p95_lines": 2.0967847781073776,
+              "all_sample_center_error_max_lines": 2.6523281470277253
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 18.28527861983527,
+          "equal_checkpoint_weight_within_one_line_pct": 63.15582104297271,
+          "zero_valid_checkpoints": []
+        },
+        "original_guarded_gain_bias": {
+          "all": {
+            "n": 884,
+            "valid": 841,
+            "valid_pct": 95.13574660633485,
+            "exact_line_pct": 15.384615384615385,
+            "within_one_line_pct": 53.50678733031674,
+            "valid_only_median_absolute_line_error": 1,
+            "valid_only_p95_absolute_line_error": 3,
+            "valid_only_max_absolute_line_error": 4,
+            "all_sample_center_error_median_lines": 1.3997128135279606,
+            "all_sample_center_error_p95_lines": 4.395124782476209,
+            "all_sample_center_error_max_lines": 7.230097491042058
+          },
+          "phases": {
+            "LOCALIZATION": {
+              "n": 361,
+              "valid": 318,
+              "valid_pct": 88.08864265927978,
+              "exact_line_pct": 3.0470914127423825,
+              "within_one_line_pct": 22.714681440443215,
+              "valid_only_median_absolute_line_error": 2,
+              "valid_only_p95_absolute_line_error": 4,
+              "valid_only_max_absolute_line_error": 4,
+              "all_sample_center_error_median_lines": 2.062117268268327,
+              "all_sample_center_error_p95_lines": 6.992781330768327,
+              "all_sample_center_error_max_lines": 7.230097491042058
+            },
+            "GUIDED_LINE_READING": {
+              "n": 523,
+              "valid": 523,
+              "valid_pct": 100,
+              "exact_line_pct": 23.90057361376673,
+              "within_one_line_pct": 74.76099426386233,
+              "valid_only_median_absolute_line_error": 1,
+              "valid_only_p95_absolute_line_error": 3,
+              "valid_only_max_absolute_line_error": 3,
+              "all_sample_center_error_median_lines": 1.0868433902138157,
+              "all_sample_center_error_p95_lines": 2.925841642680921,
+              "all_sample_center_error_max_lines": 3.1182558446898496
+            }
+          },
+          "equal_checkpoint_weight_exact_line_pct": 11.91385788130145,
+          "equal_checkpoint_weight_within_one_line_pct": 46.08037512669805,
+          "zero_valid_checkpoints": [
+            "localization_4"
+          ]
+        }
+      },
+      "offset_checkpoint_deltas": [
+        {
+          "checkpoint": "localization_1",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": -23.91304347826087,
+          "within_one_line_change_pp": -15.217391304347824,
+          "all_sample_center_p95_change_lines": 0.7808033649186439,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 7.6923076923076925,
+          "within_one_line_change_pp": 86.53846153846153,
+          "all_sample_center_p95_change_lines": -0.7808032272453596,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_3",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 9.433962264150944,
+          "all_sample_center_p95_change_lines": -0.7808030207354326,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_4",
+          "actual_target_center_screen_px": 687.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.7808029289532423,
+          "valid_count_change": 31
+        },
+        {
+          "checkpoint": "localization_5",
+          "actual_target_center_screen_px": 1737.5,
+          "exact_line_change_pp": 2.7777777777777777,
+          "within_one_line_change_pp": 11.11111111111111,
+          "all_sample_center_p95_change_lines": -0.7808030207354317,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_6",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.7808030207354322,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_7",
+          "actual_target_center_screen_px": 1351.5,
+          "exact_line_change_pp": 0,
+          "within_one_line_change_pp": 84.0909090909091,
+          "all_sample_center_p95_change_lines": -0.7808030207354324,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "localization_8",
+          "actual_target_center_screen_px": 1750.5,
+          "exact_line_change_pp": 55.81395348837209,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.40465115425281944,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_1",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": -64.58333333333333,
+          "within_one_line_change_pp": -28.125,
+          "all_sample_center_p95_change_lines": 0.7808030207354322,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_2",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": -16.470588235294116,
+          "within_one_line_change_pp": -3.529411764705884,
+          "all_sample_center_p95_change_lines": 0.35216514185855274,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_3",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": -28.28282828282829,
+          "within_one_line_change_pp": 0,
+          "all_sample_center_p95_change_lines": -0.3594239199071898,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_4",
+          "actual_target_center_screen_px": 745.5,
+          "exact_line_change_pp": -47.43589743589744,
+          "within_one_line_change_pp": -19.230769230769226,
+          "all_sample_center_p95_change_lines": 0.7808030895720748,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_5",
+          "actual_target_center_screen_px": 1232.5,
+          "exact_line_change_pp": 10.526315789473685,
+          "within_one_line_change_pp": 13.15789473684211,
+          "all_sample_center_p95_change_lines": -0.064629576259986,
+          "valid_count_change": 0
+        },
+        {
+          "checkpoint": "line_reading_6",
+          "actual_target_center_screen_px": 1718.5,
+          "exact_line_change_pp": 22.471910112359552,
+          "within_one_line_change_pp": 57.30337078651685,
+          "all_sample_center_p95_change_lines": -0.7808030207354326,
+          "valid_count_change": 0
+        }
+      ],
+      "source": "reading_validation_session_20260903_210447_787.jsonl",
+      "bytes": 2937094,
+      "sha256": "29f3481ab17c5bbebabe03343cbe605cb2371cc6b3590a55166f49769c94688a"
+    }
+  ],
+  "analysis_date": "2026-09-03",
+  "limitations": [
+    "Six recordings are three calibration sessions from one participant/device, not six independent participants.",
+    "Actual glyph/word geometry is absent; no offset-only exact-word accuracy is reported.",
+    "Reconstruction is validated on every measured base/effective line assignment; no target stabilization is replayed.",
+    "Original gain/bias arm uses its original acceptance decision. OFF arms are simulated only; a rejected original fit leaves that arm at identity.",
+    "No raw device trace is stored in this artifact. Newer source files remain app-private on the phone."
+  ]
+}

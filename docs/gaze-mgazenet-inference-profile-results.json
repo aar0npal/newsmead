@@ -1,0 +1,2739 @@
+{
+  "scope": "Synthetic debug profiling; not end-to-end gaze performance or accuracy",
+  "active_tracker_changed": false,
+  "camera_used": false,
+  "participant_calibration_used": false,
+  "android_low_precision_executed": false,
+  "reference_sha256": "1c700591ba688a7d47e6aa76427e0b524d3af598196c2e779967694f62cf7702",
+  "profiles": [
+    {
+      "case": "a56",
+      "device": "SM-A566B",
+      "source": "diagnostics-local/2026-09-07/mgazenet-inference-profile/a56/report.json",
+      "sha256": "3e32ee1e01d5670528908d5442772619834ed37ffc322ea466756cecf3cd7683",
+      "experiment": "thread_stage_v1",
+      "execution_context": "debug instrumentation; no foreground Activity",
+      "all_conditions_parity_pass": true,
+      "maximum_model_feature_difference": 6.29425048828125e-05,
+      "blocks": [
+        {
+          "index": 0,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.442844433333333,
+            "median": 12.411679,
+            "p95": 12.632539,
+            "max": 12.731367
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.08012816666666667,
+            "median": 0.079062,
+            "p95": 0.093945,
+            "max": 0.104336
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 49.99393486666666,
+            "median": 50.308633,
+            "p95": 56.077852,
+            "max": 61.967227
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05121161666666666,
+            "median": 0.04457,
+            "p95": 0.071719,
+            "max": 0.082578
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 62.56811908333331,
+            "median": 62.889921,
+            "p95": 68.600352,
+            "max": 74.4975
+          }
+        },
+        {
+          "index": 1,
+          "threads": 1,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.443292916666671,
+            "median": 12.416328,
+            "p95": 12.661328,
+            "max": 12.744023
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07462108333333335,
+            "median": 0.073398,
+            "p95": 0.08457,
+            "max": 0.103203
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 43.67113998333333,
+            "median": 43.636484,
+            "p95": 43.899883,
+            "max": 44.074492
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.050906883333333326,
+            "median": 0.039844,
+            "p95": 0.0725,
+            "max": 0.170078
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 56.239960866666664,
+            "median": 56.251328,
+            "p95": 56.439454,
+            "max": 56.926758
+          }
+        },
+        {
+          "index": 2,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.45441015,
+            "median": 12.418867,
+            "p95": 12.704102,
+            "max": 13.320821
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07527479999999996,
+            "median": 0.071875,
+            "p95": 0.103164,
+            "max": 0.115391
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 24.845563799999997,
+            "median": 24.782812,
+            "p95": 25.081796,
+            "max": 25.996602
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04893484999999999,
+            "median": 0.043086,
+            "p95": 0.071368,
+            "max": 0.073671
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 37.42418359999999,
+            "median": 37.340117,
+            "p95": 37.757149,
+            "max": 38.50332
+          }
+        },
+        {
+          "index": 3,
+          "threads": 8,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.442818383333332,
+            "median": 12.410508,
+            "p95": 12.667696,
+            "max": 12.930664
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.09514911666666667,
+            "median": 0.097773,
+            "p95": 0.108398,
+            "max": 0.158985
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 50.85946160000001,
+            "median": 51.345352,
+            "p95": 54.952734,
+            "max": 57.684219
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05237558333333334,
+            "median": 0.044531,
+            "p95": 0.072813,
+            "max": 0.094492
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 63.44980468333335,
+            "median": 63.884297,
+            "p95": 67.507617,
+            "max": 70.515859
+          }
+        },
+        {
+          "index": 4,
+          "threads": 8,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.423501999999997,
+            "median": 12.400781,
+            "p95": 12.616914,
+            "max": 12.639531
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.08409433333333335,
+            "median": 0.078711,
+            "p95": 0.108984,
+            "max": 0.150781
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 51.25566213333332,
+            "median": 50.918047,
+            "p95": 57.23625,
+            "max": 58.277304
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05774095,
+            "median": 0.044141,
+            "p95": 0.076133,
+            "max": 0.324883
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 63.82099941666664,
+            "median": 63.56375,
+            "p95": 69.843828,
+            "max": 70.852149
+          }
+        },
+        {
+          "index": 5,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.448199183333335,
+            "median": 12.43039,
+            "p95": 12.639375,
+            "max": 12.665586
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07159448333333333,
+            "median": 0.070235,
+            "p95": 0.077618,
+            "max": 0.110352
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 24.725300700000012,
+            "median": 24.694883,
+            "p95": 24.911407,
+            "max": 24.989415
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04984181666666666,
+            "median": 0.043008,
+            "p95": 0.071523,
+            "max": 0.077344
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 37.294936183333334,
+            "median": 37.259179,
+            "p95": 37.485782,
+            "max": 37.56168
+          }
+        },
+        {
+          "index": 6,
+          "threads": 1,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.695035183333337,
+            "median": 12.414649,
+            "p95": 15.613047,
+            "max": 15.787851
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.08328451666666668,
+            "median": 0.074375,
+            "p95": 0.160312,
+            "max": 0.179258
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 44.35074674999998,
+            "median": 43.764844,
+            "p95": 47.248281,
+            "max": 53.030782
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04923638333333334,
+            "median": 0.039141,
+            "p95": 0.082344,
+            "max": 0.134571
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 57.178302833333326,
+            "median": 56.322617,
+            "p95": 60.154687,
+            "max": 68.928672
+          }
+        },
+        {
+          "index": 7,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_6350\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.443410233333335,
+            "median": 12.414414,
+            "p95": 12.662344,
+            "max": 12.686015
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.08344661666666667,
+            "median": 0.07871,
+            "p95": 0.103867,
+            "max": 0.106992
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 50.020336533333335,
+            "median": 49.958164,
+            "p95": 55.199297,
+            "max": 59.513867
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05388158333333333,
+            "median": 0.045195,
+            "p95": 0.079571,
+            "max": 0.135586
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 62.60107496666669,
+            "median": 62.456602,
+            "p95": 68.003594,
+            "max": 72.000274
+          }
+        }
+      ]
+    },
+    {
+      "case": "a56-finite-guard",
+      "device": "SM-A566B",
+      "source": "diagnostics-local/2026-09-07/mgazenet-inference-profile/a56-finite-guard/report.json",
+      "sha256": "e6b37608fc8c56309422eabd17f83e1397c85d075e7574e5dff84f1d437554ea",
+      "experiment": "finite_guard_v1",
+      "execution_context": "debug instrumentation; no foreground Activity",
+      "all_conditions_parity_pass": true,
+      "maximum_model_feature_difference": 6.29425048828125e-05,
+      "blocks": [
+        {
+          "index": 0,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.58767136666667,
+            "median": 12.553321,
+            "p95": 12.815586,
+            "max": 12.955313
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.0831190666666667,
+            "median": 0.080508,
+            "p95": 0.106406,
+            "max": 0.110196
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 51.37362113333333,
+            "median": 51.663985,
+            "p95": 55.858672,
+            "max": 59.509649
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05274476666666669,
+            "median": 0.044531,
+            "p95": 0.07418,
+            "max": 0.148086
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 64.09715633333333,
+            "median": 64.319102,
+            "p95": 68.567617,
+            "max": 72.252539
+          }
+        },
+        {
+          "index": 1,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.38830850000000017,
+            "median": 0.379101,
+            "p95": 0.457422,
+            "max": 0.498242
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07830603333333333,
+            "median": 0.07625,
+            "p95": 0.086484,
+            "max": 0.154336
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 46.27129818333333,
+            "median": 45.849141,
+            "p95": 49.42086,
+            "max": 52.868243
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05440435,
+            "median": 0.044805,
+            "p95": 0.082969,
+            "max": 0.117266
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 46.792317066666676,
+            "median": 46.403672,
+            "p95": 49.943438,
+            "max": 53.421562
+          }
+        },
+        {
+          "index": 2,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.579599566666664,
+            "median": 12.559727,
+            "p95": 12.772617,
+            "max": 12.802149
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07810883333333332,
+            "median": 0.073711,
+            "p95": 0.100938,
+            "max": 0.120781
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 24.865964100000003,
+            "median": 24.725312,
+            "p95": 25.191485,
+            "max": 30.444492
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04879626666666668,
+            "median": 0.042383,
+            "p95": 0.0725,
+            "max": 0.088476
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 37.57246876666665,
+            "median": 37.418672,
+            "p95": 37.952461,
+            "max": 43.175937
+          }
+        },
+        {
+          "index": 3,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.3841054999999998,
+            "median": 0.378164,
+            "p95": 0.427695,
+            "max": 0.448399
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07057746666666666,
+            "median": 0.069531,
+            "p95": 0.078593,
+            "max": 0.106094
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 24.814927649999998,
+            "median": 24.665546,
+            "p95": 25.575859,
+            "max": 26.774571
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04771228333333334,
+            "median": 0.041485,
+            "p95": 0.064297,
+            "max": 0.092305
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 25.317322899999997,
+            "median": 25.168789,
+            "p95": 26.116484,
+            "max": 27.304687
+          }
+        },
+        {
+          "index": 4,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.38508651666666655,
+            "median": 0.378203,
+            "p95": 0.447461,
+            "max": 0.452696
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07023956666666666,
+            "median": 0.06957,
+            "p95": 0.07586,
+            "max": 0.100117
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 24.63997918333333,
+            "median": 24.613086,
+            "p95": 24.848906,
+            "max": 24.917421
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.046235066666666644,
+            "median": 0.040937,
+            "p95": 0.063828,
+            "max": 0.066172
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 25.14154033333334,
+            "median": 25.118984,
+            "p95": 25.378477,
+            "max": 25.443672
+          }
+        },
+        {
+          "index": 5,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.596526033333328,
+            "median": 12.571445,
+            "p95": 12.790078,
+            "max": 12.882539
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07421616666666667,
+            "median": 0.072695,
+            "p95": 0.081875,
+            "max": 0.104141
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 24.84515298333333,
+            "median": 24.81668,
+            "p95": 25.076758,
+            "max": 25.265547
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.049743466666666666,
+            "median": 0.042968,
+            "p95": 0.071524,
+            "max": 0.076524
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 37.565638650000004,
+            "median": 37.532188,
+            "p95": 37.764453,
+            "max": 38.07957
+          }
+        },
+        {
+          "index": 6,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.3913879999999999,
+            "median": 0.378828,
+            "p95": 0.447227,
+            "max": 0.668438
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07698836666666664,
+            "median": 0.075625,
+            "p95": 0.09,
+            "max": 0.106953
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 45.81941533333332,
+            "median": 45.431719,
+            "p95": 49.117305,
+            "max": 49.48332
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05109635000000001,
+            "median": 0.044766,
+            "p95": 0.071289,
+            "max": 0.075547
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 46.33888804999999,
+            "median": 45.933711,
+            "p95": 49.611914,
+            "max": 50.005586
+          }
+        },
+        {
+          "index": 7,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-6",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/\n1:blkio:/high\n0::/apps/uid_10344/pid_7105\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 12.592529950000001,
+            "median": 12.565039,
+            "p95": 12.801055,
+            "max": 12.85418
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.08219859999999997,
+            "median": 0.079648,
+            "p95": 0.102032,
+            "max": 0.106132
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 51.23077861666668,
+            "median": 51.631133,
+            "p95": 56.661328,
+            "max": 60.570586
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05290034999999998,
+            "median": 0.044453,
+            "p95": 0.07414,
+            "max": 0.110468
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 63.958407516666654,
+            "median": 64.370781,
+            "p95": 69.622305,
+            "max": 73.208516
+          }
+        }
+      ]
+    },
+    {
+      "case": "a56-foreground",
+      "device": "SM-A566B",
+      "source": "diagnostics-local/2026-09-07/mgazenet-inference-profile/a56-foreground/report.json",
+      "sha256": "a15eb090c83e2f1230d603e6198dcf15bebbe3c7dc34f13d7fe1a4bdef34486c",
+      "experiment": "finite_guard_v1",
+      "execution_context": "debug instrumentation with foreground benchmark Activity; screen kept on; camera closed",
+      "all_conditions_parity_pass": true,
+      "maximum_model_feature_difference": 6.29425048828125e-05,
+      "blocks": [
+        {
+          "index": 0,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 10.494393916666667,
+            "median": 10.495508,
+            "p95": 10.524609,
+            "max": 10.600313
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07064121666666669,
+            "median": 0.06957,
+            "p95": 0.081328,
+            "max": 0.094023
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 17.359735116666666,
+            "median": 17.279648,
+            "p95": 18.07082,
+            "max": 18.40543
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05231051666666667,
+            "median": 0.044687,
+            "p95": 0.075429,
+            "max": 0.115469
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 27.977080766666656,
+            "median": 27.884688,
+            "p95": 28.691563,
+            "max": 29.019102
+          }
+        },
+        {
+          "index": 1,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.3413235500000001,
+            "median": 0.33582,
+            "p95": 0.397891,
+            "max": 0.400117
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07158331666666666,
+            "median": 0.069765,
+            "p95": 0.077812,
+            "max": 0.138906
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 13.717103533333333,
+            "median": 13.70875,
+            "p95": 13.818906,
+            "max": 13.845157
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.052539699999999995,
+            "median": 0.044257,
+            "p95": 0.074648,
+            "max": 0.132148
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 14.182550100000004,
+            "median": 14.180508,
+            "p95": 14.281367,
+            "max": 14.360507
+          }
+        },
+        {
+          "index": 2,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 10.474842416666668,
+            "median": 10.473828,
+            "p95": 10.51457,
+            "max": 10.548203
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.06786728333333333,
+            "median": 0.06414,
+            "p95": 0.096328,
+            "max": 0.115352
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 26.09287496666667,
+            "median": 26.035664,
+            "p95": 27.734531,
+            "max": 28.742305
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04769661666666667,
+            "median": 0.042187,
+            "p95": 0.064844,
+            "max": 0.071484
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 36.68328128333333,
+            "median": 36.636758,
+            "p95": 38.300351,
+            "max": 39.360586
+          }
+        },
+        {
+          "index": 3,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.33900333333333327,
+            "median": 0.334844,
+            "p95": 0.375899,
+            "max": 0.39586
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.06421095,
+            "median": 0.062617,
+            "p95": 0.06957,
+            "max": 0.136484
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 23.790460250000013,
+            "median": 23.752148,
+            "p95": 23.981328,
+            "max": 24.492813
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.045619799999999995,
+            "median": 0.039727,
+            "p95": 0.061406,
+            "max": 0.078047
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 24.239294333333323,
+            "median": 24.192383,
+            "p95": 24.415704,
+            "max": 24.965547
+          }
+        },
+        {
+          "index": 4,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.34001810000000005,
+            "median": 0.334805,
+            "p95": 0.390117,
+            "max": 0.401797
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.06281184999999999,
+            "median": 0.062774,
+            "p95": 0.068398,
+            "max": 0.069609
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 23.78808265,
+            "median": 23.771367,
+            "p95": 23.869375,
+            "max": 24.120273
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04513028333333332,
+            "median": 0.039727,
+            "p95": 0.061953,
+            "max": 0.066328
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 24.236042883333337,
+            "median": 24.218906,
+            "p95": 24.307734,
+            "max": 24.551055
+          }
+        },
+        {
+          "index": 5,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 10.487421216666668,
+            "median": 10.490273,
+            "p95": 10.507696,
+            "max": 10.534257
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.06414581666666667,
+            "median": 0.062734,
+            "p95": 0.072734,
+            "max": 0.093516
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 25.873091133333332,
+            "median": 25.655273,
+            "p95": 27.697891,
+            "max": 28.54793
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04778063333333335,
+            "median": 0.041211,
+            "p95": 0.070234,
+            "max": 0.074727
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 36.472438799999985,
+            "median": 36.258828,
+            "p95": 38.295351,
+            "max": 39.159453
+          }
+        },
+        {
+          "index": 6,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.3419980500000001,
+            "median": 0.335078,
+            "p95": 0.398594,
+            "max": 0.424179
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.06828703333333334,
+            "median": 0.068086,
+            "p95": 0.073398,
+            "max": 0.075508
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 13.620441383333334,
+            "median": 13.619649,
+            "p95": 13.700469,
+            "max": 13.760039
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05065043333333333,
+            "median": 0.04375,
+            "p95": 0.071797,
+            "max": 0.116407
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 14.081376900000002,
+            "median": 14.087421,
+            "p95": 14.170625,
+            "max": 14.20668
+          }
+        },
+        {
+          "index": 7,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "5:freezer:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/\n1:blkio:/top\n0::/apps/uid_10344/pid_2120\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 10.496779283333332,
+            "median": 10.50375,
+            "p95": 10.526719,
+            "max": 10.609883
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.07000583333333335,
+            "median": 0.068204,
+            "p95": 0.088516,
+            "max": 0.103281
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 17.279578833333336,
+            "median": 17.191641,
+            "p95": 18.051719,
+            "max": 18.276757
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04989518333333333,
+            "median": 0.04293,
+            "p95": 0.076289,
+            "max": 0.07668
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 27.896259133333327,
+            "median": 27.811953,
+            "p95": 28.688399,
+            "max": 28.866016
+          }
+        }
+      ]
+    },
+    {
+      "case": "sm-g991b",
+      "device": "SM-G991B",
+      "source": "diagnostics-local/2026-09-07/mgazenet-inference-profile/sm-g991b/report.json",
+      "sha256": "b6271e6467e496edca8a89bd5cdceaae0882a451adba1b4ce97006107220a609",
+      "experiment": "thread_stage_v1",
+      "execution_context": "debug instrumentation; no foreground Activity",
+      "all_conditions_parity_pass": true,
+      "maximum_model_feature_difference": 6.29425048828125e-05,
+      "blocks": [
+        {
+          "index": 0,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.2131153666666663,
+            "median": 1.171693,
+            "p95": 1.271346,
+            "max": 2.836153
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.09159550000000004,
+            "median": 0.091,
+            "p95": 0.098423,
+            "max": 0.102116
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 13.818696183333339,
+            "median": 13.563346,
+            "p95": 15.588115,
+            "max": 17.649539
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04354615,
+            "median": 0.036461,
+            "p95": 0.059231,
+            "max": 0.173462
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 15.166953200000002,
+            "median": 14.919961,
+            "p95": 16.860077,
+            "max": 19.017923
+          }
+        },
+        {
+          "index": 1,
+          "threads": 1,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.1918833333333334,
+            "median": 1.122346,
+            "p95": 1.324115,
+            "max": 2.869885
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.09140313333333332,
+            "median": 0.089424,
+            "p95": 0.104615,
+            "max": 0.143731
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 38.63509746666668,
+            "median": 35.870153,
+            "p95": 44.038462,
+            "max": 45.530423
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.03643266666666667,
+            "median": 0.033308,
+            "p95": 0.0495,
+            "max": 0.086808
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 39.954816599999994,
+            "median": 37.11073,
+            "p95": 45.37323,
+            "max": 46.834846
+          }
+        },
+        {
+          "index": 2,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.4414891666666667,
+            "median": 1.435461,
+            "p95": 1.499,
+            "max": 1.517153
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.09907299999999997,
+            "median": 0.098616,
+            "p95": 0.105923,
+            "max": 0.112153
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 27.67317691666667,
+            "median": 27.481539,
+            "p95": 29.250192,
+            "max": 30.991269
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.03906406666666667,
+            "median": 0.036731,
+            "p95": 0.049461,
+            "max": 0.053231
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 29.252803149999995,
+            "median": 29.076616,
+            "p95": 30.846807,
+            "max": 32.588692
+          }
+        },
+        {
+          "index": 3,
+          "threads": 8,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.3978114500000003,
+            "median": 1.408577,
+            "p95": 1.444461,
+            "max": 1.448384
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10273663333333334,
+            "median": 0.101192,
+            "p95": 0.112731,
+            "max": 0.131615
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 16.23608651666667,
+            "median": 15.922577,
+            "p95": 18.420269,
+            "max": 19.9365
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04146015,
+            "median": 0.035769,
+            "p95": 0.071193,
+            "max": 0.129923
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 17.778094749999998,
+            "median": 17.470038,
+            "p95": 19.986885,
+            "max": 21.497692
+          }
+        },
+        {
+          "index": 4,
+          "threads": 8,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.4044051666666668,
+            "median": 1.417269,
+            "p95": 1.458038,
+            "max": 1.469077
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10810383333333336,
+            "median": 0.106423,
+            "p95": 0.120539,
+            "max": 0.139577
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 22.869275000000002,
+            "median": 16.150692,
+            "p95": 82.092346,
+            "max": 85.600115
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04388461666666667,
+            "median": 0.042307,
+            "p95": 0.061347,
+            "max": 0.065538
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 24.42566861666666,
+            "median": 17.736269,
+            "p95": 83.497346,
+            "max": 87.026961
+          }
+        },
+        {
+          "index": 5,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.610233933333333,
+            "median": 1.604,
+            "p95": 1.679153,
+            "max": 1.736154
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10655003333333334,
+            "median": 0.104385,
+            "p95": 0.132615,
+            "max": 0.137692
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 31.299757683333326,
+            "median": 30.177615,
+            "p95": 33.603923,
+            "max": 67.498077
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.046136500000000004,
+            "median": 0.042269,
+            "p95": 0.067385,
+            "max": 0.096423
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 33.062678149999996,
+            "median": 31.942731,
+            "p95": 35.371038,
+            "max": 69.289577
+          }
+        },
+        {
+          "index": 6,
+          "threads": 1,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.2359025333333333,
+            "median": 1.176654,
+            "p95": 1.431885,
+            "max": 3.063462
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.09944356666666664,
+            "median": 0.094923,
+            "p95": 0.132423,
+            "max": 0.180115
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 39.561546783333334,
+            "median": 37.890654,
+            "p95": 47.170807,
+            "max": 48.681577
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.039205183333333324,
+            "median": 0.036616,
+            "p95": 0.056962,
+            "max": 0.076231
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 40.936098066666666,
+            "median": 39.225884,
+            "p95": 48.621615,
+            "max": 50.142653
+          }
+        },
+        {
+          "index": 7,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.5282654499999992,
+            "median": 1.519347,
+            "p95": 1.594461,
+            "max": 1.7825
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10448326666666664,
+            "median": 0.102385,
+            "p95": 0.118653,
+            "max": 0.136576
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 16.78299363333333,
+            "median": 16.135192,
+            "p95": 18.937385,
+            "max": 25.626961
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04780759999999999,
+            "median": 0.043269,
+            "p95": 0.067576,
+            "max": 0.081269
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 18.463549949999997,
+            "median": 17.806269,
+            "p95": 20.789538,
+            "max": 27.278
+          }
+        }
+      ]
+    },
+    {
+      "case": "sm-g991b-finite-guard",
+      "device": "SM-G991B",
+      "source": "diagnostics-local/2026-09-07/mgazenet-inference-profile/sm-g991b-finite-guard/report.json",
+      "sha256": "445d8b0fd105d2c1d6435251527fcca36569f99d01001dcd14ec9185a4645d27",
+      "experiment": "finite_guard_v1",
+      "execution_context": "debug instrumentation; no foreground Activity",
+      "all_conditions_parity_pass": true,
+      "maximum_model_feature_difference": 6.29425048828125e-05,
+      "blocks": [
+        {
+          "index": 0,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.786187133333334,
+            "median": 1.781961,
+            "p95": 1.830539,
+            "max": 1.870654
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.1547615833333333,
+            "median": 0.151961,
+            "p95": 0.1685,
+            "max": 0.208462
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 20.071202533333327,
+            "median": 19.615654,
+            "p95": 22.792769,
+            "max": 27.651153
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.06639358333333333,
+            "median": 0.059039,
+            "p95": 0.098769,
+            "max": 0.133269
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 22.078544833333332,
+            "median": 21.606769,
+            "p95": 24.799961,
+            "max": 29.599577
+          }
+        },
+        {
+          "index": 1,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.5339827500000001,
+            "median": 0.527923,
+            "p95": 0.567923,
+            "max": 0.645616
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.15320956666666669,
+            "median": 0.153,
+            "p95": 0.166423,
+            "max": 0.196577
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 20.145205166666667,
+            "median": 19.554731,
+            "p95": 22.961039,
+            "max": 28.3595
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.07041989999999997,
+            "median": 0.061616,
+            "p95": 0.100423,
+            "max": 0.159
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 20.90281738333334,
+            "median": 20.328154,
+            "p95": 23.709269,
+            "max": 29.130577
+          }
+        },
+        {
+          "index": 2,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.7918782000000004,
+            "median": 1.791538,
+            "p95": 1.838115,
+            "max": 1.85627
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.15307631666666663,
+            "median": 0.149039,
+            "p95": 0.186115,
+            "max": 0.216616
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 35.44676018333333,
+            "median": 34.760346,
+            "p95": 37.976308,
+            "max": 41.792154
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.06910766666666666,
+            "median": 0.0635,
+            "p95": 0.103539,
+            "max": 0.115731
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 37.46082236666667,
+            "median": 36.78377,
+            "p95": 39.961346,
+            "max": 43.796461
+          }
+        },
+        {
+          "index": 3,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.5326710833333334,
+            "median": 0.528461,
+            "p95": 0.561385,
+            "max": 0.573307
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.14842250000000004,
+            "median": 0.145193,
+            "p95": 0.178,
+            "max": 0.236846
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 34.62000498333334,
+            "median": 34.537884,
+            "p95": 34.935769,
+            "max": 36.18773
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.06302951666666669,
+            "median": 0.057269,
+            "p95": 0.097885,
+            "max": 0.111308
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 35.364128083333334,
+            "median": 35.288077,
+            "p95": 35.681038,
+            "max": 36.916269
+          }
+        },
+        {
+          "index": 4,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.5360487,
+            "median": 0.533769,
+            "p95": 0.560654,
+            "max": 0.571192
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.14782878333333335,
+            "median": 0.146115,
+            "p95": 0.177,
+            "max": 0.184308
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 35.366750733333326,
+            "median": 34.756923,
+            "p95": 38.252192,
+            "max": 42.673769
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.06597618333333334,
+            "median": 0.058,
+            "p95": 0.097346,
+            "max": 0.183115
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 36.11660440000001,
+            "median": 35.514462,
+            "p95": 38.984116,
+            "max": 43.429654
+          }
+        },
+        {
+          "index": 5,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.7936423500000003,
+            "median": 1.793115,
+            "p95": 1.838539,
+            "max": 1.955616
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.15030309999999997,
+            "median": 0.147807,
+            "p95": 0.161616,
+            "max": 0.223077
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 34.60092051666666,
+            "median": 34.50573,
+            "p95": 35.108423,
+            "max": 35.949346
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.06563395000000002,
+            "median": 0.058385,
+            "p95": 0.099423,
+            "max": 0.112769
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 36.61049991666666,
+            "median": 36.527615,
+            "p95": 37.114115,
+            "max": 37.949385
+          }
+        },
+        {
+          "index": 6,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.5364583500000001,
+            "median": 0.530461,
+            "p95": 0.573577,
+            "max": 0.58077
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.17057693333333335,
+            "median": 0.167615,
+            "p95": 0.206154,
+            "max": 0.266692
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 20.244633966666672,
+            "median": 19.636539,
+            "p95": 22.64223,
+            "max": 27.859885
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.06214288333333332,
+            "median": 0.055346,
+            "p95": 0.088269,
+            "max": 0.120154
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 21.013812133333328,
+            "median": 20.413885,
+            "p95": 23.490307,
+            "max": 28.6405
+          }
+        },
+        {
+          "index": 7,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-2,4-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/foreground\n3:cpuacct:/\n2:cpu:/foreground\n1:blkio:/\n0::/uid_10001/pid_21521\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.792205716666666,
+            "median": 1.794038,
+            "p95": 1.850962,
+            "max": 1.88177
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.17665705000000004,
+            "median": 0.172077,
+            "p95": 0.216269,
+            "max": 0.220192
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 22.568099383333333,
+            "median": 19.631577,
+            "p95": 25.763346,
+            "max": 100.540077
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.061784616666666674,
+            "median": 0.055577,
+            "p95": 0.093269,
+            "max": 0.110615
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 24.59874676666666,
+            "median": 21.672692,
+            "p95": 27.852269,
+            "max": 102.530231
+          }
+        }
+      ]
+    },
+    {
+      "case": "sm-g991b-foreground",
+      "device": "SM-G991B",
+      "source": "diagnostics-local/2026-09-07/mgazenet-inference-profile/sm-g991b-foreground/report.json",
+      "sha256": "0bfd6632f7876a867aa59023ab91b4f299606305e433e1a1ac9fe5dcb4e3fe54",
+      "experiment": "finite_guard_v1",
+      "execution_context": "debug instrumentation with foreground benchmark Activity; screen kept on; camera closed",
+      "all_conditions_parity_pass": true,
+      "maximum_model_feature_difference": 6.29425048828125e-05,
+      "blocks": [
+        {
+          "index": 0,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.4599153500000002,
+            "median": 1.453,
+            "p95": 1.503616,
+            "max": 1.551307
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10251600000000002,
+            "median": 0.099769,
+            "p95": 0.128616,
+            "max": 0.137616
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 15.34907693333333,
+            "median": 15.173038,
+            "p95": 15.379577,
+            "max": 26.307846
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.03914808333333333,
+            "median": 0.035423,
+            "p95": 0.054269,
+            "max": 0.067116
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 16.950656366666664,
+            "median": 16.778923,
+            "p95": 16.955039,
+            "max": 27.864116
+          }
+        },
+        {
+          "index": 1,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.45037055,
+            "median": 0.443539,
+            "p95": 0.476077,
+            "max": 0.487231
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10388406666666668,
+            "median": 0.102308,
+            "p95": 0.112616,
+            "max": 0.134692
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 16.19048778333333,
+            "median": 16.055116,
+            "p95": 16.831693,
+            "max": 17.072
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.038231366666666676,
+            "median": 0.035077,
+            "p95": 0.052,
+            "max": 0.0585
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 16.782973766666668,
+            "median": 16.65,
+            "p95": 17.415847,
+            "max": 17.668808
+          }
+        },
+        {
+          "index": 2,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.585962833333333,
+            "median": 1.598424,
+            "p95": 1.656346,
+            "max": 1.662769
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.09796279999999996,
+            "median": 0.097308,
+            "p95": 0.104615,
+            "max": 0.130346
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 29.181355816666663,
+            "median": 29.349,
+            "p95": 29.722384,
+            "max": 30.032692
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04137108333333333,
+            "median": 0.038885,
+            "p95": 0.054192,
+            "max": 0.063423
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 30.906652533333336,
+            "median": 31.056692,
+            "p95": 31.429769,
+            "max": 31.787654
+          }
+        },
+        {
+          "index": 3,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.47354426666666666,
+            "median": 0.474385,
+            "p95": 0.497115,
+            "max": 0.513077
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10299485000000003,
+            "median": 0.102192,
+            "p95": 0.107808,
+            "max": 0.146731
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 29.611371133333325,
+            "median": 29.788192,
+            "p95": 30.018039,
+            "max": 30.090808
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05174546666666667,
+            "median": 0.0445,
+            "p95": 0.071077,
+            "max": 0.136384
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 30.239655716666665,
+            "median": 30.412269,
+            "p95": 30.63373,
+            "max": 30.79673
+          }
+        },
+        {
+          "index": 4,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.4543109166666666,
+            "median": 0.454847,
+            "p95": 0.479808,
+            "max": 0.488307
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10620258333333332,
+            "median": 0.102384,
+            "p95": 0.131269,
+            "max": 0.172693
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 28.348802516666673,
+            "median": 28.516577,
+            "p95": 28.754116,
+            "max": 29.009961
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.050139683333333344,
+            "median": 0.046615,
+            "p95": 0.069538,
+            "max": 0.075231
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 28.9594557,
+            "median": 29.132039,
+            "p95": 29.383269,
+            "max": 29.615731
+          }
+        },
+        {
+          "index": 5,
+          "threads": 2,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.496050616666667,
+            "median": 1.4825,
+            "p95": 1.565615,
+            "max": 1.615731
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10042254999999999,
+            "median": 0.099154,
+            "p95": 0.107423,
+            "max": 0.123846
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 27.90232036666667,
+            "median": 27.687269,
+            "p95": 28.747,
+            "max": 28.827193
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.05032176666666666,
+            "median": 0.045538,
+            "p95": 0.069885,
+            "max": 0.112923
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 29.54911529999999,
+            "median": 29.40623,
+            "p95": 30.460731,
+            "max": 30.497923
+          }
+        },
+        {
+          "index": 6,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": true,
+          "validation_ms": {
+            "n": 60,
+            "mean": 0.4931159666666666,
+            "median": 0.488385,
+            "p95": 0.525846,
+            "max": 0.543962
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.10989045000000001,
+            "median": 0.107731,
+            "p95": 0.131731,
+            "max": 0.141192
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 16.26779866666666,
+            "median": 16.222192,
+            "p95": 16.3775,
+            "max": 17.23773
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04888406666666668,
+            "median": 0.043807,
+            "p95": 0.067193,
+            "max": 0.091346
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 16.919689150000007,
+            "median": 16.870923,
+            "p95": 17.019192,
+            "max": 17.926
+          }
+        },
+        {
+          "index": 7,
+          "threads": 4,
+          "before": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "after": {
+            "power_save": false,
+            "interactive": true,
+            "thermal_status": 0,
+            "allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "process_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n",
+            "calling_thread_allowed_cpus": "Cpus_allowed_list:\t0-7",
+            "calling_thread_cgroup": "6:freezer:/\n5:memory:/\n4:cpuset:/top-app\n3:cpuacct:/top-app\n2:cpu:/top-app\n1:blkio:/\n0::/uid_10001/pid_26601\n"
+          },
+          "range_validation": false,
+          "validation_ms": {
+            "n": 60,
+            "mean": 1.6487294999999997,
+            "median": 1.630347,
+            "p95": 1.723885,
+            "max": 1.840692
+          },
+          "input_copy_ms": {
+            "n": 60,
+            "mean": 0.11374745000000003,
+            "median": 0.111731,
+            "p95": 0.130308,
+            "max": 0.147692
+          },
+          "native_run_ms": {
+            "n": 60,
+            "mean": 17.2968744,
+            "median": 17.126885,
+            "p95": 17.787962,
+            "max": 18.0385
+          },
+          "output_read_ms": {
+            "n": 60,
+            "mean": 0.04974811666666667,
+            "median": 0.043693,
+            "p95": 0.072231,
+            "max": 0.079231
+          },
+          "total_ms": {
+            "n": 60,
+            "mean": 19.10909946666666,
+            "median": 18.935924,
+            "p95": 19.727924,
+            "max": 19.904116
+          }
+        }
+      ]
+    }
+  ],
+  "all_conditions_parity_pass": true
+}

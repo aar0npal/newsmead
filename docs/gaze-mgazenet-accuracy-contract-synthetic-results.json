@@ -1,0 +1,140 @@
+{
+  "schema": "mgazenet_accuracy_summary_v1",
+  "evidence_kind": "synthetic_contract",
+  "accuracy_gate_pass": null,
+  "promotion_decision": "not_evaluated",
+  "scope": "Stationary instructed-point scoring; no verified fixation or natural-reading ground truth",
+  "provenance": {
+    "protocol_id": "analytic_fixture_only",
+    "session_id": "invented_session",
+    "device_id": "no_phone",
+    "pipeline_id": "invented_coordinates",
+    "calibration_id": "no_person"
+  },
+  "max_output_age_ms": 100,
+  "planned_blocks": 2,
+  "blocks_without_coordinates": 1,
+  "blocks": [
+    {
+      "id": "test_left",
+      "region": "top_left",
+      "planned_duration_ms": 1000,
+      "received_samples": 3,
+      "coordinate_samples": 2,
+      "explicit_invalid_samples": 1,
+      "off_text_coordinate_samples": 0,
+      "outputs_after_window": 0,
+      "exact_line_samples": 2,
+      "within_one_line_samples": 2,
+      "coordinate_fraction_of_received": 0.6666666666666666,
+      "exact_line_fraction_of_received": 0.6666666666666666,
+      "within_one_line_fraction_of_received": 0.6666666666666666,
+      "exact_line_fraction_of_coordinates": 1.0,
+      "fresh_coordinate_ms": 160.0,
+      "fresh_exact_line_ms": 160.0,
+      "fresh_within_one_line_ms": 160.0,
+      "fresh_coordinate_time_fraction": 0.16,
+      "fresh_exact_line_time_fraction": 0.16,
+      "fresh_within_one_line_time_fraction": 0.16,
+      "unavailable_ms": 840.0,
+      "longest_unavailable_ms": 620,
+      "signed_dx_px": {
+        "n": 2,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "signed_dy_px": {
+        "n": 2,
+        "median": 0.0,
+        "p95": 0,
+        "max": 0
+      },
+      "euclidean_px": {
+        "n": 2,
+        "median": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "absolute_vertical_lines": {
+        "n": 2,
+        "median": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "output_age_ms": {
+        "n": 3,
+        "median": 20,
+        "p95": 20,
+        "max": 20
+      }
+    },
+    {
+      "id": "test_empty",
+      "region": "bottom_left",
+      "planned_duration_ms": 1000,
+      "received_samples": 0,
+      "coordinate_samples": 0,
+      "explicit_invalid_samples": 0,
+      "off_text_coordinate_samples": 0,
+      "outputs_after_window": 0,
+      "exact_line_samples": 0,
+      "within_one_line_samples": 0,
+      "coordinate_fraction_of_received": null,
+      "exact_line_fraction_of_received": null,
+      "within_one_line_fraction_of_received": null,
+      "exact_line_fraction_of_coordinates": null,
+      "fresh_coordinate_ms": 0.0,
+      "fresh_exact_line_ms": 0.0,
+      "fresh_within_one_line_ms": 0.0,
+      "fresh_coordinate_time_fraction": 0.0,
+      "fresh_exact_line_time_fraction": 0.0,
+      "fresh_within_one_line_time_fraction": 0.0,
+      "unavailable_ms": 1000.0,
+      "longest_unavailable_ms": 1000,
+      "signed_dx_px": {
+        "n": 0,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "signed_dy_px": {
+        "n": 0,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "euclidean_px": {
+        "n": 0,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "absolute_vertical_lines": {
+        "n": 0,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "output_age_ms": {
+        "n": 0,
+        "median": null,
+        "p95": null,
+        "max": null
+      }
+    }
+  ],
+  "target_balanced": {
+    "fresh_coordinate_time_fraction": 0.08,
+    "fresh_exact_line_time_fraction": 0.08,
+    "fresh_within_one_line_time_fraction": 0.08
+  },
+  "worst_block_vertical_lines": 0.0,
+  "limitations": [
+    "Declared fit/test IDs do not independently prove provenance or participant compliance.",
+    "Freshness is a declared analysis parameter, not a validated study threshold.",
+    "Time fractions describe bounded availability of the latest result, not eye position between samples.",
+    "No word, fixation, dwell, regression or population-validity claim is computed."
+  ],
+  "input_sha256": "c7f6fc2dcfa38382f873a9e401b8007cfd6b16ab7c6cf96462a68ec866a2f4cd"
+}

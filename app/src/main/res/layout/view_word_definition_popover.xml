@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Native adaptation of Flowbite's Default Popover layout.
+     Source: https://flowbite-react.com/docs/components/popover#default-popover -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_definition_popover"
+    android:clipToOutline="true"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?cardBackgroundColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:id="@+id/definitionWord"
+            style="@style/ts_display_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="?primaryTextColor"
+            android:textSize="18sp"
+            tools:text="keyboard" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/definitionClose"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_definition_close"
+            android:contentDescription="@string/definition_close"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_definition_close"
+            app:tint="?primaryIconColor" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?dividerColor"
+        android:importantForAccessibility="no" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="false"
+        android:paddingStart="12dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/definitionMeaning"
+                style="@style/ts_body_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/definition_loading"
+                android:textColor="?primaryTextColor"
+                tools:text="noun: A set of keys used to enter text into a computer." />
+
+            <TextView
+                android:id="@+id/definitionSource"
+                style="@style/ts_subtext_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="?secondaryTextColor"
+                android:visibility="gone"
+                tools:text="Common meanings · Dictionary source"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

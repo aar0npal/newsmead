@@ -1,0 +1,128 @@
+{
+  "apk_sha256": "ac2f53cbce00ff58e0dd12063758a956a888b543248938970a4efc065c5c2873",
+  "native_runtime_executed": false,
+  "libraries": {
+    "libMNN.so": {
+      "sha256": "c91fb9e65ef45477406583cf374978c61713318893f6af473aecdafed4c17f60",
+      "needed": [
+        "liblog.so",
+        "libm.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libdl.so",
+        "libc.so"
+      ],
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf_16kb_compatible": true,
+      "missing_strong_cpp_symbols": [],
+      "compressed_in_apk": true
+    },
+    "libc++_shared.so": {
+      "sha256": "f9992c4ba6b7c5a716e3a202fceb1ce029d6a2b0605838ac6b3219f489dd7970",
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "load_alignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ],
+      "elf_16kb_compatible": true,
+      "missing_strong_cpp_symbols": [],
+      "compressed_in_apk": true
+    },
+    "libimage_processing_util_jni.so": {
+      "sha256": "2ead62ff358ae3a9e9cb5b0278a1d5132a7b410288bc74add8f6356d668fdc39",
+      "needed": [
+        "liblog.so",
+        "libandroid.so",
+        "libjnigraphics.so",
+        "libm.so",
+        "libdl.so",
+        "libc.so"
+      ],
+      "load_alignments": [
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "elf_16kb_compatible": false,
+      "missing_strong_cpp_symbols": [],
+      "compressed_in_apk": true
+    },
+    "libmediapipe_tasks_vision_jni.so": {
+      "sha256": "2e4bd0e718c1e977a62d7c312db5679023c97db1ec7eb467e8859118a1fc7c79",
+      "needed": [
+        "libdl.so",
+        "libEGL.so",
+        "libGLESv2.so",
+        "libm.so",
+        "libz.so",
+        "liblog.so",
+        "libandroid.so",
+        "libjnigraphics.so",
+        "libc.so"
+      ],
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf_16kb_compatible": true,
+      "missing_strong_cpp_symbols": [],
+      "compressed_in_apk": true
+    },
+    "libmnncore.so": {
+      "sha256": "075cbfac452b1a4b601a5e9d74134b800cf13e34a998aee3d1367571c2007bd9",
+      "needed": [
+        "libMNN.so",
+        "liblog.so",
+        "libjnigraphics.so",
+        "libm.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libdl.so",
+        "libc.so"
+      ],
+      "load_alignments": [
+        16384,
+        16384
+      ],
+      "elf_16kb_compatible": true,
+      "missing_strong_cpp_symbols": [],
+      "compressed_in_apk": true
+    },
+    "libopencv_java4.so": {
+      "sha256": "a9be317ba4d41ce7913817febf25d59c9585e50dfb3acee226f401d2016bf0d6",
+      "needed": [
+        "libdl.so",
+        "libm.so",
+        "liblog.so",
+        "libjnigraphics.so",
+        "libz.so",
+        "libmediandk.so",
+        "libc.so",
+        "libc++_shared.so"
+      ],
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf_16kb_compatible": true,
+      "missing_strong_cpp_symbols": [],
+      "compressed_in_apk": true
+    }
+  },
+  "required_jni_exports_present": true,
+  "strong_cpp_symbols_resolve": true,
+  "all_native_elf_16kb_compatible": false
+}

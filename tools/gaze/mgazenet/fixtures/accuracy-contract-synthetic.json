@@ -1,0 +1,139 @@
+{
+  "schema": "mgazenet_accuracy_v1",
+  "evidence_kind": "synthetic_contract",
+  "coordinate_space": "physical_screen_px",
+  "clock": "shared_monotonic_ms",
+  "protocol_id": "analytic_fixture_only",
+  "session_id": "invented_session",
+  "device_id": "no_phone",
+  "pipeline_id": "invented_coordinates",
+  "calibration_id": "no_person",
+  "fit_block_ids": [
+    "fit_center"
+  ],
+  "max_output_age_ms": 100,
+  "blocks": [
+    {
+      "id": "test_left",
+      "region": "top_left",
+      "role": "held_out",
+      "task": "stationary_point",
+      "start_ms": 0,
+      "end_ms": 1000,
+      "target_px": [
+        50,
+        50
+      ],
+      "target_line_index": 0,
+      "line_height_px": 100,
+      "viewport_screen_px": [
+        0,
+        0,
+        100,
+        300
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "rect_px": [
+            0,
+            0,
+            100,
+            100
+          ]
+        },
+        {
+          "index": 1,
+          "rect_px": [
+            0,
+            100,
+            100,
+            200
+          ]
+        },
+        {
+          "index": 2,
+          "rect_px": [
+            0,
+            200,
+            100,
+            300
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "capture_ms": 100,
+          "output_ms": 120,
+          "point_px": [
+            50,
+            50
+          ]
+        },
+        {
+          "capture_ms": 400,
+          "output_ms": 420,
+          "point_px": null
+        },
+        {
+          "capture_ms": 800,
+          "output_ms": 820,
+          "point_px": [
+            50,
+            50
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test_empty",
+      "region": "bottom_left",
+      "role": "held_out",
+      "task": "stationary_point",
+      "start_ms": 1000,
+      "end_ms": 2000,
+      "target_px": [
+        50,
+        50
+      ],
+      "target_line_index": 0,
+      "line_height_px": 100,
+      "viewport_screen_px": [
+        0,
+        0,
+        100,
+        300
+      ],
+      "lines": [
+        {
+          "index": 0,
+          "rect_px": [
+            0,
+            0,
+            100,
+            100
+          ]
+        },
+        {
+          "index": 1,
+          "rect_px": [
+            0,
+            100,
+            100,
+            200
+          ]
+        },
+        {
+          "index": 2,
+          "rect_px": [
+            0,
+            200,
+            100,
+            300
+          ]
+        }
+      ],
+      "samples": []
+    }
+  ]
+}

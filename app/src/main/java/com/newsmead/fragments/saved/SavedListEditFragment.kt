@@ -12,6 +12,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.newsmead.data.DatabaseHelper
 import com.newsmead.data.FirebaseHelper
+import com.newsmead.logging.Analytics
+import com.newsmead.research.ResearchSession
 import com.newsmead.databinding.FragmentSavedListEditBinding
 import com.newsmead.fragments.layouts.listListener
 import com.newsmead.models.Article
@@ -66,6 +68,10 @@ class SavedListEditFragment: Fragment(), listListener {
 
             // Delete articles from list
             FirebaseHelper.deleteArticlesFromFirestoreList(requireActivity(), args.listId, checkedIds)
+            for (articleId in checkedIds) {
+                Analytics.removeFromList(articleId, args.listId)
+                ResearchSession.removeFromList(articleId, args.listId)
+            }
 
             lifecycleScope.launch {
                 // Remove from offline if list is offline

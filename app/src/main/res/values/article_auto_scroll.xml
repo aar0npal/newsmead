@@ -1,0 +1,22 @@
+<resources>
+    <string name="reading_aid_menu_auto_scroll">Auto-scroll</string>
+    <string name="reading_aid_menu_auto_scroll_help">Look lower to scroll faster; look higher to slow down or stop. Text moves smoothly while gaze is available. Touch the article to pause; use Resume auto-scroll to continue.</string>
+    <string name="article_auto_scroll_pause">Pause auto-scroll</string>
+    <string name="article_auto_scroll_resume">Resume auto-scroll</string>
+    <string name="reading_aid_menu_auto_scroll_status">Status before opening this menu: %1$s</string>
+    <string name="auto_scroll_status_paused">Paused; tap Resume auto-scroll to continue.</string>
+    <string name="auto_scroll_status_dictionary">Waiting until the dictionary closes.</string>
+    <string name="auto_scroll_status_read_aloud">Paused while Read Aloud is playing.</string>
+    <string name="auto_scroll_status_gaze">Waiting for a fresh gaze point.</string>
+    <string name="auto_scroll_status_upper">Waiting for gaze to return to the upper reading area.</string>
+    <string name="auto_scroll_status_preparing">Preparing the next scroll.</string>
+    <string name="auto_scroll_status_end">No further scroll space.</string>
+    <string name="auto_scroll_status_layout">Waiting for the text to settle.</string>
+    <string name="auto_scroll_status_article">Waiting for gaze on the article.</string>
+    <string name="auto_scroll_status_off">Off.</string>
+    <string name="auto_scroll_status_ready">Ready; sustained gaze lower in the article will advance the passage.</string>
+    <string name="auto_scroll_status_cooldown">Waiting briefly after the previous scroll.</string>
+    <string name="auto_scroll_status_moving">Moving the passage upward.</string>
+    <string name="auto_scroll_status_slowing">Slowing the passage as you look higher.</string>
+    <string name="auto_scroll_status_reading">Waiting for live article reading to resume.</string>
+</resources>

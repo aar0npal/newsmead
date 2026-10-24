@@ -41,8 +41,7 @@ class ArticleSearchSourceFragment: Fragment(), clickListener {
         // Change logo of ivSearchSourceLogo
         val context = binding.root.context
         val sourceImage = DataHelper.sourceImageMap(args.sourceName)
-        val resourceId = context.resources.getIdentifier(sourceImage, "drawable", context.packageName)
-        binding.ivSearchSourceLogo.setImageResource(if (resourceId != 0) resourceId else R.drawable.sample_source_image)
+        DataHelper.loadSourceImage(binding.ivSearchSourceLogo, sourceImage)
 
         adapter = ArticleAdapter(arrayListOf(), this)
         binding.rvSearchSourceArticles.adapter = adapter

@@ -27,6 +27,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?secondaryIconColor" />
+        <ImageButton
+            android:id="@+id/btnRunGazeTest"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="@null"
+            android:contentDescription="@string/article_options"
+            android:padding="12dp"
+            android:src="@drawable/ic_dots"
+            app:layout_constraintBottom_toBottomOf="@+id/btnArticleBack"
+            app:layout_constraintStart_toEndOf="@+id/btnArticleBack"
+            app:layout_constraintTop_toTopOf="@+id/btnArticleBack"
+            app:tint="?secondaryIconColor" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReadAloudArticle"
@@ -40,8 +53,11 @@
             app:iconPadding="4dp"
             app:iconSize="20dp"
             app:iconTint="?secondaryButtonIconColor"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnTranslateArticle"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/btnRunGazeTest"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
@@ -82,7 +98,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clArticleTopBar"
+        app:layout_constraintTop_toBottomOf="@id/clArticleTopBar"
         tools:context=".fragments.article.ArticleFragment">
 
         <com.newsmead.custom.LockableNestedScrollView
@@ -288,8 +304,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
+                    android:paddingStart="@dimen/common_padding"
                     android:text="@string/article_text_loading"
                     android:textColor="?primaryTextColor" />
+
+                <View
+                    android:id="@+id/articleAutoScrollTail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    android:importantForAccessibility="no" />
+
+                <Button
+                    android:id="@+id/btnReadFullArticle"
+                    style="@style/ButtonMedium_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_margin"
+                    android:layout_marginEnd="@dimen/text_margin"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/article_read_full"
+                    android:visibility="gone" />
 
                 <View
                     android:id="@+id/divider"
@@ -328,122 +363,127 @@
             </LinearLayout>
         </com.newsmead.custom.LockableNestedScrollView>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnArticleAutoScrollPause"
+            style="@style/ButtonSmall_LowEmphasis"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="80dp"
+            android:translationZ="12dp"
+            android:visibility="gone"
+            android:text="@string/article_auto_scroll_pause" />
+
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:outlineProvider="bounds"
+            app:contentInsetStart="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:contentInsetEndWithActions="0dp"
             app:backgroundTint="?primaryBackgroundColor"
             app:hideOnScroll="false"
             app:layout_anchorGravity="top"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior">
 
-            <!-- Content for the bottom bar (article settings) goes here -->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start">
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp">
 
-                <!-- Light Button -->
-                <Button
-                    android:id="@+id/btnArticleClrLight"
-                    style="@style/ButtonSquare_MidEmphasis.BGMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:minHeight="0dp"
-                    android:singleLine="true"
-                    android:text="@string/article_theme_light"
-                    app:cornerRadius="16dp"
-                    app:icon="@drawable/circle_light"
-                    app:iconGravity="top"
-                    app:iconPadding="0dp"
-                    app:iconSize="24dp"
-                    app:iconTint="@color/transparent"
-                    app:iconTintMode="add" />
+                <LinearLayout
+                    android:layout_width="144dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <!-- Dark Button -->
-                <Button
-                    android:id="@+id/btnArticleClrDark"
-                    style="@style/ButtonSquare_MidEmphasis.BGMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:minHeight="0dp"
-                    android:singleLine="true"
-                    android:text="@string/article_theme_dark"
-                    app:cornerRadius="16dp"
-                    app:icon="@drawable/circle_black"
-                    app:iconGravity="top"
-                    app:iconPadding="0dp"
-                    app:iconSize="24dp"
-                    app:iconTint="@color/transparent"
-                    app:iconTintMode="add" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnArticleClrLight"
+                        style="@style/ArticleFooterControl"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/article_theme_light"
+                        app:icon="@drawable/circle_light"
+                        app:iconTint="@color/transparent"
+                        app:iconTintMode="add" />
 
-                <!-- Sepia Button -->
-                <Button
-                    android:id="@+id/btnArticleClrSepia"
-                    style="@style/ButtonSquare_MidEmphasis.BGMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:width="60dip"
-                    android:minWidth="58dip"
-                    android:minHeight="0dp"
-                    android:paddingLeft="8dp"
-                    android:singleLine="true"
-                    android:text="@string/article_theme_sepia"
-                    app:cornerRadius="16dp"
-                    app:icon="@drawable/circle_sepia"
-                    app:iconGravity="top"
-                    app:iconPadding="0dp"
-                    app:iconSize="24dp"
-                    app:iconTint="@color/transparent"
-                    app:iconTintMode="add" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnArticleClrDark"
+                        style="@style/ArticleFooterControl"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/article_theme_dark"
+                        app:icon="@drawable/circle_black"
+                        app:iconTint="@color/transparent"
+                        app:iconTintMode="add" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnArticleClrSepia"
+                        style="@style/ArticleFooterControl"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/article_theme_sepia"
+                        app:icon="@drawable/circle_sepia"
+                        app:iconTint="@color/transparent"
+                        app:iconTintMode="add" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:minWidth="16dp" />
+
+                <LinearLayout
+                    android:layout_width="144dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/llArticleBottomButtons"
+                        android:layout_width="96dp"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnArticleTextSmaller"
+                            style="@style/ArticleFooterControl"
+                            android:layout_width="48dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/article_text_smaller_caption"
+                            android:contentDescription="@string/article_text_smaller_btn"
+                            app:icon="@drawable/ic_article_text_smaller_circle"
+                            app:iconTint="?primaryTextColor" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnArticleTextLarger"
+                            style="@style/ArticleFooterControl"
+                            android:layout_width="48dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/article_text_larger_caption"
+                            android:contentDescription="@string/article_text_larger_btn"
+                            app:icon="@drawable/ic_article_text_larger_circle"
+                            app:iconTint="?primaryTextColor" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnArticleReadingAids"
+                        style="@style/ArticleFooterControl"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/reading_aid_entry_short"
+                        android:contentDescription="@string/reading_aids_option"
+                        app:icon="@drawable/ic_article_aids_circle"
+                        app:iconTint="?primaryTextColor" />
+                </LinearLayout>
             </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/llArticleBottomButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:weightSum="1">
-
-                <Button
-                    android:id="@+id/btnArticleTextSmaller"
-                    style="@style/ButtonSquare_MidEmphasis.Smaller"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="0.5"
-                    android:minHeight="0dp"
-                    android:text="@string/article_text_smaller_btn"
-                    app:cornerRadius="16dp"
-                    app:icon="@drawable/ic_small_text"
-                    app:iconGravity="top"
-                    app:iconPadding="-4dp"
-                    app:iconSize="32dp"
-                    app:iconTint="?secondaryButtonIconColor" />
-
-                <Button
-                    android:id="@+id/btnArticleTextLarger"
-                    style="@style/ButtonSquare_MidEmphasis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:minHeight="0dp"
-                    android:text="@string/article_text_larger_btn"
-                    app:cornerRadius="16dp"
-                    app:icon="@drawable/ic_large_text"
-                    app:iconGravity="top"
-                    app:iconPadding="-4dp"
-                    app:iconSize="32dp"
-                    app:iconTint="?secondaryButtonIconColor" />
-            </LinearLayout>
-
         </com.google.android.material.bottomappbar.BottomAppBar>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

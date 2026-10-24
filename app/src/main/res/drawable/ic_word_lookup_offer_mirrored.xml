@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="28dp" android:height="28dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <group android:pivotX="12" android:pivotY="12" android:scaleX="-1">
+    <!-- Filled outer silhouette keeps the border visible in software and hardware rendering. -->
+    <path android:fillColor="#1034B3" android:pathData="M5,17.5 C3.1,15.8 2,13.5 2,11 C2,5.5 6.5,1 12,1 C17.5,1 22,5.5 22,11 C22,16.5 17.5,21 12,21 C10.3,21 8.7,20.6 7.3,19.9 L4,22 Z" />
+    <group android:pivotX="12" android:pivotY="11" android:scaleX="0.88" android:scaleY="0.88">
+        <path android:pathData="M5,17.5 C3.1,15.8 2,13.5 2,11 C2,5.5 6.5,1 12,1 C17.5,1 22,5.5 22,11 C22,16.5 17.5,21 12,21 C10.3,21 8.7,20.6 7.3,19.9 L4,22 Z">
+            <aapt:attr name="android:fillColor">
+                <gradient android:type="linear" android:startX="4" android:startY="2"
+                    android:endX="20" android:endY="21"
+                    android:startColor="#5A96FF" android:endColor="#4177F3" />
+            </aapt:attr>
+        </path>
+    </group>
+    </group>
+    <path android:fillColor="#FFFFFF" android:pathData="M13.5,6.6 A1.5,1.5 0,1 0,10.5 6.6 A1.5,1.5 0,1 0,13.5 6.6 M10.3,9.1 H12.8 Q13.3,9.1 13.3,9.6 V14.9 H13.8 A0.6,0.6 0,0 1,13.8 16.1 H10.2 A0.6,0.6 0,0 1,10.2 14.9 H10.7 V10.3 H10.3 A0.6,0.6 0,0 1,10.3 9.1 Z" />
+</vector>

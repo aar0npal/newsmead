@@ -1,4 +1,5 @@
 *.iml
+.venv/
 .gradle
 /local.properties
 /.idea/caches
@@ -17,6 +18,16 @@ local.properties
 *.apk
 *.aab
 /debug
+
+# Local gaze diagnostics and generated analysis artifacts
+/diagnostics-local/
+/tmp/
+/.venv-runtime/
+/output/
+# Stray redirected Git diff output; keep local without committing it
+/canpath-driven adjustable reading aids*
+__pycache__/
+*.py[cod]
 
 # .DS_Store
 # /.idea/shelf

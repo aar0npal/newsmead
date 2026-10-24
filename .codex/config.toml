@@ -1,0 +1,7 @@
+# Primary model and reasoning are chosen by the user; only helper defaults are set here.
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+default_subagent_model = "gpt-6-luna"
+default_subagent_reasoning_effort = "medium"
